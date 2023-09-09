@@ -2,26 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  /* Typography */
+
+  .display-l {
+    @apply font-sans text-black text-6xl font-normal leading-10;
+  }
+
+  .display-m {
+    @apply font-sans text-black text-5xl font-normal leading-10;
+  }
+
+  .display-m {
+    @apply font-sans text-black text-4xl font-normal leading-10;
+  }
+
+  .headline-l {
+    @apply font-sans text-black text-3xl font-normal leading-10;
+  }
+
+  .headline-m {
+    @apply font-sans text-black text-2xl font-normal leading-9;
+  }
+
+  .headline-m {
+    @apply font-sans text-black text-2xl font-normal leading-loose;
+  }
+
+  .title-l {
+    @apply font-sans text-black text-xl font-normal leading-7;
+  }
+
+  .title-m {
+    @apply font-sans text-black text-base font-normal leading-normal tracking-tight;
+  }
+
+  .title-m {
+    @apply font-sans text-black text-sm font-medium leading-tight tracking-tight;
+  }
+
+  .label-l {
+    @apply font-sans text-black text-sm font-medium leading-tight tracking-tight;
+  }
+
+  .label-m {
+    @apply font-sans text-black text-xs font-medium leading-none tracking-wide;
+  }
+
+  .label-m {
+    @apply font-sans text-black text-xs font-medium leading-none tracking-wide;
+  }
+
+  .body-l {
+    @apply font-sans text-black text-base font-normal leading-normal tracking-wide;
+  }
+
+  .body-m {
+    @apply font-sans text-black text-sm font-normal leading-tight tracking-tight;
+  }
+
+  .body-m {
+    @apply font-sans text-black text-xs font-normal leading-none;
+  }
+
+  /*****************/
+
+  .elevation-1 {
+    @apply bg-violet-50 rounded-2xl shadow;
+  }
+
+  .elevation-2 {
+    @apply bg-gray-100 rounded-2xl shadow;
+  }
+
+  .elevation-3 {
+    @apply bg-gray-200 rounded-2xl shadow;
+  }
+
+  .elevation-4 {
+    @apply bg-zinc-200 rounded-2xl shadow;
+  }
 }
