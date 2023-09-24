@@ -1,5 +1,6 @@
 import type { StorybookConfig } from '@storybook/nextjs';
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+import merge from 'lodash-es/merge';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -25,16 +26,34 @@ const config: StorybookConfig = {
     autodocs: 'tag',
   },
   webpackFinal(config) {
-    return {
-      ...config,
+    const fileLoaderRule = config?.module?.rules?.find((rule) =>
+      //@ts-ignore
+      rule?.test?.test?.('.svg'),
+    ) ?? {} as any;
+
+    const finalConfig = merge(config, {
       resolve: {
-        ...(config.resolve ?? {}),
-        plugins: [
-          ...(config.resolve?.plugins ?? []),
-          new TsconfigPathsPlugin(),
-        ]
-      }
-    };
+        plugins: [new TsconfigPathsPlugin()],
+      },
+      module: {
+        rules: [
+          {
+            ...fileLoaderRule,
+            test: /\.svg$/i,
+            resourceQuery: /url/, // *.svg?url
+          },
+          {
+            test: /\.svg$/i,
+            resourceQuery: { not: /url/ }, // exclude if *.svg?url
+            use: ['@svgr/webpack'],
+          },
+        ],
+      },
+    });
+
+    fileLoaderRule.exclude = /\.svg$/i;
+
+    return finalConfig;
   },
 };
 export default config;
