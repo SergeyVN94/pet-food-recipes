@@ -71,6 +71,7 @@ const palette = {
     80: '#CAC5CD',
     90: '#E6E0E9',
     95: '#F5EFF7',
+    96: '#F7F2FA',
     99: '#FFFBFE',
     100: '#FFFFFF',
   },
@@ -99,7 +100,7 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   theme: {
     container: {
       center: true,
@@ -165,6 +166,13 @@ module.exports = {
         scrim: palette.neutral[0],
         shadow: palette.neutral[0],
       },
+      boxShadow: {
+        'elevation-1': '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
+        'elevation-2': '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
+        'elevation-3': '0px 1px 3px 0px rgba(0, 0, 0, 0.30), 0px 4px 8px 3px rgba(0, 0, 0, 0.15)',
+        'elevation-4': '0px 2px 3px 0px rgba(0, 0, 0, 0.30), 0px 6px 10px 4px rgba(0, 0, 0, 0.15)',
+        'elevation-5': '0px 4px 4px 0px rgba(0, 0, 0, 0.30), 0px 8px 12px 6px rgba(0, 0, 0, 0.15)',
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

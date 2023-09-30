@@ -18,7 +18,7 @@ export const Filled: Story = {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['filled', 'outline'],
+      options: ['filled', 'outline', 'text', 'elevated', 'tonal'],
     },
   },
   render: (props) => {
@@ -40,7 +40,7 @@ export const FilledWithIcon: Story = {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['filled', 'outline'],
+      options: ['filled', 'outline', 'text', 'elevated', 'tonal'],
     },
   },
   render: (props) => (
