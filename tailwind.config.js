@@ -70,6 +70,7 @@ const palette = {
     70: '#AEA9B1',
     80: '#CAC5CD',
     90: '#E6E0E9',
+    92: '#ECE6F0',
     95: '#F5EFF7',
     96: '#F7F2FA',
     99: '#FFFBFE',
@@ -104,7 +105,7 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "24px",
     },
     fontFamily: {
       sans: ['var(--font-roboto)', 'sans-serif'],

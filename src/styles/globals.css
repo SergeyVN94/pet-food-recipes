@@ -23,7 +23,7 @@ html {
     @apply font-sans text-black text-5xl font-normal leading-10;
   }
 
-  .display-m {
+  .display-s {
     @apply font-sans text-black text-4xl font-normal leading-10;
   }
 
@@ -35,7 +35,7 @@ html {
     @apply font-sans text-black text-2xl font-normal leading-9;
   }
 
-  .headline-m {
+  .headline-s {
     @apply font-sans text-black text-2xl font-normal leading-loose;
   }
 
@@ -47,7 +47,7 @@ html {
     @apply font-sans text-black text-base font-normal leading-normal tracking-tight;
   }
 
-  .title-m {
+  .title-s {
     @apply font-sans text-black text-sm font-medium leading-tight tracking-tight;
   }
 
@@ -59,7 +59,7 @@ html {
     @apply font-sans text-black text-xs font-medium leading-none tracking-wide;
   }
 
-  .label-m {
+  .label-s {
     @apply font-sans text-black text-xs font-medium leading-none tracking-wide;
   }
 
@@ -71,7 +71,7 @@ html {
     @apply font-sans text-black text-sm font-normal leading-tight tracking-tight;
   }
 
-  .body-m {
+  .body-s {
     @apply font-sans text-black text-xs font-normal leading-none;
   }
 

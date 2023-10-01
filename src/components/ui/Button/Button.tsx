@@ -1,8 +1,9 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode, ComponentProps } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import Link from 'next/link';
 
 const buttonVariants = cva(
-  'rounded-full outline-none text-center transition-all font-sans text-sm font-medium leading-5 tracking-tight disabled:cursor-not-allowed disabled:opacity-40',
+  'rounded-full outline-none text-center transition-all font-sans text-sm font-medium leading-5 tracking-tight disabled:cursor-not-allowed disabled:opacity-40 inline-block whitespace-nowrap',
   {
     variants: {
       variant: {
@@ -39,11 +40,10 @@ const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    Omit<VariantProps<typeof buttonVariants>, 'withIcon'> {
+type ButtonProps = ({
   iconLeft?: ReactNode;
-}
+} & Omit<VariantProps<typeof buttonVariants>, 'withIcon'>) &
+  ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
   className,
@@ -51,23 +51,49 @@ const Button = ({
   children,
   iconLeft,
   ...props
-}: ButtonProps) => {
-  return (
-    <button
-      className={buttonVariants({
-        variant,
-        className,
-        withIcon: !!iconLeft,
-      })}
-      {...props}
-    >
-      <span className="flex flex-nowrap items-center justify-center gap-2">
-        {iconLeft}
-        {children}
-      </span>
-    </button>
-  );
-};
+}: ButtonProps) => (
+  <button
+    className={buttonVariants({
+      variant,
+      className,
+      withIcon: !!iconLeft,
+    })}
+    {...props}
+  >
+    <span className="flex flex-nowrap items-center justify-center gap-2">
+      {iconLeft}
+      {children}
+    </span>
+  </button>
+);
+Button.displayName = 'Button';
+
+type ButtonLinkProps = ({
+  iconLeft?: ReactNode;
+} & Omit<VariantProps<typeof buttonVariants>, 'withIcon'>) &
+ComponentProps<typeof Link>;
+
+export const ButtonLink = ({
+  className,
+  variant,
+  children,
+  iconLeft,
+  ...props
+}: ButtonLinkProps) => (
+  <Link
+    className={buttonVariants({
+      variant,
+      className,
+      withIcon: !!iconLeft,
+    })}
+    {...props}
+  >
+    <span className="flex flex-nowrap items-center justify-center gap-2">
+      {iconLeft}
+      {children}
+    </span>
+  </Link>
+);
 Button.displayName = 'Button';
 
 export default Button;
