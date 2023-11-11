@@ -1,0 +1,12 @@
+{
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "singleQuote": true,
+  "tabWidth": 2,
+  "parser": "babel-ts",
+  "proseWrap": "preserve",
+  "printWidth": 140,
+  "useTabs": false,
+  "endOfLine": "auto",
+  "semi": true
+}
