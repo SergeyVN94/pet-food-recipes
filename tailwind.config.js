@@ -176,7 +176,91 @@ module.exports = {
     /** @type {import('tailwindcss/types/config').PluginCreator} */
     ({ addComponents }) => {
       addComponents({
-        '.display-l': '@apply font-sans text-black text-6xl font-normal leading-10',
+        '.display-l': {
+          '@apply font-sans text-black text-6xl font-normal leading-10': {},
+        },
+
+        '.display-m': {
+          '@apply font-sans text-black text-5xl font-normal leading-10': {},
+        },
+
+        '.display-s': {
+          '@apply font-sans text-black text-4xl font-normal leading-10': {},
+        },
+
+        '.headline-l': {
+          '@apply font-sans text-black text-3xl font-normal leading-10': {},
+        },
+
+        '.headline-m': {
+          '@apply font-sans text-black text-2xl font-normal leading-9': {},
+        },
+
+        '.headline-s': {
+          '@apply font-sans text-black text-2xl font-normal leading-loose': {},
+        },
+
+        '.title-l': {
+          '@apply font-sans text-black text-xl font-normal leading-7': {},
+        },
+
+        '.title-m': {
+          '@apply font-sans text-black text-base font-normal leading-normal tracking-tight': {},
+        },
+
+        '.title-s': {
+          '@apply font-sans text-black text-sm font-medium leading-tight tracking-tight': {},
+        },
+
+        '.label-l': {
+          '@apply font-sans text-black text-sm font-medium leading-tight tracking-tight': {},
+        },
+
+        '.label-m': {
+          '@apply font-sans text-black text-xs font-medium leading-none tracking-wide': {},
+        },
+
+        '.label-s': {
+          '@apply font-sans text-black text-xs font-medium leading-none tracking-wide': {},
+        },
+
+        '.body-l': {
+          '@apply font-sans text-black text-base font-normal leading-normal tracking-wide': {},
+        },
+
+        '.body-m': {
+          '@apply font-sans text-black text-sm font-normal leading-tight tracking-tight': {},
+        },
+
+        '.body-s': {
+          '@apply font-sans text-black text-xs font-normal leading-none': {},
+        },
+
+        '.elevation-1': {
+          '@apply bg-violet-50 rounded-2xl shadow': {},
+        },
+
+        '.elevation-2': {
+          '@apply bg-gray-100 rounded-2xl shadow': {},
+        },
+
+        '.elevation-3': {
+          '@apply bg-gray-200 rounded-2xl shadow': {},
+        },
+
+        '.elevation-4': {
+          '@apply bg-zinc-200 rounded-2xl shadow': {},
+        },
+
+        '.skeleton': {
+          display: 'block',
+          width: '100%',
+          background: '#eee',
+          background: 'linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%)',
+          'background-size': '200% 100%',
+          'border-radius': '5px',
+          animation: '1.3s shine linear infinite',
+        },
       });
     },
   ],

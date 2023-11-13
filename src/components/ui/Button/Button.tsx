@@ -37,7 +37,7 @@ const buttonVariants = cva(
     defaultVariants: {
       variant: 'filled',
     },
-  }
+  },
 );
 
 type ButtonProps = ({
@@ -45,13 +45,7 @@ type ButtonProps = ({
 } & Omit<VariantProps<typeof buttonVariants>, 'withIcon'>) &
   ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({
-  className,
-  variant,
-  children,
-  iconLeft,
-  ...props
-}: ButtonProps) => (
+const Button = ({ className, variant, children, iconLeft, ...props }: ButtonProps) => (
   <button
     className={buttonVariants({
       variant,
@@ -71,15 +65,9 @@ Button.displayName = 'Button';
 type ButtonLinkProps = ({
   iconLeft?: ReactNode;
 } & Omit<VariantProps<typeof buttonVariants>, 'withIcon'>) &
-ComponentProps<typeof Link>;
+  ComponentProps<typeof Link>;
 
-export const ButtonLink = ({
-  className,
-  variant,
-  children,
-  iconLeft,
-  ...props
-}: ButtonLinkProps) => (
+export const ButtonLink = ({ className, variant, children, iconLeft, ...props }: ButtonLinkProps) => (
   <Link
     className={buttonVariants({
       variant,

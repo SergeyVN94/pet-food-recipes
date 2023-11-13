@@ -1,26 +1,19 @@
-'use client';
-import { useState } from 'react';
 import { Header } from '@/components';
-import ActualRecipesList from './ActualRecipesList.server';
+import ActualRecipesList from './components/ActualRecipesList';
+import Search from './components/Search';
 
-const Home = () => {
-  const [search, setSearch] = useState('');
-
+const HomePage = () => {
   return (
-    <>
+    <div>
       <Header />
       <main>
         <div className="container pt-12">
-          <input
-            type="search"
-            onChange={(val) => setSearch(val.target.value)}
-            value={search}
-          />
-          <ActualRecipesList search={''} />
+          <Search />
+          <ActualRecipesList />
         </div>
       </main>
-    </>
+    </div>
   );
 };
 
-export default Home;
+export default HomePage;
