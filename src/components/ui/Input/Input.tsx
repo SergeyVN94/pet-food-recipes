@@ -1,5 +1,9 @@
-import React, { FocusEventHandler, InputHTMLAttributes, useState } from 'react';
+'use client';
+
+import React, { FocusEventHandler, InputHTMLAttributes, forwardRef, useEffect, useRef, useState } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { useFormContext } from 'react-hook-form';
+import { mergeRefs } from 'react-merge-refs';
 
 const wrapVariants = cva('group outline-none flex flex-nowrap items-center transition-colors', {
   variants: {
@@ -39,7 +43,7 @@ const labelVariants = cva('transition-all', {
     {
       variant: ['filled'],
       focus: true,
-      class: '!text-primary translate-y-0 top-0 body-s ',
+      class: '!text-primary !translate-y-0 !top-0 !body-s ',
     },
   ],
 });
@@ -48,11 +52,15 @@ type InputProps = {
   label?: string;
   subText?: string;
   className?: string;
+  controlled?: boolean;
 } & InputHTMLAttributes<HTMLInputElement> &
   Omit<VariantProps<typeof wrapVariants>, 'focus'>;
 
-const Input = ({ variant, label, subText, className = '', ...other }: InputProps) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ variant, label, subText, controlled, className = '', ...other }, ref) => {
   const [focus, setFocus] = useState(false);
+  const [value, setValue] = useState('');
+  const localRef = useRef<HTMLInputElement>(null);
+  const methods = useFormContext();
 
   const handleFocus: FocusEventHandler<HTMLInputElement> = (ev) => {
     setFocus(true);
@@ -70,14 +78,30 @@ const Input = ({ variant, label, subText, className = '', ...other }: InputProps
     }
   };
 
+  const registerProps = controlled && other.name ? methods.register(other.name) : { ref };
+
+  useEffect(() => {
+    const handleChange = (ev: Event) => {
+      setValue((ev as any)?.target?.value ?? '');
+    };
+
+    const inputElement = localRef.current;
+    inputElement?.addEventListener('change', handleChange);
+
+    return () => {
+      inputElement?.removeEventListener('change', handleChange);
+    };
+  }, []);
+
   return (
     <div className={className}>
       <label className={wrapVariants({ variant, focus })}>
         <div className="flex-1 relative">
-          {label && <p className={labelVariants({ variant, focus: focus || !!other.value })}>{label}</p>}
+          {label && <p className={labelVariants({ variant, focus: focus || !!value })}>{label}</p>}
           <input
+            {...registerProps}
             {...other}
-            value={other.value ?? ''}
+            ref={mergeRefs([ref, registerProps.ref, localRef])}
             onFocus={handleFocus}
             onBlur={handleBlur}
             className="w-full outline-none bg-transparent body-l text-on-surface pr-4 pt-4"
@@ -87,6 +111,7 @@ const Input = ({ variant, label, subText, className = '', ...other }: InputProps
       {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
     </div>
   );
-};
+});
+Input.displayName = 'Input';
 
 export default Input;
