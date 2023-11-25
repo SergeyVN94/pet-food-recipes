@@ -21,15 +21,11 @@ export const Filled: Story = {
       options: ['filled', 'outline', 'text', 'elevated', 'tonal'],
     },
   },
-  render: (props) => {
-    console.log(props);
-    
-    return (
-      <Button type="button" {...props}>
-        Label
-      </Button>
-    );
-  },
+  render: (props) => (
+    <Button type="button" {...props}>
+      Label
+    </Button>
+  ),
 };
 
 export const FilledWithIcon: Story = {

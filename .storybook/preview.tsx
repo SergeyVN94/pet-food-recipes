@@ -2,7 +2,7 @@ import React from 'react';
 import type { Decorator, Preview } from '@storybook/react';
 import { Roboto } from 'next/font/google';
 
-import '../src/app/globals.css';
+import '../src/styles/globals.css';
 
 const roboto = Roboto({ weight: ['100', '300', '400', '500', '700', '900'], subsets: ['latin'] });
 
