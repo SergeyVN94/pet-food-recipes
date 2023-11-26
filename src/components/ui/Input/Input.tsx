@@ -1,9 +1,20 @@
 'use client';
 
-import React, { FocusEventHandler, InputHTMLAttributes, forwardRef, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  FocusEventHandler,
+  InputHTMLAttributes,
+  MouseEventHandler,
+  forwardRef,
+  useRef,
+  useState,
+} from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
+import { ButtonIcon } from '../ButtonIcon';
+import { IconCancel } from '@/assets/icons';
 
 const wrapVariants = cva('group outline-none flex flex-nowrap items-center transition-colors', {
   variants: {
@@ -53,65 +64,94 @@ type InputProps = {
   subText?: string;
   className?: string;
   controlled?: boolean;
-} & InputHTMLAttributes<HTMLInputElement> &
+  onChange?: (value: string, ev: ChangeEvent<HTMLInputElement>) => void;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
   Omit<VariantProps<typeof wrapVariants>, 'focus'>;
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ variant, label, subText, controlled, className = '', ...other }, ref) => {
-  const [focus, setFocus] = useState(false);
-  const [value, setValue] = useState('');
-  const localRef = useRef<HTMLInputElement>(null);
-  const methods = useFormContext();
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ variant, label, subText, controlled, onChange, className = '', ...other }, ref) => {
+    const [focus, setFocus] = useState(false);
+    const [value, setValue] = useState('');
+    const localRef = useRef<HTMLInputElement>(null);
+    const methods = useFormContext();
 
-  const handleFocus: FocusEventHandler<HTMLInputElement> = (ev) => {
-    setFocus(true);
+    const handleFocus: FocusEventHandler<HTMLInputElement> = (ev) => {
+      setFocus(true);
 
-    if (other.onFocus) {
-      other.onFocus(ev);
-    }
-  };
-
-  const handleBlur: FocusEventHandler<HTMLInputElement> = (ev) => {
-    setFocus(false);
-
-    if (other.onBlur) {
-      other.onBlur(ev);
-    }
-  };
-
-  const registerProps = controlled && other.name ? methods.register(other.name) : { ref };
-
-  useEffect(() => {
-    const handleChange = (ev: Event) => {
-      setValue((ev as any)?.target?.value ?? '');
+      if (other.onFocus) {
+        other.onFocus(ev);
+      }
     };
 
-    const inputElement = localRef.current;
-    inputElement?.addEventListener('change', handleChange);
+    const handleBlur: FocusEventHandler<HTMLInputElement> = (ev) => {
+      setFocus(false);
 
-    return () => {
-      inputElement?.removeEventListener('change', handleChange);
+      if (other.onBlur) {
+        other.onBlur(ev);
+      }
     };
-  }, []);
 
-  return (
-    <div className={className}>
-      <label className={wrapVariants({ variant, focus })}>
-        <div className="flex-1 relative">
-          {label && <p className={labelVariants({ variant, focus: focus || !!value })}>{label}</p>}
-          <input
-            {...registerProps}
-            {...other}
-            ref={mergeRefs([ref, registerProps.ref, localRef])}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            className="w-full outline-none bg-transparent body-l text-on-surface pr-4 pt-4"
-          />
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (ev) => {
+      const nextValue = ev.target.value;
+      setValue(nextValue);
+
+      if (controlled && other.name && methods) {
+        methods.setValue(other.name, nextValue);
+      }
+
+      if (onChange) {
+        onChange(nextValue, ev);
+      }
+    };
+
+    const handleClear: MouseEventHandler = (ev) => {
+      setValue('');
+
+      if (localRef.current) {
+        localRef.current.value = '';
+      }
+
+      if (controlled && other.name && methods) {
+        methods.setValue(other.name, '');
+      }
+
+      if (onChange) {
+        onChange('', ev as any);
+      }
+    };
+
+    const handleRootClick = () => {
+      localRef.current?.focus();
+    };
+
+    const registerProps = controlled && other.name ? methods.register(other.name) : { ref };
+
+    return (
+      <div className={className}>
+        <div className={wrapVariants({ variant, focus: focus || !!value })} onClick={handleRootClick}>
+          <label className="flex-1 relative">
+            {label && <span className={labelVariants({ variant, focus: focus || !!value })}>{label}</span>}
+            <input
+              {...registerProps}
+              {...other}
+              ref={mergeRefs([ref, registerProps.ref, localRef])}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              className="w-full outline-none bg-transparent body-l text-on-surface pr-4 pt-4"
+            />
+          </label>
+          {value && (
+            <ButtonIcon onClick={handleClear} type="button">
+              <IconCancel />
+            </ButtonIcon>
+          )}
         </div>
-      </label>
-      {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
-    </div>
-  );
-});
+        {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
+      </div>
+    );
+  },
+);
 Input.displayName = 'Input';
 
 export default Input;

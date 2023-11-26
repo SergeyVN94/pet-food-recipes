@@ -29,7 +29,7 @@ export const FilledUncontrolled: Story = {
   render: (props) => {
     const [value, setValue] = useState('');
 
-    return <Input {...props} value={value} onChange={(ev) => setValue(ev.target.value)} />;
+    return <Input {...props} value={value} onChange={setValue} />;
   },
 };
 
