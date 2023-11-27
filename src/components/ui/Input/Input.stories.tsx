@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import { IconAdd } from '@/assets/icons';
-import { Input } from '.';
+import { Input, InputControlled } from '.';
 
 const meta: Meta<typeof Input> = {
   component: Input,
@@ -29,7 +29,7 @@ export const FilledUncontrolled: Story = {
   render: (props) => {
     const [value, setValue] = useState('');
 
-    return <Input {...props} value={value} onChange={setValue} />;
+    return <Input {...props} value={value} onChange={(ev, value) => setValue(value)} onClear={() => setValue('')} />;
   },
 };
 
@@ -52,7 +52,7 @@ export const FilledControlled: Story = {
     return (
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(console.log)}>
-          <Input {...props} name="test" controlled />
+          <InputControlled {...props} name="test" />
         </form>
       </FormProvider>
     );
