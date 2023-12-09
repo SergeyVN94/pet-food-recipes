@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -8,18 +7,17 @@ import { Recipe } from '@/types';
 import useRecipes from '@/hooks/useRecipes';
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
+  const imageUrl =
+    recipe.images && recipe.images.length > 0
+      ? process.env.NEXT_PUBLIC_API_SERVER + '/recipes/' + recipe.images[0]
+      : '/recipe-card-placeholder.png';
+
   return (
     <Link
       className="w-full border border-neutral-90 rounded-xl p-4 relative flex items-start gap-4 pointer"
       href={`/recipe/${recipe.slug}`}
     >
-      <Image
-        alt={recipe.title}
-        src={recipe.images?.at(0) ?? '/recipe-card-placeholder.png'}
-        className="object-contain"
-        width={256}
-        height={256}
-      />
+      <img alt={recipe.title} src={imageUrl} className="object-contain" width={256} height={256} />
       <div>
         <h3 className="title-l">{recipe.title}</h3>
         <p className="body-l mt-8">{recipe.description}</p>
