@@ -25,6 +25,7 @@ export const FilledUncontrolled: Story = {
     },
     label: { type: 'string' },
     subText: { type: 'string' },
+    maxRows: { type: 'number' },
   },
   render: (props) => {
     const [value, setValue] = useState('');
@@ -45,6 +46,7 @@ export const FilledControlled: Story = {
     },
     label: { type: 'string' },
     subText: { type: 'string' },
+    maxRows: { type: 'number' },
   },
   render: (props) => {
     const methods = useForm();

@@ -1,17 +1,17 @@
 'use client';
 
-import { ChangeEvent, ChangeEventHandler, InputHTMLAttributes, forwardRef, useEffect, useRef } from 'react';
+import { ChangeEvent, ChangeEventHandler, TextareaHTMLAttributes, forwardRef, useEffect, useRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 import { ButtonIcon } from '../ButtonIcon';
 import { IconCancel } from '@/assets/icons';
 
-const wrapVariants = cva('group outline-none flex flex-nowrap items-center transition-colors', {
+const wrapVariants = cva('group outline-none flex flex-nowrap items-start transition-all', {
   variants: {
     variant: {
       filled:
-        'cursor-text pt-1 pb-[0.1875rem] pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] border-on-surface border-b hover:bg-on-surface/10 focus-within:pb-0.5 focus-within:border-b-2 focus-within:border-primary',
+        'cursor-text py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface  hover:bg-on-surface/10 focus-within:after:h-0.5 focus-within:after:bg-primary',
     },
   },
   defaultVariants: {
@@ -23,7 +23,7 @@ const labelVariants = cva('transition-all', {
   variants: {
     variant: {
       filled:
-        'text-on-surface-var hover:text-primary !body-l absolute top-1/2 left-0 -translate-y-1/2 group-hover:text-on-surface-var peer-focus:text-primary peer-focus:translate-y-0 peer-focus:top-0 peer-focus:body-s data-[focus="true"]:text-primary data-[focus="true"]:translate-y-0 data-[focus="true"]:top-0 data-[focus="true"]:body-s',
+        'text-on-surface-var hover:text-primary !body-l absolute top-3 left-0 group-hover:text-on-surface-var peer-focus:text-primary peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:body-s data-[focus="true"]:text-xs',
     },
   },
 });
@@ -32,78 +32,123 @@ type InputProps = {
   label?: string;
   subText?: string;
   className?: string;
-  onChange?: (ev: ChangeEvent<HTMLInputElement>, value: string) => void;
+  maxRows?: number;
+  onChange?: (ev: ChangeEvent<HTMLTextAreaElement>, value: string) => void;
   onClear?: () => void;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
+} & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> &
   Omit<VariantProps<typeof wrapVariants>, 'focus'>;
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ variant, label, subText, onChange, onClear, className = '', ...other }, ref) => {
-  const localRef = useRef<HTMLInputElement>(null);
-  const labelRef = useRef<HTMLSpanElement>(null);
+const Input = forwardRef<HTMLTextAreaElement, InputProps>(
+  ({ variant, label, subText, onChange, onClear, className = '', ...other }, ref) => {
+    const localRef = useRef<HTMLTextAreaElement>(null);
+    const labelRef = useRef<HTMLSpanElement>(null);
+    const buttonClearRef = useRef<HTMLButtonElement>(null);
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (ev) => {
-    const nextValue = ev.target.value;
+    const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (ev) => {
+      const nextValue = ev.target.value;
 
-    if (onChange) {
-      onChange(ev, nextValue);
-    }
-  };
+      if (buttonClearRef.current) {
+        buttonClearRef.current.style.display = nextValue ? '' : 'none';
+      }
 
-  const handleRootClick = () => {
-    localRef.current?.focus();
-  };
-
-  const handleClear = () => {
-    labelRef.current?.setAttribute('data-focus', 'false');
-
-    if (onClear) {
-      onClear();
-    }
-  };
-
-  useEffect(() => {
-    const handleChange = () => {
-      if (localRef.current) {
-        labelRef.current?.setAttribute('data-focus', (!!localRef.current.value).toString());
+      if (onChange) {
+        onChange(ev, nextValue);
       }
     };
 
-    const inputEl = localRef.current;
-    inputEl?.addEventListener('change', handleChange);
-
-    return () => {
-      inputEl?.removeEventListener('change', handleChange);
+    const handleRootClick = () => {
+      localRef.current?.focus();
     };
-  }, []);
 
-  useEffect(() => {
-    labelRef.current?.setAttribute('data-focus', (!!other.value).toString());
-  }, [other.value]);
+    const handleClear = () => {
+      if (localRef.current) {
+        labelRef.current!.setAttribute('data-focus', 'false');
+        localRef.current.style.height = '';
+      }
 
-  return (
-    <div className={className}>
-      <div className={wrapVariants({ variant })} onClick={handleRootClick}>
-        <label className="flex-1 relative">
-          <input
-            className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 pt-4"
-            {...other}
-            onChange={handleChange}
-            ref={mergeRefs([ref, localRef])}
-          />
-          {label && (
-            <span className={labelVariants({ variant })} ref={labelRef}>
-              {label}
-            </span>
-          )}
-        </label>
-        <ButtonIcon onClick={handleClear} type="button">
-          <IconCancel />
-        </ButtonIcon>
+      if (onClear) {
+        onClear();
+      }
+    };
+
+    useEffect(() => {
+      const handleChange = () => {
+        if (localRef.current) {
+          labelRef.current?.setAttribute('data-focus', (!!localRef.current.value).toString());
+        }
+      };
+
+      const inputEl = localRef.current;
+      inputEl?.addEventListener('change', handleChange);
+
+      return () => {
+        inputEl?.removeEventListener('change', handleChange);
+      };
+    }, []);
+
+    useEffect(() => {
+      labelRef.current?.setAttribute('data-focus', (!!(other.value || other.placeholder)).toString());
+
+      if (buttonClearRef.current) {
+        buttonClearRef.current.style.display = other.value ? '' : 'none';
+      }
+    }, [other.value, other.placeholder]);
+
+    useEffect(() => {
+      const handleChange = (ev: ChangeEvent<HTMLTextAreaElement>) => {
+        const textarea = ev.target;
+
+        if (!textarea) {
+          return;
+        }
+
+        textarea.style.height = 'auto';
+        let nextHeight = textarea.scrollHeight;
+
+        if (other.maxRows !== undefined && other.maxRows > 0) {
+          const rowHeight = parseInt(getComputedStyle(textarea).lineHeight, 10);
+          const maxHeight = other.maxRows * rowHeight;
+          nextHeight = nextHeight > maxHeight ? maxHeight : nextHeight;
+        }
+
+        textarea.style.height = nextHeight + 'px';
+      };
+
+      const textarea = localRef.current;
+      textarea?.addEventListener('input', handleChange as any);
+
+      return () => {
+        textarea?.removeEventListener('input', handleChange as any);
+      };
+    }, [other.rows, other.maxRows]);
+
+    return (
+      <div className={className}>
+        <div className={wrapVariants({ variant })} onClick={handleRootClick}>
+          <label className="flex-1 relative pt-1">
+            <textarea
+              className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-x-hidden overflow-y-auto"
+              rows={other.rows ?? 1}
+              wrap={!other.rows ? 'off' : undefined}
+              {...other}
+              onChange={handleChange}
+              ref={mergeRefs([ref, localRef])}
+            />
+            {label && (
+              <span className={labelVariants({ variant })} ref={labelRef}>
+                {label}
+              </span>
+            )}
+          </label>
+          <ButtonIcon onClick={handleClear} type="button" ref={buttonClearRef}>
+            <IconCancel />
+          </ButtonIcon>
+        </div>
+        {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
       </div>
-      {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
-    </div>
-  );
-});
+    );
+  },
+);
 Input.displayName = 'Input';
 
 type InputControlledProps = Omit<InputProps, 'onChange' | 'value' | 'onBlur' | 'onFocus' | 'name'> & {

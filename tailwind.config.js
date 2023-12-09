@@ -221,7 +221,7 @@ module.exports = {
         },
 
         '.label-s': {
-          '@apply font-sans text-black text-xs font-medium leading-none tracking-wide': {},
+          '@apply font-sans text-black font-medium leading-none tracking-wide text-xs ': {},
         },
 
         '.body-l': {
@@ -255,7 +255,6 @@ module.exports = {
         '.skeleton': {
           display: 'block',
           width: '100%',
-          background: '#eee',
           background: 'linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%)',
           'background-size': '200% 100%',
           'border-radius': '5px',

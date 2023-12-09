@@ -1,4 +1,5 @@
-import React, { ButtonHTMLAttributes, ReactComponentElement, cloneElement } from 'react';
+'use client';
+import { ButtonHTMLAttributes, FC, ReactComponentElement, Ref, SVGProps, cloneElement, forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const variants = cva(
@@ -19,12 +20,12 @@ const variants = cva(
 );
 
 type ButtonIconProps = {
-  children: ReactComponentElement<React.FC<React.SVGProps<SVGSVGElement>>>;
-} & ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof variants>;
+  children: ReactComponentElement<FC<SVGProps<SVGSVGElement>>>;
+} & VariantProps<typeof variants> &
+  ButtonHTMLAttributes<HTMLButtonElement>;
 
-const ButtonIcon = ({ children, className, variant, ...other }: ButtonIconProps) => (
-  <button className="p-1 group/button-icon outline-none border-none bg-transparent" {...other}>
+const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(({ children, className, variant, ...other }, ref) => (
+  <button className="p-1 group/button-icon outline-none border-none bg-transparent" ref={ref} {...other}>
     <span className={variants({ variant })}>
       {cloneElement(children, {
         width: 24,
@@ -32,6 +33,7 @@ const ButtonIcon = ({ children, className, variant, ...other }: ButtonIconProps)
       })}
     </span>
   </button>
-);
+));
+ButtonIcon.displayName = 'ButtonIcon';
 
 export default ButtonIcon;
