@@ -221,7 +221,7 @@ module.exports = {
         },
 
         '.label-s': {
-          '@apply font-sans text-black font-medium leading-none tracking-wide text-xs ': {},
+          '@apply font-sans text-black font-medium leading-none tracking-wide text-xs': {},
         },
 
         '.body-l': {

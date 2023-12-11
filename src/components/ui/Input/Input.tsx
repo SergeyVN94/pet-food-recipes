@@ -28,6 +28,22 @@ const labelVariants = cva('transition-all', {
   },
 });
 
+const updateTextareaHeight = (textarea: HTMLTextAreaElement) => {
+  let maxRows = Number(textarea.getAttribute('maxrows'));
+
+  if (Number.isNaN(maxRows) || maxRows < 1) {
+    maxRows = 1;
+  }
+
+  textarea.style.height = 'auto';
+
+  const rowHeight = parseInt(getComputedStyle(textarea).lineHeight, 10);
+  const maxHeight = maxRows * rowHeight;
+  const nextHeight = textarea.scrollHeight > maxHeight ? maxHeight : textarea.scrollHeight;
+
+  textarea.style.height = nextHeight + 'px';
+};
+
 type InputProps = {
   label?: string;
   subText?: string;
@@ -102,16 +118,7 @@ const Input = forwardRef<HTMLTextAreaElement, InputProps>(
           return;
         }
 
-        textarea.style.height = 'auto';
-        let nextHeight = textarea.scrollHeight;
-
-        if (other.maxRows !== undefined && other.maxRows > 0) {
-          const rowHeight = parseInt(getComputedStyle(textarea).lineHeight, 10);
-          const maxHeight = other.maxRows * rowHeight;
-          nextHeight = nextHeight > maxHeight ? maxHeight : nextHeight;
-        }
-
-        textarea.style.height = nextHeight + 'px';
+        updateTextareaHeight(textarea);
       };
 
       const textarea = localRef.current;
@@ -120,14 +127,20 @@ const Input = forwardRef<HTMLTextAreaElement, InputProps>(
       return () => {
         textarea?.removeEventListener('input', handleChange as any);
       };
-    }, [other.rows, other.maxRows]);
+    }, []);
+
+    useEffect(() => {
+      if (localRef.current) {
+        updateTextareaHeight(localRef.current);
+      }
+    }, [other.maxRows]);
 
     return (
       <div className={className}>
         <div className={wrapVariants({ variant })} onClick={handleRootClick}>
           <label className="flex-1 relative pt-1">
             <textarea
-              className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-x-hidden overflow-y-auto"
+              className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-x-hidden overflow-y-auto whitespace-nowrap"
               rows={other.rows ?? 1}
               wrap={!other.rows ? 'off' : undefined}
               {...other}
