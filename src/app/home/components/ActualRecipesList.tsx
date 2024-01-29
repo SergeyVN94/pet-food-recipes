@@ -30,7 +30,9 @@ const ActualRecipesList = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') ?? '';
 
-  const { isFetching, data } = useRecipes(query);
+  const { isFetching, data } = useRecipes(query, {
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <ul className="flex flex-col items-start flex-nowrap gap-4 pt-8 w-full">

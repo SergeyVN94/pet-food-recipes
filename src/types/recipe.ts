@@ -6,3 +6,9 @@ export type Recipe = {
   ingredients: number[];
   images: string[];
 };
+
+export type RecipeDto = {
+  title: string;
+  description: string;
+  images?: FileList | File[];
+};

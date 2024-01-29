@@ -14,7 +14,7 @@ const NewRecipePage = () => {
       <main>
         <div className="container pt-12">
           <h1 className="headline-l">Добавить рецепт</h1>
-          <RecipeForm />
+          <RecipeForm className="mt-8" />
         </div>
       </main>
     </div>

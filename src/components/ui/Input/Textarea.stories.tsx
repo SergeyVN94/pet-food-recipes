@@ -3,14 +3,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { Input, InputControlled } from '.';
+import { Textarea, TextareaControlled } from '.';
 
-const meta: Meta<typeof Input> = {
-  component: Input,
+const meta: Meta<typeof Textarea> = {
+  component: Textarea,
 };
 
 export default meta;
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<typeof Textarea>;
 
 export const FilledUncontrolled: Story = {
   args: {
@@ -24,11 +24,12 @@ export const FilledUncontrolled: Story = {
     },
     label: { type: 'string' },
     subText: { type: 'string' },
+    maxRows: { type: 'number', min: 1 },
   },
   render: (props) => {
     const [value, setValue] = useState('');
 
-    return <Input {...props} value={value} onChange={(ev, value) => setValue(value)} onClear={() => setValue('')} />;
+    return <Textarea {...props} value={value} onChange={(ev, value) => setValue(value)} onClear={() => setValue('')} />;
   },
 };
 
@@ -44,6 +45,7 @@ export const FilledControlled: Story = {
     },
     label: { type: 'string' },
     subText: { type: 'string' },
+    maxRows: { type: 'number', min: 1 },
   },
   render: (props) => {
     const methods = useForm();
@@ -51,7 +53,7 @@ export const FilledControlled: Story = {
     return (
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(console.log)}>
-          <InputControlled {...props} name="test" />
+          <TextareaControlled {...props} name="test" />
         </form>
       </FormProvider>
     );

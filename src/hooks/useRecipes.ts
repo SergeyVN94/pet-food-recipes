@@ -1,18 +1,16 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 
 import { Recipe } from '@/types';
+import { RecipeService } from '@/services';
 
 const useRecipes = (query: string, config: Omit<UseQueryOptions<Recipe[], unknown, Recipe[], string[]>, 'initialData'> = {}) =>
   useQuery({
     queryKey: ['recipe', 'get', query],
     queryFn: async ({ queryKey, signal }) => {
-      const [, , _search] = queryKey;
+      const [, , search] = queryKey;
+      const response = await RecipeService.getRecipes(search, { signal });
 
-      const response = await fetch(process.env.NEXT_PUBLIC_API_SERVER + `/api/v1/recipes${_search ? '?query=' + _search : ''}`, {
-        signal,
-      });
-
-      return (await response.json()) as Recipe[];
+      return response.data as Recipe[];
     },
     initialData: [],
     ...config,
