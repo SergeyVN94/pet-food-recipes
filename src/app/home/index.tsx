@@ -7,7 +7,7 @@ const HomePage = () => {
     <div>
       <Header />
       <main>
-        <div className="container pt-12">
+        <div className="container py-12">
           <Search />
           <ActualRecipesList />
         </div>

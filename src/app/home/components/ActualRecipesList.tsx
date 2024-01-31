@@ -9,7 +9,7 @@ import useRecipes from '@/hooks/useRecipes';
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   const imageUrl =
     recipe.images && recipe.images.length > 0
-      ? process.env.NEXT_PUBLIC_API_SERVER + '/recipes/' + recipe.images[0]
+      ? process.env.NEXT_PUBLIC_API_SERVER + '/public/recipes/' + recipe.images[0]
       : '/recipe-card-placeholder.png';
 
   return (
