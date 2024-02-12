@@ -19,8 +19,6 @@ export const generateMetadata = async ({ params }: { params: RecipePageProps }):
 
   const recipe: Recipe = await response.json();
 
-  console.log(recipe);
-
   return {
     title: recipe.title,
   };

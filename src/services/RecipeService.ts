@@ -13,7 +13,7 @@ class RecipeService {
       merge(
         {
           params: {
-            search,
+            q: search,
           },
         },
         config,

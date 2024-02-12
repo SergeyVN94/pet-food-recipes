@@ -1,15 +1,26 @@
 import { Header } from '@/components';
+import { RecipeService } from '@/services';
+
 import ActualRecipesList from './components/ActualRecipesList';
 import Search from './components/Search';
 
-const HomePage = () => {
+type HomePageProps = {
+  params: {};
+  searchParams: {
+    q?: string;
+  };
+};
+
+const HomePage = async ({ searchParams }: HomePageProps) => {
+  const res = await RecipeService.getRecipes(searchParams.q ?? '');
+
   return (
     <div>
       <Header />
       <main>
         <div className="container py-12">
           <Search />
-          <ActualRecipesList />
+          <ActualRecipesList initialRecipes={res.data} />
         </div>
       </main>
     </div>

@@ -3,7 +3,7 @@ import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { Recipe } from '@/types';
 import { RecipeService } from '@/services';
 
-const useRecipes = (query: string, config: Omit<UseQueryOptions<Recipe[], unknown, Recipe[], string[]>, 'initialData'> = {}) =>
+const useRecipes = (query: string, config: UseQueryOptions<Recipe[], unknown, Recipe[], string[]> = {}) =>
   useQuery({
     queryKey: ['recipe', 'get', query],
     queryFn: async ({ queryKey, signal }) => {
