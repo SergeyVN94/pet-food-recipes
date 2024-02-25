@@ -12,7 +12,7 @@ const NewRecipePage = () => {
     <div>
       <Header />
       <main>
-        <div className="container pt-12">
+        <div className="container py-12">
           <h1 className="headline-l">Добавить рецепт</h1>
           <RecipeForm className="mt-8" />
         </div>

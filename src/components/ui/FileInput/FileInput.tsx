@@ -7,7 +7,6 @@ import { mergeRefs } from 'react-merge-refs';
 import { cn, getNoun } from '@/lib/utils';
 import { ButtonIcon } from '../ButtonIcon';
 import { IconAdd, IconCancel } from '@/assets/icons';
-import { Button } from '../Button';
 
 type FileInputProps = {
   label?: string;

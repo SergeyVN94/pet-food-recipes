@@ -36,25 +36,32 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
   return (
     <div>
       <Header />
-      <main>
-        <div className="container py-12">
-          <h1 className="headline-l">{recipe.title}</h1>
-          <p className="body-l mt-8">{recipe.description}</p>
-          {recipe.images.length > 0 && (
-            <div className="mt-8 flex flex-wrap gap-4">
-              {recipe.images.map((src, index) => (
-                <div key={src} className="flex-1 basis-[32%]">
-                  <Image
-                    fill
-                    alt={`Изображение ${index}`}
-                    src={`${process.env.NEXT_PUBLIC_API_SERVER}${process.env.NEXT_PUBLIC_STATIC_DIR}/recipes/${src}`}
-                    className="!static block max-h-[400px] object-cover rounded"
-                  />
-                </div>
-              ))}
+      <main className="container pt-12 pb-16">
+        <h1 className="headline-l">{recipe.title}</h1>
+        <p className="body-l mt-8">{recipe.description}</p>
+        {recipe.images.length > 0 && (
+          <div className="mt-16 flex flex-wrap gap-4">
+            {recipe.images.map((src, index) => (
+              <div key={src} className="flex-1 basis-[32%]">
+                <Image
+                  fill
+                  alt={`Изображение ${index}`}
+                  src={`${process.env.NEXT_PUBLIC_API_SERVER}${process.env.NEXT_PUBLIC_STATIC_DIR}/recipes/${src}`}
+                  className="!static block max-h-[400px] object-cover rounded"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+        <section className="mt-16">
+          <h3 className="headline-l">Этапы приготовления</h3>
+          {recipe.steps.map((step, index) => (
+            <div key={index} className=" mt-8 border-b border-primary/50 pb-4">
+              <h4 className="title-l">Этап {index + 1}</h4>
+              <p className="body-l mt-3">{step}</p>
             </div>
-          )}
-        </div>
+          ))}
+        </section>
       </main>
     </div>
   );
