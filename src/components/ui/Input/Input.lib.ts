@@ -16,7 +16,7 @@ export const labelVariants = cva('transition-all', {
   variants: {
     variant: {
       filled:
-        'text-on-surface-var hover:text-primary !body-l absolute top-3 left-0 group-hover:text-on-surface-var peer-focus:text-primary peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:body-s data-[focus="true"]:text-xs',
+        'text-on-surface-var hover:text-primary !body-l absolute top-3 left-0 group-hover:text-on-surface-var peer-focus:text-primary peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:body-s data-[focus="true"]:text-xs data-[force-focus="true"]:text-primary data-[force-focus="true"]:top-1 data-[force-focus="true"]:body-s data-[force-focus="true"]:text-xs',
     },
   },
   defaultVariants: {
