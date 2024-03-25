@@ -1,25 +1,23 @@
 'use client';
 
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
 import { Button, FileInputControlled, InputControlled, TextareaControlled } from '@/components/ui';
-import { useMakeRecipe } from '@/hooks';
-import { IconAdd, IconArrowDropDown, IconArrowDropUp, IconDelete } from '@/assets/icons';
-import { RecipeDtoStep } from '@/types';
-import { ButtonIcon } from '@/components/ui/ButtonIcon';
-
-type FormFieldStep = RecipeDtoStep;
-
-type FormFields = {
-  title: string;
-  description: string;
-  steps: FormFieldStep[];
-  images?: FileList;
-};
+import { useAmountTypes, useMakeRecipe, useRecipeIngredients } from '@/hooks';
+import { RecipeDtoIngredient } from '@/types';
+import { Ingredients, Steps } from './local-components';
+import { FormFields } from './RecipeForm.types';
 
 const RecipeForm = ({ className }: { className?: string }) => {
   const navigate = useRouter();
+  const { data: amountTypes, isFetching: isAmountTypesFetching } = useAmountTypes({
+    refetchOnMount: true,
+  });
+  const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useRecipeIngredients({
+    refetchOnMount: true,
+  });
 
   const { mutateAsync, isLoading } = useMakeRecipe({
     onSuccess: (data) => {
@@ -36,12 +34,12 @@ const RecipeForm = ({ className }: { className?: string }) => {
           value: '',
         },
       ],
+      ingredients: [
+        {
+          count: 0,
+        },
+      ],
     },
-  });
-
-  const { append, remove, fields, move } = useFieldArray<FormFields>({
-    name: 'steps',
-    control: methods.control,
   });
 
   const handleSubmit = (formFields: FormFields) => {
@@ -49,27 +47,15 @@ const RecipeForm = ({ className }: { className?: string }) => {
       return;
     }
 
+    const ingredients: RecipeDtoIngredient[] = formFields.ingredients.filter(
+      (i) => i.count && i.amountTypeId && i.ingredientId,
+    ) as RecipeDtoIngredient[];
+
     console.log(formFields);
-    mutateAsync(formFields);
-  };
-
-  const handleAddStepBtnClick = () => {
-    append({
-      order: fields.length,
-      value: '',
+    mutateAsync({
+      ...formFields,
+      ingredients,
     });
-  };
-
-  const handleRemoveStepBtnClick = (index: number) => {
-    remove(index);
-  };
-
-  const handleMoveTopBtnClick = (index: number) => {
-    move(index, index - 1);
-  };
-
-  const handleMoveBottomBtnClick = (index: number) => {
-    move(index, index + 1);
   };
 
   return (
@@ -85,36 +71,17 @@ const RecipeForm = ({ className }: { className?: string }) => {
           className="mt-4"
           disabled={isLoading}
         />
-        <fieldset className="mt-8">
-          <h4 className="headline-m">Этапы готовки</h4>
-          <div className="mt-4">
-            {fields.map((field, index) => (
-              <div key={field.id} className="mt-3 first:mt-0 flex flex-nowrap items-start">
-                <TextareaControlled className="flex-1" name={`steps.${index}.value`} label={`Этап ${index + 1}`} required rows={5} />
-                <div className="flex flex-col">
-                  <ButtonIcon onClick={() => handleRemoveStepBtnClick(index)} disabled={fields.length === 1}>
-                    <IconDelete className="group-hover/button-icon:text-error" />
-                  </ButtonIcon>
-                  <ButtonIcon onClick={() => handleMoveTopBtnClick(index)} disabled={fields.length === 1 || index === 0}>
-                    <IconArrowDropUp />
-                  </ButtonIcon>
-                  <ButtonIcon onClick={() => handleMoveBottomBtnClick(index)} disabled={fields.length === 1 || index === fields.length - 1}>
-                    <IconArrowDropDown />
-                  </ButtonIcon>
-                </div>
-              </div>
-            ))}
-          </div>
-          <Button
-            className="mt-4"
-            disabled={isLoading}
-            type="button"
-            iconLeft={<IconAdd width={24} height={24} />}
-            onClick={handleAddStepBtnClick}
-          >
-            Добавить этап
-          </Button>
-        </fieldset>
+        {isAmountTypesFetching || isRecipeIngredientsFetching ? (
+          <div className="skeleton mt-4 h-48" />
+        ) : (
+          <Ingredients
+            methods={methods}
+            isLoading={isLoading}
+            amountTypes={amountTypes ?? []}
+            recipeIngredients={recipeIngredients ?? []}
+          />
+        )}
+        <Steps methods={methods} isLoading={isLoading} />
         <Button className="mt-8" disabled={isLoading}>
           Сохранить
         </Button>
