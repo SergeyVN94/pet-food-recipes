@@ -42,7 +42,7 @@ const IngredientsRow = ({
     const ingredient = recipeIngredientMap.get(ingredientId)!;
 
     return amountTypeItems.filter((i) => ingredient.amountTypes.some((j) => j.id === i.id));
-  }, [ingredientId]);
+  }, [amountTypeItems, ingredientId, recipeIngredientMap]);
 
   return (
     <tr key={field.id}>
