@@ -72,17 +72,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       };
     }, []);
 
-  useEffect(() => {
-    labelRef.current?.setAttribute('data-focus', (!!(other.value || other.placeholder)).toString());
-
-    if (buttonClearRef.current) {
-      buttonClearRef.current.style.display = other.value ? '' : 'none';
-    }
-  }, [other.value, other.placeholder]);
-
     return (
       <div className={className}>
-        <div className={wrapVariants({ variant })} onClick={handleRootClick}>
+        <div className={wrapVariants({ variant })} onClick={handleRootClick} data-icon-left={!!iconLeft}>
           {iconLeft &&
             React.cloneElement(iconLeft, {
               width: 48,

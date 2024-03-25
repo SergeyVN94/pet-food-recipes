@@ -140,13 +140,13 @@ module.exports = {
         'on-secondary-fixed-variant': palette.secondary[30],
         'on-tertiary-fixed-variant': palette.tertiary[30],
 
-        'surface-dim': palette.neutral[87],
-        surface: palette.neutral[98],
-        'surface-bright': palette.neutral[98],
+        'surface-dim': palette.neutral[90],
+        surface: palette.neutral[99],
+        'surface-bright': palette.neutral[99],
 
         'surf-cont-lowest': palette.neutral[100],
         'surf-cont-low': palette.neutral[96],
-        'surf-cont': palette.neutral[94],
+        'surf-cont': palette.neutral[95],
         'surf-cont-high': palette.neutral[92],
         'surf-cont-highest': palette.neutral[90],
 

@@ -110,11 +110,8 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
                 {rowVirtualizer.getVirtualItems().map((virtualItem) => (
                   <div
                     key={virtualItem.key}
+                    className="absolute top-0 left-0 w-full"
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
                       height: `${virtualItem.size}px`,
                       transform: `translateY(${virtualItem.start}px)`,
                     }}
