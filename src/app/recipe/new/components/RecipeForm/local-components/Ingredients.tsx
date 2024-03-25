@@ -7,6 +7,7 @@ import { Button, InputControlled, SelectControlled, SelectItem } from '@/compone
 import { ButtonIcon } from '@/components/ui/ButtonIcon';
 import { AmountType, RecipeIngredient } from '@/types';
 import { FormFields } from '../RecipeForm.types';
+import { reduce } from 'lodash-es';
 
 type IngredientsRowProps = {
   field: FieldArrayWithId<FormFields, 'ingredients', 'id'>;
@@ -115,8 +116,14 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
     remove(index);
   };
 
+  const recipeIngredientItemsFiltered: SelectItem[] = React.useMemo(() => {
+    const selectedIngredientsSet = fields.reduce((acc, value) => acc.add(value.id), new Set());
+
+    return recipeIngredientItems.filter((i) => !selectedIngredientsSet.has(i.id));
+  }, [recipeIngredientItems, fields]);
+
   return (
-    <fieldset className="mt-8">
+    <fieldset className="mt-8 p-0">
       <h4 className="headline-m">Ингредиенты</h4>
       <div className="mt-4">
         <table className="border-separate border-spacing-0 w-full">
@@ -129,7 +136,7 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
                 totalFields={fields.length}
                 amountTypeItems={amountTypeItems}
                 onRemoveIngredient={handleRemoveIngredientBtnClick}
-                recipeIngredientItems={recipeIngredientItems}
+                recipeIngredientItems={recipeIngredientItemsFiltered}
                 recipeIngredientMap={recipeIngredientMap}
               />
             ))}

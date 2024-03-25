@@ -59,8 +59,10 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
   }, [isOpen]);
 
   useEffect(() => {
-    setInputValue(selectedItemLabel ?? '');
-    setFilter(selectedItemLabel ?? '');
+    if (selectedItemLabel) {
+      setInputValue('');
+      setFilter('');
+    }
   }, [selectedItemLabel]);
 
   return (

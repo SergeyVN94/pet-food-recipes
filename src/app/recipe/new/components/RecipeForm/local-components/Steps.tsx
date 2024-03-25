@@ -36,7 +36,7 @@ const Steps = ({ methods, isLoading }: StepsProps) => {
   };
 
   return (
-    <fieldset className="mt-8">
+    <fieldset className="mt-8 p-0">
       <h4 className="headline-m">Этапы готовки</h4>
       <div className="mt-4">
         {fields.map((field, index) => (
