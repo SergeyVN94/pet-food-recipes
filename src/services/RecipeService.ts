@@ -34,6 +34,9 @@ class RecipeService {
     steps.forEach((step, index) => {
       formData.append(`steps[${index}]`, step);
     });
+    dto.ingredients.forEach((ingredient, index) => {
+      formData.append(`ingredients[${index}]`, JSON.stringify(ingredient));
+    });
     formData.append('tags[]', '');
 
     return apiInstance.post<Recipe>(

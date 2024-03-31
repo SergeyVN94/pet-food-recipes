@@ -7,7 +7,6 @@ import { Button, InputControlled, SelectControlled, SelectItem } from '@/compone
 import { ButtonIcon } from '@/components/ui/ButtonIcon';
 import { AmountType, RecipeIngredient } from '@/types';
 import { FormFields } from '../RecipeForm.types';
-import { reduce } from 'lodash-es';
 
 type IngredientsRowProps = {
   field: FieldArrayWithId<FormFields, 'ingredients', 'id'>;
@@ -31,7 +30,7 @@ const IngredientsRow = ({
   const context = useFormContext();
 
   const ingredientId: RecipeIngredient['id'] | undefined = useWatch({
-    name: `ingredients.${field.id}.ingredientId`,
+    name: `ingredients.${index}.ingredientId`,
     control: context.control,
   });
 
@@ -48,15 +47,15 @@ const IngredientsRow = ({
   return (
     <tr key={field.id}>
       <td className="pr-3 pb-3 w-1/3">
-        <SelectControlled name={`ingredients.${field.id}.ingredientId`} label="Ингредиент" items={recipeIngredientItems} />
+        <SelectControlled name={`ingredients.${index}.ingredientId`} label="Ингредиент" items={recipeIngredientItems} />
       </td>
       <td className="px-3 pb-3 w-1/3">
-        <InputControlled name={`ingredients.${field.id}.count`} type="number" label="Количество" min={0} required />
+        <InputControlled name={`ingredients.${index}.count`} type="number" label="Количество" min={0} required />
       </td>
       <td className="pl-3 pb-3 flex flex-nowrap items-center w-1/3 min-w-[18rem]">
         <div className="flex items-center w-full">
           <SelectControlled
-            name={`ingredients.${field.id}.amountTypeId`}
+            name={`ingredients.${index}.amountTypeId`}
             className="flex-1"
             label="Единицы измерения"
             items={filteredAmountTypes}

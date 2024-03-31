@@ -54,6 +54,19 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
           </div>
         )}
         <section className="mt-16">
+          <h3 className="headline-l">Ингредиенты</h3>
+          <table className="mt-8 border border-primary/50">
+            <tbody>
+              {recipe.ingredients.map((unit) => (
+                <tr key={unit.id}>
+                  <td className="p-2 border border-primary/50">{unit.ingredient.name}</td>
+                  <td className="p-2 border border-primary/50">{`${unit.count} ${unit.amountType.name}`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+        <section className="mt-16">
           <h3 className="headline-l">Этапы приготовления</h3>
           {recipe.steps.map((step, index) => (
             <div key={index} className=" mt-8 border-b border-primary/50 pb-4">

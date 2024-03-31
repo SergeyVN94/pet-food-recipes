@@ -17,12 +17,20 @@ export type RecipeIngredient = {
   image?: string;
 };
 
+export type RecipeIngredientUnit = {
+  id: string;
+  count: number;
+  ingredient: RecipeIngredient;
+  amountType: AmountType;
+  createdAt: string;
+};
+
 export type Recipe = {
   id: string;
   title: string;
   slug: string;
   description: string;
-  ingredients: RecipeIngredient[];
+  ingredients: RecipeIngredientUnit[];
   images: string[];
   steps: string[];
   createdAt: string;
