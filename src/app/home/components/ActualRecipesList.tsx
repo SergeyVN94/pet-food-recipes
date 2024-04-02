@@ -8,10 +8,8 @@ import { Recipe } from '@/types';
 import useRecipes from '@/hooks/useRecipes';
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
-  const imageUrl =
-    recipe.images && recipe.images.length > 0
-      ? `${process.env.NEXT_PUBLIC_API_SERVER}${process.env.NEXT_PUBLIC_STATIC_DIR}/recipes/${recipe.images[0]}`
-      : '/recipe-card-placeholder.png';
+  const firstImagePath = recipe.images?.[0];
+  const imageUrl = firstImagePath ? `${process.env.NEXT_STATIC_SERVER_URL}${firstImagePath}` : '/recipe-card-placeholder.png';
 
   return (
     <Link

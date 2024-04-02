@@ -11,7 +11,7 @@ type RecipePageProps = {
 
 export const generateMetadata = async ({ params }: { params: RecipePageProps }): Promise<Metadata> => {
   const { slug } = params;
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/v1/recipes/${slug}`);
+  const response = await fetch(`${process.env.NEXT_API_SERVER_URL}/api/v1/recipes/${slug}`);
 
   if (response.status !== 200) {
     redirect('/404');
@@ -25,7 +25,7 @@ export const generateMetadata = async ({ params }: { params: RecipePageProps }):
 };
 
 const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/v1/recipes/${slug}`);
+  const response = await fetch(`${process.env.NEXT_API_SERVER_URL}/api/v1/recipes/${slug}`);
 
   if (response.status !== 200) {
     redirect('/404');
@@ -46,7 +46,7 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
                 <Image
                   fill
                   alt={`Изображение ${index}`}
-                  src={`${process.env.NEXT_PUBLIC_API_SERVER}${process.env.NEXT_PUBLIC_STATIC_DIR}/recipes/${src}`}
+                  src={`${process.env.NEXT_STATIC_SERVER_URL}${src}`}
                   className="!static block max-h-[400px] object-cover rounded"
                 />
               </div>
