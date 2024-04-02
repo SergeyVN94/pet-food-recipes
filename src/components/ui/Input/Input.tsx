@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { mergeRefs } from 'react-merge-refs';
 import { ButtonIcon } from '../ButtonIcon';
 import { IconCancel } from '@/assets/icons';
 
@@ -57,23 +56,38 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
+    React.useImperativeHandle(
+      ref,
+      () =>
+        ({
+          ...(localRef.current ?? {}),
+          get value() {
+            return localRef.current?.value ?? '';
+          },
+          set value(val: string) {
+            if (localRef.current) {
+              localRef.current.value = val;
+              labelRef.current?.setAttribute('data-focus', Boolean(String(val ?? '')).toString());
+            }
+          },
+        }) as any,
+      [],
+    );
+
     React.useEffect(() => {
       const handleChange = () => {
-        console.log('handleChange', localRef.current?.name, localRef.current?.value);
-
         if (localRef.current) {
           labelRef.current?.setAttribute('data-focus', Boolean(localRef.current.value).toString());
         }
       };
 
       const inputEl = localRef.current;
-      if (inputEl) inputEl.onchange = handleChange as any;
-      inputEl?.addEventListener('input', handleChange);
+      inputEl?.addEventListener('change', handleChange);
 
       return () => {
-        inputEl?.removeEventListener('input', handleChange);
+        inputEl?.removeEventListener('change', handleChange);
       };
-    }, []);
+    }, [localRef.current]);
 
     return (
       <div className={className}>
@@ -90,7 +104,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               {...other}
               data-with-label={String(Boolean(label))}
               onChange={other.readOnly ? undefined : handleChange}
-              ref={mergeRefs([ref, localRef])}
+              ref={localRef}
             />
             {label && (
               <span
@@ -129,17 +143,18 @@ type InputControlledProps = Omit<InputProps, 'onChange' | 'value' | 'onBlur' | '
 export const InputControlled = ({ isClearable = true, ...other }: InputControlledProps) => {
   const methods = useFormContext();
 
-  const handleClear = () => {
-    methods.resetField(other.name);
-  };
+  const handleClear =
+    other.onClear || isClearable
+      ? () => {
+          methods.resetField(other.name);
 
-  return (
-    <Controller
-      name={other.name}
-      control={methods.control}
-      render={({ field }) => <Input {...other} onChange={field.onChange} onBlur={field.onBlur} value={field.value} onClear={handleClear} />}
-    />
-  );
+          if (other.onClear) {
+            other.onClear();
+          }
+        }
+      : undefined;
+
+  return <Input {...other} {...methods.register(other.name)} onClear={handleClear} />;
 };
 
 export default Input;
