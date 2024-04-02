@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 import { ButtonIcon } from '../ButtonIcon';
 import { IconCancel } from '@/assets/icons';
@@ -59,16 +59,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     React.useEffect(() => {
       const handleChange = () => {
+        console.log('handleChange', localRef.current?.name, localRef.current?.value);
+
         if (localRef.current) {
           labelRef.current?.setAttribute('data-focus', Boolean(localRef.current.value).toString());
         }
       };
 
       const inputEl = localRef.current;
-      inputEl?.addEventListener('change', handleChange);
+      if (inputEl) inputEl.onchange = handleChange as any;
+      inputEl?.addEventListener('input', handleChange);
 
       return () => {
-        inputEl?.removeEventListener('change', handleChange);
+        inputEl?.removeEventListener('input', handleChange);
       };
     }, []);
 
@@ -93,7 +96,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               <span
                 className={labelVariants({ variant })}
                 ref={labelRef}
-                data-force-focus={Boolean(other.value || other.placeholder || isFocus)}
+                data-force-focus={Boolean(String(other.value ?? '') || other.placeholder || isFocus)}
               >
                 {label}
               </span>
@@ -126,18 +129,17 @@ type InputControlledProps = Omit<InputProps, 'onChange' | 'value' | 'onBlur' | '
 export const InputControlled = ({ isClearable = true, ...other }: InputControlledProps) => {
   const methods = useFormContext();
 
-  const handleClear =
-    other.onClear || isClearable
-      ? () => {
-          methods.resetField(other.name);
+  const handleClear = () => {
+    methods.resetField(other.name);
+  };
 
-          if (other.onClear) {
-            other.onClear();
-          }
-        }
-      : undefined;
-
-  return <Input {...methods.register(other.name)} {...other} onClear={handleClear} />;
+  return (
+    <Controller
+      name={other.name}
+      control={methods.control}
+      render={({ field }) => <Input {...other} onChange={field.onChange} onBlur={field.onBlur} value={field.value} onClear={handleClear} />}
+    />
+  );
 };
 
 export default Input;
