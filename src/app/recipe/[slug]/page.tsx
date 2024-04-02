@@ -11,7 +11,7 @@ type RecipePageProps = {
 
 export const generateMetadata = async ({ params }: { params: RecipePageProps }): Promise<Metadata> => {
   const { slug } = params;
-  const response = await fetch(`${process.env.NEXT_API_SERVER_URL}/api/v1/recipes/${slug}`);
+  const response = await fetch(`${process.env.NEXT_BASE_API_URL}/api/v1/recipes/${slug}`);
 
   if (response.status !== 200) {
     redirect('/404');
@@ -25,7 +25,7 @@ export const generateMetadata = async ({ params }: { params: RecipePageProps }):
 };
 
 const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => {
-  const response = await fetch(`${process.env.NEXT_API_SERVER_URL}/api/v1/recipes/${slug}`);
+  const response = await fetch(`${process.env.NEXT_BASE_API_URL}/api/v1/recipes/${slug}`);
 
   if (response.status !== 200) {
     redirect('/404');

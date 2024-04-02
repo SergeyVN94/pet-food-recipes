@@ -36,6 +36,10 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    NEXT_BASE_API_URL: process.env.NEXT_BASE_API_URL,
+    NEXT_STATIC_SERVER_URL: process.env.NEXT_STATIC_SERVER_URL,
+  },
 };
 
 module.exports = nextConfig;

@@ -16,12 +16,12 @@ export const metadata = {
   description: 'Сайт с разными рецептами',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="ru" className="h-full">
-      <body className={`${roboto.variable} h-full`}>
-        <TanStackProvider>{children}</TanStackProvider>
-      </body>
-    </html>
-  );
-}
+const RootLayout = ({ children }: { children: ReactNode }) => (
+  <html lang="ru" className="h-full">
+    <body className={`${roboto.variable} h-full`}>
+      <TanStackProvider>{children}</TanStackProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;
