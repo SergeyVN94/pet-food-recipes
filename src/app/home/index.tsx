@@ -1,8 +1,7 @@
-import { Header } from '@/components';
+import { Header, SearchBar } from '@/components';
 import { RecipeService } from '@/services';
 
 import ActualRecipesList from './components/ActualRecipesList';
-import Search from './components/Search';
 
 type HomePageProps = {
   params: {};
@@ -19,7 +18,7 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
       <Header />
       <main>
         <div className="container py-12">
-          <Search />
+          <SearchBar delay={350} placeholder="Введите запрос" isClearable />
           <ActualRecipesList initialRecipes={res.data} />
         </div>
       </main>

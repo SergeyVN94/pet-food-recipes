@@ -13,7 +13,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
   return (
     <Link
-      className="w-full border-b border-neutral-90 group-last:border-none p-4 relative flex items-start gap-4 pointer"
+      className="w-full border-b border-neutral-90 group-last:border-none p-4 pl-0 relative flex items-start gap-4 pointer"
       href={`/recipe/${recipe.slug}`}
     >
       <Image alt={recipe.title} src={imageUrl} className="object-contain" width={256} height={256} />
@@ -40,7 +40,7 @@ const ActualRecipesList = ({ initialRecipes = [] }: ActualRecipesListProps) => {
 
   return (
     <ul className="flex flex-col items-start flex-nowrap gap-4 pt-8 w-full">
-      {!process && isFetching ? (
+      {isFetching ? (
         <>
           <div className="skeleton h-[18.4375rem] rounded-xl" />
           <div className="skeleton h-[18.4375rem] rounded-xl" />
@@ -53,6 +53,7 @@ const ActualRecipesList = ({ initialRecipes = [] }: ActualRecipesListProps) => {
           </li>
         ))
       )}
+      {!isFetching && data?.length === 0 && query && <li>{`По запросу «${query}» ничего не найдено`}</li>}
     </ul>
   );
 };

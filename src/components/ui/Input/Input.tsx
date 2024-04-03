@@ -32,10 +32,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       if (onChange) {
         onChange(ev, nextValue);
       }
-
-      if (buttonClearRef.current && localRef.current) {
-        buttonClearRef.current.style.opacity = localRef.current.value || other.value ? '1' : '0';
-      }
     };
 
     const handleRootClick = () => {
@@ -62,13 +58,17 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         if (localRef.current) {
           labelRef.current?.setAttribute('data-focus', Boolean(localRef.current.value).toString());
         }
+
+        if (buttonClearRef.current && localRef.current) {
+          buttonClearRef.current.style.opacity = Boolean(localRef.current.value) ? '1' : '0';
+        }
       };
 
       const inputEl = localRef.current;
-      inputEl?.addEventListener('change', handleChange);
+      inputEl?.addEventListener('input', handleChange);
 
       return () => {
-        inputEl?.removeEventListener('change', handleChange);
+        inputEl?.removeEventListener('input', handleChange);
       };
     }, []);
 
