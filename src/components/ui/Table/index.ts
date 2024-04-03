@@ -1,1 +1,1 @@
-export { default as Table } from './Table';
+export { default as Table, type TableRow, type TableColumn } from './Table';

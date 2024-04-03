@@ -6,6 +6,7 @@ import { ButtonIcon } from '../ButtonIcon';
 import { IconCancel } from '@/assets/icons';
 
 import { labelVariants, wrapVariants, InputVariantProps } from './Input.lib';
+import { mergeRefs } from 'react-merge-refs';
 
 type InputProps = {
   label?: string;
@@ -56,24 +57,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
-    React.useImperativeHandle(
-      ref,
-      () =>
-        ({
-          ...(localRef.current ?? {}),
-          get value() {
-            return localRef.current?.value ?? '';
-          },
-          set value(val: string) {
-            if (localRef.current) {
-              localRef.current.value = val;
-              labelRef.current?.setAttribute('data-focus', Boolean(String(val ?? '')).toString());
-            }
-          },
-        }) as any,
-      [],
-    );
-
     React.useEffect(() => {
       const handleChange = () => {
         if (localRef.current) {
@@ -87,7 +70,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       return () => {
         inputEl?.removeEventListener('change', handleChange);
       };
-    }, [localRef.current]);
+    }, []);
 
     return (
       <div className={className}>
@@ -104,7 +87,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               {...other}
               data-with-label={String(Boolean(label))}
               onChange={other.readOnly ? undefined : handleChange}
-              ref={localRef}
+              ref={mergeRefs([ref, localRef])}
             />
             {label && (
               <span
@@ -143,18 +126,23 @@ type InputControlledProps = Omit<InputProps, 'onChange' | 'value' | 'onBlur' | '
 export const InputControlled = ({ isClearable = true, ...other }: InputControlledProps) => {
   const methods = useFormContext();
 
-  const handleClear =
-    other.onClear || isClearable
-      ? () => {
-          methods.resetField(other.name);
+  const handleClear = () => {
+    methods.resetField(other.name);
 
-          if (other.onClear) {
-            other.onClear();
-          }
-        }
-      : undefined;
+    if (other.onClear) {
+      other.onClear();
+    }
+  };
 
-  return <Input {...other} {...methods.register(other.name)} onClear={handleClear} />;
+  return (
+    <Controller
+      name={other.name}
+      control={methods.control}
+      render={({ field }) => (
+        <Input {...other} onChange={(ev, value) => field.onChange(value)} onBlur={field.onBlur} value={field.value} onClear={handleClear} />
+      )}
+    />
+  );
 };
 
 export default Input;
