@@ -4,6 +4,12 @@ import Image from 'next/image';
 
 import { Header } from '@/components';
 import { Recipe } from '@/types';
+import { Table, TableColumn } from '@/components/ui';
+
+const RecipesTableColumns: TableColumn[] = [
+  { keyOrComponent: 'ingredientName' },
+  { keyOrComponent: 'amountTypeValue' },
+];
 
 type RecipePageProps = {
   slug: string;
@@ -33,6 +39,12 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
 
   const recipe: Recipe = await response.json();
 
+  const tableRows = recipe.ingredients.map(i => ({
+    id: i.id,
+    ingredientName: i.ingredient.name,
+    amountTypeValue: `${i.count} ${i.amountType.name}`,
+  }));
+
   return (
     <div>
       <Header />
@@ -55,16 +67,7 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
         )}
         <section className="mt-16">
           <h3 className="headline-l">Ингредиенты</h3>
-          <table className="mt-8 border border-primary/50">
-            <tbody>
-              {recipe.ingredients.map((unit) => (
-                <tr key={unit.id}>
-                  <td className="p-2 border border-primary/50">{unit.ingredient.name}</td>
-                  <td className="p-2 border border-primary/50">{`${unit.count} ${unit.amountType.name}`}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table columns={RecipesTableColumns} showTableHead={false} rows={tableRows} />
         </section>
         <section className="mt-16">
           <h3 className="headline-l">Этапы приготовления</h3>
