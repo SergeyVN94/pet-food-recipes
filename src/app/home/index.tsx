@@ -17,9 +17,12 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
     <div>
       <Header />
       <main>
-        <div className="container py-12">
-          <SearchBar delay={350} placeholder="Введите запрос" isClearable />
-          <ActualRecipesList initialRecipes={res.data} />
+        <div className="container py-12 flex gap-3">
+          <div className="w-full">
+            <SearchBar delay={350} placeholder="Введите запрос" isClearable />
+            <ActualRecipesList initialRecipes={res.data} />
+          </div>
+          <aside className="w-1/5 min-w-[250px]"></aside>
         </div>
       </main>
     </div>

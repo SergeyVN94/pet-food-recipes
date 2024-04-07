@@ -4,7 +4,7 @@ export const wrapVariants = cva('group outline-none flex flex-nowrap items-start
   variants: {
     variant: {
       filled:
-        'cursor-text py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface  hover:bg-on-surface/10 focus-within:after:h-0.5 focus-within:after:bg-primary data-[icon-left="true"]:pl-1',
+        'cursor-text py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface hover:bg-on-surface/10 focus-within:after:h-0.5 focus-within:after:bg-primary data-[icon-left="true"]:pl-1',
     },
   },
   defaultVariants: {

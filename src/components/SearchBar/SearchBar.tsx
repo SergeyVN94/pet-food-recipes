@@ -71,7 +71,7 @@ const SearchBar = ({ delay, defaultValue, className, placeholder, onChange, isCl
 
   return (
     <Input
-      className={cn('max-w-xs w-80', className)}
+      className={className}
       name="search"
       onChange={handleChange}
       value={value}
