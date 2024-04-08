@@ -22,33 +22,29 @@ type CheckboxProps = Omit<React.ComponentProps<'input'>, 'type' | 'onChange' | '
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({ label, value, isIndeterminate = false, onChange, ...other }, ref) => {
   const localRef = React.useRef<HTMLInputElement>(null);
 
-  const handleChange = isIndeterminate
-    ? (ev: React.ChangeEvent<HTMLInputElement>) => {
-        if (!isIndeterminate) {
-          onChange(ev, !value);
-          return;
-        }
+  const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isIndeterminate) {
+      onChange(ev, !value);
+      return;
+    }
 
-        if (value) {
-          if (localRef.current) {
-            localRef.current.indeterminate = false;
-          }
-          onChange(ev, false);
-        } else if (value === null) {
-          if (localRef.current) {
-            localRef.current.indeterminate = false;
-          }
-          onChange(ev, true);
-        } else {
-          if (localRef.current) {
-            localRef.current.indeterminate = true;
-          }
-          onChange(ev, null!);
-        }
+    if (value) {
+      if (localRef.current) {
+        localRef.current.indeterminate = false;
       }
-    : (ev: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(ev, !value);
-      };
+      onChange(ev, false);
+    } else if (value === null) {
+      if (localRef.current) {
+        localRef.current.indeterminate = false;
+      }
+      onChange(ev, true);
+    } else {
+      if (localRef.current) {
+        localRef.current.indeterminate = true;
+      }
+      onChange(ev, null!);
+    }
+  };
 
   return (
     <label className="flex flex-nowrap items-center cursor-pointer">
