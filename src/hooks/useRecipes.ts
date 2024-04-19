@@ -1,14 +1,14 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 
-import { Recipe } from '@/types';
+import { Recipe, RecipeFilter } from '@/types';
 import { RecipeService } from '@/services';
 
-const useRecipes = (query: string, config: UseQueryOptions<Recipe[], unknown, Recipe[], string[]> = {}) =>
+const useRecipes = (filter: RecipeFilter, config: UseQueryOptions<Recipe[], unknown, Recipe[], ['recipes', 'get', RecipeFilter]> = {}) =>
   useQuery({
-    queryKey: ['recipe', 'get', query],
+    queryKey: ['recipes', 'get', filter],
     queryFn: async ({ queryKey, signal }) => {
-      const [, , search] = queryKey;
-      const response = await RecipeService.getRecipes(search, { signal });
+      const [, , filter] = queryKey;
+      const response = await RecipeService.postRecipes(filter, { signal });
 
       return response.data as Recipe[];
     },
