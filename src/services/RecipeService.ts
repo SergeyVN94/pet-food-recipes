@@ -1,24 +1,14 @@
 import { AxiosRequestConfig } from 'axios';
 import merge from 'lodash-es/merge';
 
-import { Recipe, RecipeDto } from '@/types';
+import { Recipe, RecipeDto, RecipeFilter } from '@/types';
 import { apiInstance } from './lib';
 
 const BASE_API_URL = '/api/v1/recipes';
 
 class RecipeService {
-  static getRecipes(search?: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.get<Recipe[]>(
-      `${BASE_API_URL}`,
-      merge(
-        {
-          params: {
-            q: search,
-          },
-        },
-        config,
-      ),
-    );
+  static postRecipes(filter: RecipeFilter = {}, config: AxiosRequestConfig = {}) {
+    return apiInstance.post<Recipe[]>(`${BASE_API_URL}`, filter, config);
   }
 
   static postRecipe(dto: RecipeDto, config: AxiosRequestConfig = {}) {

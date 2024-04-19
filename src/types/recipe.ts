@@ -55,3 +55,8 @@ export type RecipeDto = {
   steps: RecipeDtoStep[];
   ingredients: RecipeDtoIngredient[];
 };
+
+export type RecipeFilter = {
+  q?: string;
+  ingredients?: string[];
+};

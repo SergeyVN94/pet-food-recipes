@@ -7,11 +7,15 @@ type HomePageProps = {
   params: {};
   searchParams: {
     q?: string;
+    ingredients?: string[];
   };
 };
 
 const HomePage = async ({ searchParams }: HomePageProps) => {
-  const res = await RecipeService.getRecipes(searchParams.q ?? '');
+  const res = await RecipeService.postRecipes({
+    q: searchParams.q,
+    ingredients: searchParams.ingredients,
+  });
 
   return (
     <div>
