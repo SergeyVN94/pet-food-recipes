@@ -7,8 +7,8 @@ import { apiInstance } from './lib';
 const BASE_API_URL = '/api/v1/recipes';
 
 class RecipeService {
-  static postRecipes(filter: RecipeFilter = {}, config: AxiosRequestConfig = {}) {
-    return apiInstance.post<Recipe[]>(`${BASE_API_URL}`, filter, config);
+  static postRecipesSearch(filter: RecipeFilter = {}, config: AxiosRequestConfig = {}) {
+    return apiInstance.post<Recipe[]>(`${BASE_API_URL}/search`, filter, config);
   }
 
   static postRecipe(dto: RecipeDto, config: AxiosRequestConfig = {}) {

@@ -6,7 +6,6 @@ import debounce from 'lodash/debounce';
 
 import { IconSearch } from '@/assets/icons';
 import { Input } from '../ui';
-import { cn } from '@/lib/utils';
 
 type SearchProps = {
   onChange?: (value: string) => void;
@@ -30,15 +29,17 @@ const SearchBar = ({ delay, defaultValue, className, placeholder, onChange, isCl
 
   const handleQueryChange = React.useCallback(
     (query: string) => {
-      const params = new URLSearchParams(searchParamsRef.current);
+      if (searchParamName) {
+        const params = new URLSearchParams(searchParamsRef.current);
 
-      if (query) {
-        params.set(searchParamName, query);
-      } else {
-        params.delete(searchParamName);
+        if (query) {
+          params.set(searchParamName, query);
+        } else {
+          params.delete(searchParamName);
+        }
+
+        replace(`${pathRef.current}?${params.toString()}`);
       }
-
-      replace(`${pathRef.current}?${params.toString()}`);
     },
     [replace, searchParamName],
   );

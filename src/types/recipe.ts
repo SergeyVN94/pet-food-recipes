@@ -58,5 +58,8 @@ export type RecipeDto = {
 
 export type RecipeFilter = {
   q?: string;
-  ingredients?: string[];
+  ingredients?: {
+    includes?: string[];
+    excludes?: string[];
+  };
 };

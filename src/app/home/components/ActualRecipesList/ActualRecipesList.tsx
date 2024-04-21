@@ -1,11 +1,13 @@
 'use client';
 
+import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { Recipe } from '@/types';
 import useRecipes from '@/hooks/useRecipes';
+import { urlSearchParamsToFilter } from '../../lib';
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   const firstImagePath = recipe.images?.[0];
@@ -31,9 +33,9 @@ type ActualRecipesListProps = {
 
 const ActualRecipesList = ({ initialRecipes = [] }: ActualRecipesListProps) => {
   const searchParams = useSearchParams();
-  const query = searchParams.get('q') ?? '';
+  const filter = React.useMemo(() => urlSearchParamsToFilter(searchParams), [searchParams]);
 
-  const { isFetching, data } = useRecipes(query, {
+  const { isFetching, data } = useRecipes(filter, {
     initialData: initialRecipes,
     refetchOnWindowFocus: false,
   });
@@ -53,7 +55,7 @@ const ActualRecipesList = ({ initialRecipes = [] }: ActualRecipesListProps) => {
           </li>
         ))
       )}
-      {!isFetching && data?.length === 0 && query && <li>{`По запросу «${query}» ничего не найдено`}</li>}
+      {!isFetching && data?.length === 0 && filter.q && <li>{`По запросу «${filter.q}» ничего не найдено`}</li>}
     </ul>
   );
 };

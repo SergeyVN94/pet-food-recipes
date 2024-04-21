@@ -8,7 +8,7 @@ const useRecipes = (filter: RecipeFilter, config: UseQueryOptions<Recipe[], unkn
     queryKey: ['recipes', 'get', filter],
     queryFn: async ({ queryKey, signal }) => {
       const [, , filter] = queryKey;
-      const response = await RecipeService.postRecipes(filter, { signal });
+      const response = await RecipeService.postRecipesSearch(filter, { signal });
 
       return response.data as Recipe[];
     },
