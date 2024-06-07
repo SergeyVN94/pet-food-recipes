@@ -4,3 +4,4 @@ export * from './Button';
 export * from './Select';
 export * from './Checkbox';
 export * from './FileInput';
+export * from './ButtonIcon';

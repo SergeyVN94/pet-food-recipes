@@ -3,6 +3,5 @@ export type FormFields = {
     id: string;
     name: string;
     value: boolean | null;
-    index: number;
   }[];
 };

@@ -24,7 +24,6 @@ const Filters = () => {
   const defaultValues: FormFields = React.useMemo(() => {
     return {
       ingredients: (ingredients ?? []).map((item, index) => ({
-        index,
         id: item.id,
         name: item.name,
         value: false,
@@ -59,7 +58,7 @@ const Filters = () => {
 
   const handleReset = () => {
     methods.reset(defaultValues);
-    handleSubmit(defaultValues)
+    handleSubmit(defaultValues);
   };
 
   return (
