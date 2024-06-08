@@ -25,8 +25,8 @@ type ButtonIconProps = {
 } & VariantProps<typeof variants> &
   ButtonHTMLAttributes<HTMLButtonElement>;
 
-const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(({ children, className, variant, ...other }, ref) => (
-  <button className={cn('p-1 group/button-icon outline-none border-none bg-transparent', className)} ref={ref} {...other}>
+const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(({ children, className, variant, type = 'button', ...other }, ref) => (
+  <button className={cn('p-1 group/button-icon outline-none border-none bg-transparent', className)} ref={ref} type={type} {...other}>
     <span className={variants({ variant })}>
       {cloneElement(children, {
         width: 24,

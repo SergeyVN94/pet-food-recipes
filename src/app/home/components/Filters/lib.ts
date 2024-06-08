@@ -10,26 +10,21 @@ export const searchParamsToFormFields = ({
   params: ReadonlyURLSearchParams;
   ingredients: RecipeIngredient[];
 }): FormFields => {
-  const includesIngredientsMap = params
+  const ingredientsMap = new Map<string, boolean | null>();
+
+  params
     .getAll('ingr-inc[]')
     .map((i) => i.trim().toLowerCase())
     .filter(Boolean)
-    .reduce((acc, val) => acc.set(val, true), new Map());
+    .reduce((acc, val) => acc.set(val, true), ingredientsMap);
 
-  const excludesIngredientsMap = params
+  params
     .getAll('ingr-exc[]')
     .map((i) => i.trim().toLowerCase())
     .filter(Boolean)
-    .reduce((acc, val) => acc.set(val, null), new Map());
-
-  const ingredientItems = ingredients.map((item, index) => ({
-    index,
-    id: item.id,
-    name: item.name,
-    value: includesIngredientsMap.get(item.id) || excludesIngredientsMap.get(item.id),
-  }));
+    .reduce((acc, val) => acc.set(val, null), ingredientsMap);
 
   return {
-    ingredients: ingredientItems,
+    ingredients: ingredientsMap,
   };
 };

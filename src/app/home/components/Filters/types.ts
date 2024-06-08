@@ -1,7 +1,3 @@
 export type FormFields = {
-  ingredients: {
-    id: string;
-    name: string;
-    value: boolean | null;
-  }[];
+  ingredients: Map<string, boolean | null>;
 };

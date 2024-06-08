@@ -11,45 +11,39 @@ import IngredientsFilter from './IngredientsFilter';
 import { searchParamsToFormFields } from './lib';
 import { FormFields } from './types';
 
+const defaultValues = {
+  ingredients: new Map(),
+};
+
 const Filters = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { data: ingredients = [], isFetching: isIngredientsFetching } = useRecipeIngredients();
+  const { data: ingredients, isFetching: isIngredientsFetching } = useRecipeIngredients();
   const values = React.useMemo(
     () => searchParamsToFormFields({ params: searchParams, ingredients: ingredients ?? [] }),
     [searchParams, ingredients],
   );
-
-  const defaultValues: FormFields = React.useMemo(() => {
-    return {
-      ingredients: (ingredients ?? []).map((item, index) => ({
-        id: item.id,
-        name: item.name,
-        value: false,
-      })),
-    };
-  }, [ingredients]);
 
   const methods = useForm<FormFields>({
     values,
     defaultValues,
   });
 
-  const handleSubmit = (formFields: FormFields) => {
+  const handleSubmit = ({ ingredients: selectedIngredients }: FormFields) => {
     const nextParams = new URLSearchParams();
 
-    if (searchParams.get('q')) {
+    if (searchParams.get('q')?.trim()) {
       nextParams.set('q', searchParams.get('q') ?? '');
     }
 
-    formFields.ingredients.forEach((ingredient) => {
-      if (ingredient.value) {
-        nextParams.append('ingr-inc[]', ingredient.id);
+    selectedIngredients.forEach((value, id) => {
+      if (value) {
+        nextParams.append('ingr-inc[]', id);
       }
 
-      if (ingredient.value === null) {
-        nextParams.append('ingr-exc[]', ingredient.id);
+      if (value === null) {
+        nextParams.append('ingr-exc[]', id);
       }
     });
 
@@ -69,7 +63,7 @@ const Filters = () => {
       >
         <h3 className="headline-m">Фильтры</h3>
         <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
-          <IngredientsFilter />
+          <IngredientsFilter ingredients={ingredients} isIngredientsFetching={isIngredientsFetching} />
         </div>
         <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-white">
           <Button type="submit">Применить</Button>

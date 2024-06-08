@@ -8,10 +8,11 @@ import { IconAdd, IconArrowBack } from '@/assets/icons';
 type FilterPageProps = {
   title: string;
   children: React.ReactNode;
+  isLoading?: boolean;
   className?: string;
 };
 
-const FilterPage = ({ title, children, className }: FilterPageProps) => {
+const FilterPage = ({ title, children, className, isLoading }: FilterPageProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenBtnClick = () => {
@@ -25,9 +26,13 @@ const FilterPage = ({ title, children, className }: FilterPageProps) => {
   return (
     <>
       <div className={className}>
-        <Button iconLeft={<IconAdd className="w-6 h-6" />} onClick={handleOpenBtnClick}>
-          {title}
-        </Button>
+        {isLoading ? (
+          <div className="skeleton w-[9.375rem] h-[2.75rem] cursor-progress rounded-full" />
+        ) : (
+          <Button iconLeft={<IconAdd className="w-6 h-6" />} onClick={handleOpenBtnClick}>
+            {title}
+          </Button>
+        )}
       </div>
       <div
         className="absolute top-0 left-0 w-full h-full translate-x-full transition-all z-0 flex flex-col items-stretch bg-white data-[open='true']:translate-x-0 data-[open='true']:z-20"
