@@ -1,23 +1,9 @@
-install-deps:
-  tags:
-    - production
-  stage: build
-  script: npm ci
-  environment: production
-
-build:
-  tags:
-    - production
-  stage: build
-  script: npm run build
-  environment: production
+stages:
+  - deploy
 
 deploy:
   tags:
     - production
-  variables:
-    NEXT_BASE_API_URL: http://localhost:8000
-    NEXT_STATIC_SERVER_URL: http://localhost:9000
   stage: deploy
-  script: screen -S site_run_prod_front -d -m npm run start
+  script: ./build.sh
   environment: production

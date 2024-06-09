@@ -1,6 +1,5 @@
 const staticServerUrl = new URL(process.env.NEXT_STATIC_SERVER_URL);
 const staticApiUrl = new URL(process.env.NEXT_BASE_API_URL);
-console.log(staticServerUrl.protocol);
 const imagesRemotePatterns = [staticServerUrl, staticApiUrl]
   .map((i) =>
     i.hostname
