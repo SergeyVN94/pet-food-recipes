@@ -39,7 +39,7 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
 
   const recipe: Recipe = await response.json();
 
-  const tableRows = recipe.ingredients.map(i => ({
+  const tableRows = recipe.ingredients.map((i) => ({
     id: i.id,
     ingredientName: i.ingredient.name,
     amountTypeValue: `${i.count} ${i.amountType.name}`,
@@ -52,7 +52,7 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
         <h1 className="headline-l">{recipe.title}</h1>
         <p className="body-l mt-8">{recipe.description}</p>
         {recipe.images.length > 0 && (
-          <div className="mt-16 flex flex-wrap gap-4">
+          <section className="mt-16 flex flex-wrap gap-4">
             {recipe.images.map((src, index) => (
               <div key={src} className="flex-1 basis-[32%]">
                 <Image
@@ -63,7 +63,7 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
                 />
               </div>
             ))}
-          </div>
+          </section>
         )}
         <section className="mt-16">
           <h3 className="headline-l">Ингредиенты</h3>

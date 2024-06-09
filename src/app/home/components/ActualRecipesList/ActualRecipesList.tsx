@@ -35,9 +35,10 @@ const ActualRecipesList = ({ initialRecipes = [] }: ActualRecipesListProps) => {
   const searchParams = useSearchParams();
   const filter = React.useMemo(() => urlSearchParamsToFilter(searchParams), [searchParams]);
 
-  const { isFetching, data } = useRecipes(filter, {
-    initialData: initialRecipes,
+  const { data, isFetching } = useRecipes(filter, {
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
+    initialData: initialRecipes,
   });
 
   return (

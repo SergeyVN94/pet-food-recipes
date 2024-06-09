@@ -1,3 +1,18 @@
+const staticServerUrl = new URL(process.env.NEXT_STATIC_SERVER_URL);
+const staticApiUrl = new URL(process.env.NEXT_BASE_API_URL);
+console.log(staticServerUrl.protocol);
+const imagesRemotePatterns = [staticServerUrl, staticApiUrl]
+  .map((i) =>
+    i.hostname
+      ? {
+          protocol: i.protocol?.slice(0, -1) ?? 'http',
+          hostname: i.hostname,
+          port: i.port,
+        }
+      : null,
+  )
+  .filter(Boolean);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config) => {
@@ -23,18 +38,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
-      },
-      {
-        protocol: 'http',
-        hostname: '127.0.0.1',
-        port: '9000',
-      },
-    ],
+    remotePatterns: imagesRemotePatterns,
   },
   env: {
     NEXT_BASE_API_URL: process.env.NEXT_BASE_API_URL,

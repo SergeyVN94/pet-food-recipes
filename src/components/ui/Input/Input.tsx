@@ -45,7 +45,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
 
       if (buttonClearRef.current) {
-        buttonClearRef.current.style.opacity = '0';
+        buttonClearRef.current.classList.add('hidden');
       }
 
       if (onClear) {
@@ -60,7 +60,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         }
 
         if (buttonClearRef.current && localRef.current) {
-          buttonClearRef.current.style.opacity = Boolean(localRef.current.value) ? '1' : '0';
+          if (localRef.current.value) {
+            buttonClearRef.current.classList.remove('hidden');
+          } else {
+            buttonClearRef.current.classList.add('hidden');
+          }
         }
       };
 
@@ -71,6 +75,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         inputEl?.removeEventListener('input', handleChange);
       };
     }, []);
+
+    React.useEffect(() => {
+      if (buttonClearRef.current && other.value) {
+        buttonClearRef.current?.classList.remove('hidden');
+      }
+    }, [other.value]);
 
     return (
       <div className={className}>
@@ -100,7 +110,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
           </label>
           {onClear && (
-            <ButtonIcon className="opacity-0" onClick={handleClear} type="button" ref={buttonClearRef}>
+            <ButtonIcon className="hidden" onClick={handleClear} type="button" ref={buttonClearRef}>
               <IconCancel />
             </ButtonIcon>
           )}

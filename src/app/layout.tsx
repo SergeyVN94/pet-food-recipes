@@ -3,7 +3,7 @@ import { Roboto } from 'next/font/google';
 import 'normalize.css';
 
 import '@/styles/globals.css';
-import TanStackProvider from './TanStackProvider';
+import { TanStackProvider } from '@/providers';
 
 const roboto = Roboto({
   variable: '--font-roboto',
