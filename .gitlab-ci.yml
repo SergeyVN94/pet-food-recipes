@@ -6,12 +6,12 @@ build-job:
       - "dist"
       - "node_modules"
       - "ecosystem.config.js"
+      - "package.json"
     when: always
   before_script:
     - npm ci
   script:
     - npm run build
-    - npm run seed:prod:run
 
 deploy-pm2-job:
   stage: deploy
@@ -22,10 +22,8 @@ deploy-pm2-job:
     NEXT_BASE_API_URL: http://192.168.0.19:8000
     NEXT_STATIC_SERVER_URL: http://192.168.0.19:9000
   script: 
-    - mkdir -p /var/www/recipe/server
-    - rm -rf /var/www/recipe/server/*
-    - mv dist/* /var/www/recipe/server
-    - mv node_modules /var/www/recipe/server
-    - mv ecosystem.config.js /var/www/recipe/server
-    - cd /var/www/recipe/server
+    - mkdir -p /var/www/recipe/frontend
+    - rm -rf /var/www/recipe/frontend/*
+    - mv .next node_modules ecosystem.config.js package.json /var/www/recipe/frontend
+    - cd /var/www/recipe/frontend
     - pm2 startOrRestart ecosystem.config.js

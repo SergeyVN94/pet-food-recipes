@@ -1,6 +1,7 @@
 module.exports = {
   apps : [{
-    name   : "backend",
-    script : "./main.js"
+    name   : "frontend",
+    script : "npm",
+    args: "run start"
   }]
 }
