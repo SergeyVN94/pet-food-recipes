@@ -11,8 +11,6 @@ build-job:
       - "node_modules"
       - "ecosystem.config.js"
       - "package.json"
-    exclude:
-      - ".next/cache/images"
     when: always
   before_script:
     - npm ci
