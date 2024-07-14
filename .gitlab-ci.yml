@@ -1,3 +1,7 @@
+variables:
+  NEXT_BASE_API_URL: http://192.168.0.19:8000
+  NEXT_STATIC_SERVER_URL: http://192.168.0.19:9000
+
 build-job:
   stage: build
   environment: production
@@ -18,9 +22,6 @@ deploy-pm2-job:
   environment: production
   dependencies:
     - build-job
-  variables:
-    NEXT_BASE_API_URL: http://192.168.0.19:8000
-    NEXT_STATIC_SERVER_URL: http://192.168.0.19:9000
   script: 
     - mkdir -p /var/www/recipe/frontend
     - rm -rf /var/www/recipe/frontend/*
