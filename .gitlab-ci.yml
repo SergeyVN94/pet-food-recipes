@@ -25,6 +25,6 @@ deploy-pm2-job:
   script: 
     - mkdir -p /var/www/recipe/frontend
     - rm -rf /var/www/recipe/frontend/*
-    - cp .next node_modules ecosystem.config.js package.json /var/www/recipe/frontend
+    - cp -r .next node_modules ecosystem.config.js package.json /var/www/recipe/frontend
     - cd /var/www/recipe/frontend
     - pm2 startOrRestart ecosystem.config.js
