@@ -3,7 +3,7 @@ import { Roboto } from 'next/font/google';
 import 'normalize.css';
 
 import '@/styles/globals.css';
-import { TanStackProvider } from '@/providers';
+import { TanStackProvider, StoreProvider } from '@/providers';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -19,7 +19,9 @@ export const metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="ru" className="h-full">
     <body className={`${roboto.variable} h-full`}>
-      <TanStackProvider>{children}</TanStackProvider>
+      <StoreProvider>
+        <TanStackProvider>{children}</TanStackProvider>
+      </StoreProvider>
     </body>
   </html>
 );
