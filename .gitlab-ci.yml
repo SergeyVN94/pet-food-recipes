@@ -3,7 +3,7 @@ build-job:
   environment: production
   artifacts:
     paths:
-      - "dist"
+      - ".next"
       - "node_modules"
       - "ecosystem.config.js"
       - "package.json"
