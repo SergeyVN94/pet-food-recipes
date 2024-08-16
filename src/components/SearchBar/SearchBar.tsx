@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
 import debounce from 'lodash/debounce';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { IconSearch } from '@/assets/icons';
+
 import { Input } from '../ui';
 
 type SearchProps = {

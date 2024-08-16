@@ -24,7 +24,7 @@ const Table = <T extends TableRow>({ columns, rows, showTableHead = true }: Tabl
       {showTableHead && (
         <thead>
           <tr>
-            {columns.map((column) => (
+            {columns.map(column => (
               <td key={column.label} className="p-2 border border-primary/50">
                 {column.label}
               </td>

@@ -1,14 +1,16 @@
 'use client';
 
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+
 import { useRouter } from 'next/navigation';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button, FileInputControlled, InputControlled, TextareaControlled } from '@/components/ui';
 import { useAmountTypes, useMakeRecipe, useRecipeIngredients } from '@/hooks';
 import { RecipeDtoIngredient } from '@/types';
-import { Ingredients, Steps } from './local-components';
+
 import { FormFields } from './RecipeForm.types';
+import { Ingredients, Steps } from './local-components';
 
 const RecipeForm = ({ className }: { className?: string }) => {
   const navigate = useRouter();
@@ -20,7 +22,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
   });
 
   const { mutateAsync, isLoading } = useMakeRecipe({
-    onSuccess: (data) => {
+    onSuccess: data => {
       navigate.push(`/recipe/${data.slug}`);
     },
   });
@@ -48,7 +50,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
     }
 
     const ingredients: RecipeDtoIngredient[] = formFields.ingredients.filter(
-      (i) => i.count && i.amountTypeId && i.ingredientId,
+      i => i.count && i.amountTypeId && i.ingredientId,
     ) as RecipeDtoIngredient[];
 
     console.log(formFields);

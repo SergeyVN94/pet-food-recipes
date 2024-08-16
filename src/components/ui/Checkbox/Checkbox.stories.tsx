@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+
 import type { Meta, StoryObj } from '@storybook/react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Checkbox, CheckboxControlled } from '.';
 import { Button } from '../Button';
@@ -19,7 +20,7 @@ export const DefaultUncontrolled: Story = {
     isIndeterminate: true,
   },
   argTypes: {},
-  render: (props) => {
+  render: props => {
     const [checked, setChecked] = React.useState<boolean | null>(false);
 
     const handleChange = (value: boolean | null) => {
@@ -46,7 +47,7 @@ export const DefaultControlled: Story = {
     isIndeterminate: true,
   },
   argTypes: {},
-  render: (props) => {
+  render: props => {
     const methods = useForm({
       defaultValues: {
         story: false,

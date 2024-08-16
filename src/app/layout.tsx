@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
+
 import { Roboto } from 'next/font/google';
 import 'normalize.css';
 
+import { StoreProvider, TanStackProvider } from '@/providers';
 import '@/styles/globals.css';
-import { TanStackProvider, StoreProvider } from '@/providers';
 
 const roboto = Roboto({
   variable: '--font-roboto',

@@ -1,8 +1,9 @@
 import { UseFormReturn, useFieldArray } from 'react-hook-form';
 
-import { IconDelete, IconArrowDropUp, IconArrowDropDown, IconAdd } from '@/assets/icons';
-import { TextareaControlled, Button } from '@/components/ui';
+import { IconAdd, IconArrowDropDown, IconArrowDropUp, IconDelete } from '@/assets/icons';
+import { Button, TextareaControlled } from '@/components/ui';
 import { ButtonIcon } from '@/components/ui/ButtonIcon';
+
 import { FormFields } from '../RecipeForm.types';
 
 type StepsProps = {

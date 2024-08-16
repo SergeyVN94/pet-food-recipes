@@ -1,13 +1,15 @@
 'use client';
 
 import React from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { useVirtualizer } from '@tanstack/react-virtual';
 
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { useFormContext, useWatch } from 'react-hook-form';
+
+import { IconAdd, IconCheck, IconCheckIndeterminateSmall, IconDelete } from '@/assets/icons';
 import { SearchBar } from '@/components';
 import { ButtonIcon } from '@/components/ui';
-import { IconAdd, IconCheck, IconCheckIndeterminateSmall, IconDelete } from '@/assets/icons';
 import { RecipeIngredient } from '@/types';
+
 import FiltersPage from './FiltersPage';
 import { FormFields } from './types';
 
@@ -75,14 +77,14 @@ const IngredientsFilter = ({ ingredients, isIngredientsFetching }: IngredientsFi
 
   const filteredIngredients = React.useMemo(() => {
     const normalizedSearch = search.toLowerCase();
-    return (ingredients ?? []).filter((i) => !selectedIngredients.has(i.id) && i.name.toLowerCase().includes(normalizedSearch));
+    return (ingredients ?? []).filter(i => !selectedIngredients.has(i.id) && i.name.toLowerCase().includes(normalizedSearch));
   }, [ingredients, search, selectedIngredients]);
 
   const rowVirtualizer = useVirtualizer({
     count: filteredIngredients.length ?? 0,
     getScrollElement: () => containerRef.current,
     estimateSize: () => 48,
-    getItemKey: (index) => filteredIngredients[index].id ?? '',
+    getItemKey: index => filteredIngredients[index].id ?? '',
   });
 
   const handleIncludeClick = (index: number) => {
@@ -115,7 +117,7 @@ const IngredientsFilter = ({ ingredients, isIngredientsFetching }: IngredientsFi
       {search.trim() && filteredIngredients.length === 0 && <p className="body-l my-1">По запросу «{search}» ничего не найдено</p>}
       <div className="overflow-y-auto flex-1" ref={containerRef}>
         <div className="w-full relative" style={{ height: `${rowVirtualizer.getTotalSize()}px` }}>
-          {rowVirtualizer.getVirtualItems().map((virtualItem) => (
+          {rowVirtualizer.getVirtualItems().map(virtualItem => (
             <ul
               key={virtualItem.key}
               className="absolute top-0 left-0 w-full"

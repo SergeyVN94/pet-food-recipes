@@ -1,12 +1,14 @@
 'use client';
 
 import { ChangeEvent, InputHTMLAttributes, MouseEvent, forwardRef, useEffect, useRef, useState } from 'react';
+
 import { useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 
-import { cn, getNoun } from '@/lib/utils';
-import { ButtonIcon } from '../ButtonIcon';
 import { IconAdd, IconCancel } from '@/assets/icons';
+import { cn, getNoun } from '@/lib/utils';
+
+import { ButtonIcon } from '../ButtonIcon';
 
 type FileInputProps = {
   label?: string;

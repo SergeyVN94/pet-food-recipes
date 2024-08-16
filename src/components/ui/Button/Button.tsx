@@ -1,5 +1,6 @@
-import { ButtonHTMLAttributes, ReactNode, ComponentProps } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { ButtonHTMLAttributes, ComponentProps, ReactNode } from 'react';
+
+import { type VariantProps, cva } from 'class-variance-authority';
 import Link from 'next/link';
 
 const buttonVariants = cva(

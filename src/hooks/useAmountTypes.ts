@@ -1,7 +1,7 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 
-import { AmountType } from '@/types';
 import { RecipeIngredientService } from '@/services';
+import { AmountType } from '@/types';
 
 const useAmountTypes = (config: UseQueryOptions<AmountType[] | null, Error, AmountType[]> = {}) =>
   useQuery({

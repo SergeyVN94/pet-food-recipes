@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
+
 import { FieldArrayWithId, UseFormReturn, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
-import { IconDelete, IconAdd } from '@/assets/icons';
+import { IconAdd, IconDelete } from '@/assets/icons';
 import { Button, InputControlled, SelectControlled, SelectItem } from '@/components/ui';
 import { ButtonIcon } from '@/components/ui/ButtonIcon';
 import { AmountType, RecipeIngredient } from '@/types';
+
 import { FormFields } from '../RecipeForm.types';
 
 type IngredientsRowProps = {
@@ -41,7 +43,7 @@ const IngredientsRow = ({
 
     const ingredient = recipeIngredientMap.get(ingredientId)!;
 
-    return amountTypeItems.filter((i) => ingredient.amountTypes.some((j) => j.id === i.id));
+    return amountTypeItems.filter(i => ingredient.amountTypes.some(j => j.id === i.id));
   }, [amountTypeItems, ingredientId, recipeIngredientMap]);
 
   return (
@@ -79,7 +81,7 @@ type IngredientsProps = {
 const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: IngredientsProps) => {
   const amountTypeItems: SelectItem[] = React.useMemo(
     () =>
-      amountTypes.map((i) => ({
+      amountTypes.map(i => ({
         id: i.id,
         label: i.name,
       })),
@@ -88,7 +90,7 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
 
   const recipeIngredientItems: SelectItem[] = React.useMemo(
     () =>
-      recipeIngredients.map((i) => ({
+      recipeIngredients.map(i => ({
         id: i.id,
         label: i.name,
       })),
@@ -118,7 +120,7 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
   const recipeIngredientItemsFiltered: SelectItem[] = React.useMemo(() => {
     const selectedIngredientsSet = fields.reduce((acc, value) => acc.add(value.id), new Set());
 
-    return recipeIngredientItems.filter((i) => !selectedIngredientsSet.has(i.id));
+    return recipeIngredientItems.filter(i => !selectedIngredientsSet.has(i.id));
   }, [recipeIngredientItems, fields]);
 
   return (

@@ -1,7 +1,7 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 
-import { RecipeIngredient } from '@/types';
 import { RecipeIngredientService } from '@/services';
+import { RecipeIngredient } from '@/types';
 
 const useRecipeIngredients = (config: UseQueryOptions<RecipeIngredient[] | null, Error, RecipeIngredient[] | null> = {}) =>
   useQuery({

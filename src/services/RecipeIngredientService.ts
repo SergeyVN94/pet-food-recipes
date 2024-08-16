@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 import { AmountType, RecipeIngredient } from '@/types';
+
 import { apiInstance } from './lib';
 
 const BASE_API_URL = '/api/v1/recipe-ingredients';

@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Input, InputControlled } from '.';
 
@@ -25,7 +26,7 @@ export const FilledUncontrolled: Story = {
     label: { type: 'string' },
     subText: { type: 'string' },
   },
-  render: (props) => {
+  render: props => {
     const [value, setValue] = useState('');
 
     return <Input {...props} value={value} onChange={(ev, value) => setValue(value)} onClear={() => setValue('')} />;
@@ -45,7 +46,7 @@ export const FilledControlled: Story = {
     label: { type: 'string' },
     subText: { type: 'string' },
   },
-  render: (props) => {
+  render: props => {
     const methods = useForm();
 
     return (

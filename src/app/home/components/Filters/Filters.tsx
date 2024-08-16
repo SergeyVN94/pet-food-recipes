@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { useRecipeIngredients } from '@/hooks';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { Button } from '@/components/ui';
+import { useRecipeIngredients } from '@/hooks';
 
 import IngredientsFilter from './IngredientsFilter';
 import { searchParamsToFormFields } from './lib';

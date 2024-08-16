@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useEffect } from 'react';
+
 import * as SelectPrimitives from '@radix-ui/react-select';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useFormContext, Controller } from 'react-hook-form';
 import debounce from 'lodash-es/debounce';
+import { Controller, useFormContext } from 'react-hook-form';
+
+import { IconArrowLeft, IconSearch } from '@/assets/icons';
+import { cn } from '@/lib/utils';
 
 import { Input } from '../Input';
-import { cn } from '@/lib/utils';
-import { IconArrowLeft, IconSearch } from '@/assets/icons';
 
 export type SelectItem = {
   id: string;
@@ -29,13 +31,13 @@ type SelectProps = {
 };
 
 const Select = ({ ariaLabel, items, value, error, label, name, className, onChange, onBlur, onFocus }: SelectProps) => {
-  const selectedItemLabel = React.useMemo(() => items.find((i) => i.id === value)?.label, [items, value]);
+  const selectedItemLabel = React.useMemo(() => items.find(i => i.id === value)?.label, [items, value]);
   const [inputValue, setInputValue] = React.useState(selectedItemLabel ?? '');
   const [filter, setFilter] = React.useState(selectedItemLabel ?? '');
   const setFilterDebounced = React.useMemo(() => debounce(setFilter, 250), [setFilter]);
   const filteredItems = React.useMemo(() => {
     const normalizedFilter = filter.trim().toLowerCase();
-    return normalizedFilter.length > 0 ? items.filter((i) => i.label.toLowerCase().includes(normalizedFilter)) : items;
+    return normalizedFilter.length > 0 ? items.filter(i => i.label.toLowerCase().includes(normalizedFilter)) : items;
   }, [filter, items]);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
@@ -109,7 +111,7 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
             {/* 21rem == 6 items */}
             <div className="max-h-[21rem] overflow-y-auto" ref={itemsParentRef}>
               <div className="w-full relative" style={{ height: `${rowVirtualizer.getTotalSize()}px` }}>
-                {rowVirtualizer.getVirtualItems().map((virtualItem) => (
+                {rowVirtualizer.getVirtualItems().map(virtualItem => (
                   <div
                     key={virtualItem.key}
                     className="absolute top-0 left-0 w-full"

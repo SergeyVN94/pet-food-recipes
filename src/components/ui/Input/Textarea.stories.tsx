@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Textarea, TextareaControlled } from '.';
 
@@ -26,7 +27,7 @@ export const FilledUncontrolled: Story = {
     subText: { type: 'string' },
     maxRows: { type: 'number', min: 1 },
   },
-  render: (props) => {
+  render: props => {
     const [value, setValue] = useState('');
 
     return <Textarea {...props} value={value} onChange={(ev, value) => setValue(value)} onClear={() => setValue('')} />;
@@ -47,7 +48,7 @@ export const FilledControlled: Story = {
     subText: { type: 'string' },
     maxRows: { type: 'number', min: 1 },
   },
-  render: (props) => {
+  render: props => {
     const methods = useForm();
 
     return (

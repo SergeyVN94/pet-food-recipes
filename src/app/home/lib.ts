@@ -7,12 +7,12 @@ export const urlSearchParamsToFilter = (params: URLSearchParams): RecipeFilter =
 
   const includesIngredients = params
     .getAll('ingr-inc[]')
-    .map((i) => i.trim().toLowerCase())
+    .map(i => i.trim().toLowerCase())
     .filter(Boolean);
 
   const excludesIngredients = params
     .getAll('ingr-exc[]')
-    .map((i) => i.trim().toLowerCase())
+    .map(i => i.trim().toLowerCase())
     .filter(Boolean);
 
   if (includesIngredients.length > 0 || excludesIngredients.length > 0) {
@@ -36,11 +36,11 @@ export const searchParamsToFilter = (params: Record<string, string | string[]>):
   };
 
   const includesIngredients = (Array.isArray(params['ingr-inc[]']) ? params['ingr-inc[]'] : [])
-    .map((i) => i.trim().toLowerCase())
+    .map(i => i.trim().toLowerCase())
     .filter(Boolean);
 
   const excludesIngredients = (Array.isArray(params['ingr-exc[]']) ? params['ingr-exc[]'] : [])
-    .map((i) => i.trim().toLowerCase())
+    .map(i => i.trim().toLowerCase())
     .filter(Boolean);
 
   if (includesIngredients.length > 0 || excludesIngredients.length > 0) {

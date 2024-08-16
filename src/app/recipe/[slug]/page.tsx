@@ -1,15 +1,12 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
 import { Header } from '@/components';
-import { Recipe } from '@/types';
 import { Table, TableColumn } from '@/components/ui';
+import { Recipe } from '@/types';
 
-const RecipesTableColumns: TableColumn[] = [
-  { keyOrComponent: 'ingredientName' },
-  { keyOrComponent: 'amountTypeValue' },
-];
+const RecipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
 
 type RecipePageProps = {
   slug: string;
@@ -39,7 +36,7 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
 
   const recipe: Recipe = await response.json();
 
-  const tableRows = recipe.ingredients.map((i) => ({
+  const tableRows = recipe.ingredients.map(i => ({
     id: i.id,
     ingredientName: i.ingredient.name,
     amountTypeValue: `${i.count} ${i.amountType.name}`,

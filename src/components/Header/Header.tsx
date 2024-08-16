@@ -1,6 +1,8 @@
-import { IconAdd } from '@/assets/icons';
-import { ButtonLink } from '../ui';
 import Link from 'next/link';
+
+import { IconAdd } from '@/assets/icons';
+
+import { ButtonLink } from '../ui';
 
 const Header = () => (
   <header className="bg-surf-cont-high border-b border-primary/[0.12]">

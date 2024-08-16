@@ -2,6 +2,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { IconAdd } from '@/assets/icons';
+
 import { ButtonIcon } from '.';
 
 const meta: Meta<typeof ButtonIcon> = {
@@ -24,7 +25,7 @@ export const FilledButtonIcon: Story = {
     // label: { type: 'string' },
     // subText: { type: 'string' },
   },
-  render: (props) => (
+  render: props => (
     <ButtonIcon {...props}>
       <IconAdd />
     </ButtonIcon>

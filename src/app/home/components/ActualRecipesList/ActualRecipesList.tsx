@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
 
-import { Recipe } from '@/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+
 import useRecipes from '@/hooks/useRecipes';
+import { Recipe } from '@/types';
+
 import { urlSearchParamsToFilter } from '../../lib';
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
@@ -50,7 +52,7 @@ const ActualRecipesList = ({ initialRecipes = [] }: ActualRecipesListProps) => {
           <div className="skeleton h-[18.4375rem] rounded-xl" />
         </>
       ) : (
-        data?.map((i) => (
+        data?.map(i => (
           <li key={i.id} className="w-full">
             <RecipeCard recipe={i} />
           </li>

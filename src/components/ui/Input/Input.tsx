@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
+
 import { Controller, useFormContext } from 'react-hook-form';
-import { ButtonIcon } from '../ButtonIcon';
+import { mergeRefs } from 'react-merge-refs';
+
 import { IconCancel } from '@/assets/icons';
 
-import { labelVariants, wrapVariants, InputVariantProps } from './Input.lib';
-import { mergeRefs } from 'react-merge-refs';
+import { ButtonIcon } from '../ButtonIcon';
+import { InputVariantProps, labelVariants, wrapVariants } from './Input.lib';
 
 type InputProps = {
   label?: string;
@@ -26,7 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const labelRef = React.useRef<HTMLSpanElement>(null);
     const buttonClearRef = React.useRef<HTMLButtonElement>(null);
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (ev) => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = ev => {
       const nextValue = ev.target.value;
 
       if (onChange) {

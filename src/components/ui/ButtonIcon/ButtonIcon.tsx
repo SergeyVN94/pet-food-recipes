@@ -1,6 +1,9 @@
 'use client';
+
 import { ButtonHTMLAttributes, FC, ReactComponentElement, Ref, SVGProps, cloneElement, forwardRef } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+
+import { type VariantProps, cva } from 'class-variance-authority';
+
 import { cn } from '@/lib/utils';
 
 const variants = cva(

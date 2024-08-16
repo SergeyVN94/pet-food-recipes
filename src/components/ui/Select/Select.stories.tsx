@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
 
-import { Button } from '../Button';
+import type { Meta, StoryObj } from '@storybook/react';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { Select, SelectControlled, SelectItem } from '.';
+import { Button } from '../Button';
 
 const meta: Meta<typeof Select> = {
   component: Select,
@@ -26,7 +27,7 @@ type Story = StoryObj<typeof Select>;
 export const FilledUncontrolled: Story = {
   args: {},
   argTypes: {},
-  render: (props) => {
+  render: props => {
     const [value, setValue] = useState<string>();
 
     const handleChange = (val: string) => {
@@ -41,7 +42,7 @@ export const FilledUncontrolled: Story = {
 export const FilledControlled: Story = {
   args: {},
   argTypes: {},
-  render: (props) => {
+  render: props => {
     const methods = useForm<{
       controlled?: string | undefined;
     }>();

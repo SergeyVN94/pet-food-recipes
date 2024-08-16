@@ -1,12 +1,14 @@
 'use client';
 
 import { ChangeEvent, ChangeEventHandler, TextareaHTMLAttributes, forwardRef, useEffect, useRef } from 'react';
+
 import { useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
-import { ButtonIcon } from '../ButtonIcon';
+
 import { IconCancel } from '@/assets/icons';
 
-import { labelVariants, wrapVariants, InputVariantProps, updateTextareaHeight } from './Input.lib';
+import { ButtonIcon } from '../ButtonIcon';
+import { InputVariantProps, labelVariants, updateTextareaHeight, wrapVariants } from './Input.lib';
 
 type TextareaProps = {
   label?: string;
@@ -24,7 +26,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const labelRef = useRef<HTMLSpanElement>(null);
     const buttonClearRef = useRef<HTMLButtonElement>(null);
 
-    const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (ev) => {
+    const handleChange: ChangeEventHandler<HTMLTextAreaElement> = ev => {
       const nextValue = ev.target.value;
 
       if (buttonClearRef.current) {

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 
-import { Button } from '@/components/ui';
 import { IconAdd, IconArrowBack } from '@/assets/icons';
+import { Button } from '@/components/ui';
 
 type FilterPageProps = {
   title: string;
