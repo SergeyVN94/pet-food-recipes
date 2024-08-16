@@ -15,5 +15,10 @@ module.exports = {
       files: ['**/*.ts?(x)'],
       rules: { 'prettier/prettier': ['warn', prettierOptions] },
     },
+    {
+      files: ['*.json'],
+      parser: 'jsonc-eslint-parser',
+      rules: {},
+    },
   ],
 };
