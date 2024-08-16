@@ -8,7 +8,9 @@
     "start": "npx next start",
     "lint": "npx next lint",
     "storybook": "npx storybook dev -p 6006",
-    "build-storybook": "npx storybook build"
+    "build-storybook": "npx storybook build",
+    "eslint-check": "npx eslint src",
+    "eslint-format": "npx eslint src --fix"
   },
   "dependencies": {
     "@legendapp/state": "^1.11.3",
