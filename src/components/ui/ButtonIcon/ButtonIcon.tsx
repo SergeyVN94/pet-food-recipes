@@ -1,10 +1,11 @@
 'use client';
 
-import { ButtonHTMLAttributes, FC, ReactComponentElement, Ref, SVGProps, cloneElement, forwardRef } from 'react';
+import React from 'react';
 
 import { type VariantProps, cva } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
+import { SVGIcon } from '@/types';
 
 const variants = cva(
   'p-2 border-transparent rounded-full transition-all block group-disabled/button-icon:cursor-not-allowed group-disabled/button-icon:opacity-40',
@@ -16,28 +17,33 @@ const variants = cva(
         filled:
           'text-primary bg-surf-cont-highest/70 group-hover/button-icon:bg-surf-cont-highest/90 group-focus/button-icon:bg-surf-cont-highest/95 group-active/button-icon:bg-surf-cont-highest/95 group-disabled/button-icon:bg-on-surface group-disabled/button-icon:!text-on-surface',
       },
+      layoutSize: {
+        48: 'p-1',
+        40: '',
+      },
     },
     defaultVariants: {
       variant: 'standard',
+      layoutSize: 48,
     },
   },
 );
 
 type ButtonIconProps = {
-  children: ReactComponentElement<FC<SVGProps<SVGSVGElement>>>;
+  children: SVGIcon;
 } & VariantProps<typeof variants> &
-  ButtonHTMLAttributes<HTMLButtonElement>;
+  React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(({ children, className, variant, type = 'button', ...other }, ref) => (
-  <button className={cn('p-1 group/button-icon outline-none border-none bg-transparent', className)} ref={ref} type={type} {...other}>
-    <span className={variants({ variant })}>
-      {cloneElement(children, {
+const ButtonIcon = ({ children, className, variant, layoutSize, type = 'button', ...other }: ButtonIconProps) => (
+  <button className={cn('group/button-icon outline-none border-none bg-transparent', className)} type={type} {...other}>
+    <span className={variants({ variant, layoutSize })}>
+      {React.cloneElement(children, {
         width: 24,
         height: 24,
       })}
     </span>
   </button>
-));
+);
 ButtonIcon.displayName = 'ButtonIcon';
 
 export default ButtonIcon;
