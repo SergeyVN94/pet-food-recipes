@@ -1,4 +1,5 @@
 import React from 'react';
+
 import type { Decorator, Preview } from '@storybook/react';
 import { Roboto } from 'next/font/google';
 
@@ -6,7 +7,7 @@ import '../src/styles/globals.css';
 
 const roboto = Roboto({ weight: ['100', '300', '400', '500', '700', '900'], subsets: ['latin'] });
 
-const GlobalDecorator: Decorator = (Story) => (
+const GlobalDecorator: Decorator = Story => (
   <div className={roboto.className}>
     <Story />
   </div>
@@ -14,7 +15,9 @@ const GlobalDecorator: Decorator = (Story) => (
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: {
+      argTypesRegex: '^on[A-Z].*',
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

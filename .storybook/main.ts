@@ -1,6 +1,7 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 import merge from 'lodash-es/merge';
+
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -16,20 +17,20 @@ const config: StorybookConfig = {
           implementation: require.resolve('postcss'),
         },
       },
-    }
+    },
+    '@chromatic-com/storybook',
   ],
   framework: {
     name: '@storybook/nextjs',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: {},
   webpackFinal(config) {
-    const fileLoaderRule = config?.module?.rules?.find((rule) =>
-      //@ts-ignore
-      rule?.test?.test?.('.svg'),
-    ) ?? {} as any;
+    const fileLoaderRule =
+      config?.module?.rules?.find(rule =>
+        //@ts-ignore
+        rule?.test?.test?.('.svg'),
+      ) ?? ({} as any);
 
     const finalConfig = merge(config, {
       resolve: {
@@ -54,6 +55,10 @@ const config: StorybookConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     return finalConfig;
+  },
+
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
   },
 };
 export default config;
