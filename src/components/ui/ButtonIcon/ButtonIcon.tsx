@@ -34,15 +34,17 @@ type ButtonIconProps = {
 } & VariantProps<typeof variants> &
   React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const ButtonIcon = ({ children, className, variant, layoutSize, type = 'button', ...other }: ButtonIconProps) => (
-  <button className={cn('group/button-icon outline-none border-none bg-transparent', className)} type={type} {...other}>
-    <span className={variants({ variant, layoutSize })}>
-      {React.cloneElement(children, {
-        width: 24,
-        height: 24,
-      })}
-    </span>
-  </button>
+const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonIconProps>(
+  ({ children, className, variant, layoutSize, type = 'button', ...other }, ref) => (
+    <button className={cn('group/button-icon outline-none border-none bg-transparent', className)} type={type} ref={ref} {...other}>
+      <span className={variants({ variant, layoutSize })}>
+        {React.cloneElement(children, {
+          width: 24,
+          height: 24,
+        })}
+      </span>
+    </button>
+  ),
 );
 ButtonIcon.displayName = 'ButtonIcon';
 
