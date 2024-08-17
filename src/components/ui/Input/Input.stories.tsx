@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
+import React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormProvider, useForm } from 'react-hook-form';
+
+import { IconMenu, IconSearch } from '@/assets/icons';
 
 import { Input, InputControlled } from '.';
 
@@ -13,7 +16,7 @@ const meta: Meta<typeof Input> = {
 export default meta;
 type Story = StoryObj<typeof Input>;
 
-export const FilledUncontrolled: Story = {
+export const Uncontrolled: Story = {
   args: {
     variant: 'filled',
     disabled: false,
@@ -25,6 +28,15 @@ export const FilledUncontrolled: Story = {
     },
     label: { type: 'string' },
     subText: { type: 'string' },
+    placeholder: { type: 'string' },
+    iconLeft: {
+      control: { type: 'select' },
+      options: ['search', 'menu'],
+      mapping: {
+        search: <IconSearch />,
+        menu: <IconMenu />,
+      },
+    },
   },
   render: props => {
     const [value, setValue] = useState('');
@@ -33,7 +45,7 @@ export const FilledUncontrolled: Story = {
   },
 };
 
-export const FilledControlled: Story = {
+export const Controlled: Story = {
   args: {
     variant: 'filled',
     disabled: false,

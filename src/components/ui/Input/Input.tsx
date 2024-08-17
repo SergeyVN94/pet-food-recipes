@@ -8,7 +8,7 @@ import { mergeRefs } from 'react-merge-refs';
 import { IconCancel } from '@/assets/icons';
 
 import { ButtonIcon } from '../ButtonIcon';
-import { InputVariantProps, labelVariants, wrapVariants } from './Input.lib';
+import { InputVariantProps, inputVariants, labelVariants, wrapVariants } from './Input.lib';
 
 type InputProps = {
   label?: string;
@@ -86,18 +86,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={className}>
-        <div className={wrapVariants({ variant })} onClick={handleRootClick} data-icon-left={!!iconLeft}>
+        <div className={wrapVariants({ variant, className: 'relative' })} onClick={handleRootClick} data-icon-left={!!iconLeft}>
           {iconLeft &&
             React.cloneElement(iconLeft, {
               width: 48,
               height: 48,
               className: 'p-3',
             })}
-          <label className="flex-1 relative pt-1">
+          <label className="flex-1">
             <input
-              className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 mt-4 data-[with-label=false]:mt-2"
+              className={inputVariants({ variant })}
               {...other}
-              data-with-label={String(Boolean(label))}
+              data-with-label={!!label}
               onChange={other.readOnly ? undefined : handleChange}
               ref={mergeRefs([ref, localRef])}
             />
@@ -105,14 +105,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               <span
                 className={labelVariants({ variant })}
                 ref={labelRef}
-                data-force-focus={Boolean(String(other.value ?? '') || other.placeholder || isFocus)}
+                data-icon-left={!!iconLeft}
+                data-force-focus={!!(other.value ?? '') || other.placeholder || isFocus}
               >
                 {label}
               </span>
             )}
           </label>
           {onClear && (
-            <ButtonIcon className="hidden" onClick={handleClear} type="button" ref={buttonClearRef}>
+            <ButtonIcon className="hidden" onClick={handleClear} type="button" ref={buttonClearRef} layoutSize={48}>
               <IconCancel />
             </ButtonIcon>
           )}
