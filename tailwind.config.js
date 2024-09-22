@@ -107,8 +107,6 @@ module.exports = {
     },
     extend: {
       colors: {
-        palette,
-
         primary: palette.primary[40],
         secondary: palette.secondary[40],
         tertiary: palette.tertiary[40],
@@ -213,7 +211,7 @@ module.exports = {
         },
 
         '.label-l': {
-          '@apply font-sans text-black text-sm font-medium leading-tight tracking-tight': {},
+          '@apply font-sans text-black text-sm font-medium leading-tight tracking-tight leading-5': {},
         },
 
         '.label-m': {
