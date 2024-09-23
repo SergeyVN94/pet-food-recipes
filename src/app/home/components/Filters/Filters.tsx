@@ -8,12 +8,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui';
 import { useRecipeIngredients } from '@/hooks';
 
-import IngredientsFilter from './IngredientsFilter';
-import { searchParamsToFormFields } from './lib';
-import { FormFields } from './types';
+import { searchParamsToFormFields } from './Filters.lib';
+import { FormFields } from './Filters.types';
+import IngredientsFilter from './local-components/IngredientsFilter';
 
-const defaultValues = {
-  ingredients: new Map(),
+const defaultValues: FormFields = {
+  excludesIngredients: {},
+  includesIngredients: {},
 };
 
 const Filters = () => {
@@ -31,19 +32,21 @@ const Filters = () => {
     defaultValues,
   });
 
-  const handleSubmit = ({ ingredients: selectedIngredients }: FormFields) => {
+  const handleSubmit = ({ includesIngredients, excludesIngredients }: FormFields) => {
     const nextParams = new URLSearchParams();
 
     if (searchParams.get('q')?.trim()) {
       nextParams.set('q', searchParams.get('q') ?? '');
     }
 
-    selectedIngredients.forEach((value, id) => {
-      if (value) {
+    Object.keys(includesIngredients).forEach(id => {
+      if (includesIngredients[id]) {
         nextParams.append('ingr-inc[]', id);
       }
+    });
 
-      if (value === null) {
+    Object.keys(excludesIngredients).forEach(id => {
+      if (excludesIngredients[id]) {
         nextParams.append('ingr-exc[]', id);
       }
     });
