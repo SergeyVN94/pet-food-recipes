@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, ChangeEventHandler, TextareaHTMLAttributes, forwardRef, useEffect, useRef } from 'react';
+import React from 'react';
 
 import { useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
@@ -15,18 +15,18 @@ type TextareaProps = {
   subText?: string;
   className?: string;
   maxRows?: number;
-  onChange?: (ev: ChangeEvent<HTMLTextAreaElement>, value: string) => void;
+  onChange?: (ev: React.ChangeEvent<HTMLTextAreaElement>, value: string) => void;
   onClear?: () => void;
-} & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> &
+} & Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> &
   Omit<InputVariantProps, 'focus'>;
 
-const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ variant, label, subText, maxRows, onChange, onClear, className = '', ...other }, ref) => {
-    const localRef = useRef<HTMLTextAreaElement>(null);
-    const labelRef = useRef<HTMLSpanElement>(null);
-    const buttonClearRef = useRef<HTMLButtonElement>(null);
+    const localRef = React.useRef<HTMLTextAreaElement>(null);
+    const labelRef = React.useRef<HTMLSpanElement>(null);
+    const buttonClearRef = React.useRef<HTMLButtonElement>(null);
 
-    const handleChange: ChangeEventHandler<HTMLTextAreaElement> = ev => {
+    const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = ev => {
       const nextValue = ev.target.value;
 
       if (buttonClearRef.current) {
@@ -53,7 +53,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
       const handleChange = () => {
         if (localRef.current) {
           labelRef.current?.setAttribute('data-focus', (!!localRef.current.value).toString());
@@ -68,7 +68,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       };
     }, []);
 
-    useEffect(() => {
+    React.useEffect(() => {
       labelRef.current?.setAttribute('data-focus', (!!(other.value || other.placeholder)).toString());
 
       if (buttonClearRef.current) {
@@ -76,8 +76,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       }
     }, [other.value, other.placeholder]);
 
-    useEffect(() => {
-      const handleChange = (ev: ChangeEvent<HTMLTextAreaElement>) => {
+    React.useEffect(() => {
+      const handleChange = (ev: React.ChangeEvent<HTMLTextAreaElement>) => {
         const textarea = ev.target;
 
         if (!textarea) {
@@ -95,7 +95,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       };
     }, []);
 
-    useEffect(() => {
+    React.useEffect(() => {
       if (localRef.current) {
         updateTextareaHeight(localRef.current);
       }
@@ -104,7 +104,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className={className}>
         <div className={wrapVariants({ variant })} onClick={handleRootClick}>
-          <label className="flex-1 relative pt-1">
+          <label className="flex-1">
             <textarea
               className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-y-auto"
               rows={other.rows ?? 3}

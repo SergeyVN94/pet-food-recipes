@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx next dev",
     "build": "npx next build",
     "start": "npx next start",
+    "start:dev": "npx next dev",
     "lint": "npx next lint",
     "storybook": "npx storybook dev -p 6006",
     "build-storybook": "npx storybook build",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@legendapp/state": "^1.11.3",
+    "@radix-ui/react-popover": "^1.1.1",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-query-devtools": "^4.36.1",
     "@tanstack/react-virtual": "^3.9.0",

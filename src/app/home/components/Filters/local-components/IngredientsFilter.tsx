@@ -7,16 +7,15 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { RecipeIngredient } from '@/types';
 
 import { FormFields } from '../Filters.types';
-import FiltersPage from '../FiltersPage';
 import Accordion from './Accordion';
+import FiltersSection from './FiltersSection';
 import IngredientsList from './IngredientsList';
 
 type IngredientsFilterProps = {
   ingredients?: RecipeIngredient[] | null;
-  isIngredientsFetching: boolean;
 };
 
-const IngredientsFilter = ({ ingredients, isIngredientsFetching }: IngredientsFilterProps) => {
+const IngredientsFilter = ({ ingredients }: IngredientsFilterProps) => {
   const methods = useFormContext<FormFields>();
 
   const ingredientsMap: Map<string, RecipeIngredient> = React.useMemo(
@@ -70,7 +69,7 @@ const IngredientsFilter = ({ ingredients, isIngredientsFetching }: IngredientsFi
   };
 
   return (
-    <FiltersPage title="Ингредиенты" isLoading={isIngredientsFetching}>
+    <FiltersSection title="Ингредиенты">
       <Accordion label="Добавить ингредиенты">
         <IngredientsList
           ingredients={ingredients}
@@ -91,7 +90,7 @@ const IngredientsFilter = ({ ingredients, isIngredientsFetching }: IngredientsFi
           onDeleteIngredient={handleDeleteClick}
         />
       </Accordion>
-    </FiltersPage>
+    </FiltersSection>
   );
 };
 

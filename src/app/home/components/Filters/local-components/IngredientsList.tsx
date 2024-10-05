@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { useVirtualizer } from '@tanstack/react-virtual';
@@ -30,8 +32,6 @@ const IngredientsList = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [search, setSearch] = React.useState('');
 
-  console.log(allSelectedIngredients);
-
   const filteredIngredients = React.useMemo(() => {
     const normalizedSearch = search.toLowerCase();
     return (ingredients ?? []).filter(
@@ -48,9 +48,9 @@ const IngredientsList = ({
 
   return (
     <>
-      <SelectedIngredients selectedIngredients={selectedIngredients} ingredientsMap={ingredientsMap} onDelete={onDeleteIngredient} />
       <SearchBar className="mb-4" onChange={setSearch} delay={200} placeholder="Поиск" isClearable searchParamName="" />
       {search.trim() && filteredIngredients.length === 0 && <p className="body-l my-1">По запросу «{search}» ничего не найдено</p>}
+      <SelectedIngredients selectedIngredients={selectedIngredients} ingredientsMap={ingredientsMap} onDelete={onDeleteIngredient} />
       <div className="overflow-y-auto flex-1 max-h-[15rem]" ref={containerRef}>
         <ul className="w-full relative" style={{ height: `${rowVirtualizer.getTotalSize()}px` }}>
           {rowVirtualizer.getVirtualItems().map(virtualItem => (

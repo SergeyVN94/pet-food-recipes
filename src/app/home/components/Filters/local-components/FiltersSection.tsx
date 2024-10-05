@@ -5,14 +5,14 @@ import React from 'react';
 import { IconAdd, IconArrowBack } from '@/assets/icons';
 import { Button } from '@/components/ui';
 
-type FilterPageProps = {
+type FiltersSectionProps = {
   title: string;
   children: React.ReactNode;
   isLoading?: boolean;
   className?: string;
 };
 
-const FilterPage = ({ title, children, className, isLoading }: FilterPageProps) => {
+const FiltersSection = ({ title, children, className, isLoading }: FiltersSectionProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const handleOpenBtnClick = () => {
@@ -45,4 +45,4 @@ const FilterPage = ({ title, children, className, isLoading }: FilterPageProps) 
   );
 };
 
-export default FilterPage;
+export default FiltersSection;

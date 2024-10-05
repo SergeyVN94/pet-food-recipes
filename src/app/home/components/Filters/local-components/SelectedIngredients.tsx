@@ -1,3 +1,5 @@
+'use client';
+
 import { IconDelete } from '@/assets/icons';
 import { ButtonIcon } from '@/components/ui';
 import { RecipeIngredient } from '@/types';

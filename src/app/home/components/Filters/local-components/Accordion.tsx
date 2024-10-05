@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { IconArrowDropDown } from '@/assets/icons';
@@ -21,6 +23,7 @@ const Accordion = ({ children, label }: AccordionProps) => {
         tabIndex={-1}
         onClick={handleButtonClick}
         data-open={isOpen}
+        type="button"
       >
         <p className="flex flex-nowrap items-center justify-between w-full">
           <span className="title-m">{label}</span>

@@ -21,7 +21,7 @@ const Filters = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { data: ingredients, isFetching: isIngredientsFetching } = useRecipeIngredients();
+  const { data: ingredients } = useRecipeIngredients();
   const values = React.useMemo(
     () => searchParamsToFormFields({ params: searchParams, ingredients: ingredients ?? [] }),
     [searchParams, ingredients],
@@ -67,7 +67,7 @@ const Filters = () => {
       >
         <h3 className="headline-m">Фильтры</h3>
         <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
-          <IngredientsFilter ingredients={ingredients} isIngredientsFetching={isIngredientsFetching} />
+          <IngredientsFilter ingredients={ingredients} />
         </div>
         <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-white">
           <Button type="submit">Применить</Button>

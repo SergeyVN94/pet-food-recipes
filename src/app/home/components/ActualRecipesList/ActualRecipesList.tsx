@@ -39,17 +39,17 @@ const ActualRecipesList = ({ initialRecipes = [] }: ActualRecipesListProps) => {
 
   const { data, isFetching } = useRecipes(filter, {
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
     initialData: initialRecipes,
+    cacheTime: 1000 * 60 * 3, // 3 min
   });
 
   return (
     <ul className="flex flex-col items-start flex-nowrap gap-4 pt-8 w-full">
       {isFetching ? (
         <>
-          <div className="skeleton h-[18.4375rem] rounded-xl" />
-          <div className="skeleton h-[18.4375rem] rounded-xl" />
-          <div className="skeleton h-[18.4375rem] rounded-xl" />
+          <li className="skeleton h-[18.4375rem] rounded-xl" />
+          <li className="skeleton h-[18.4375rem] rounded-xl" />
+          <li className="skeleton h-[18.4375rem] rounded-xl" />
         </>
       ) : (
         data?.map(i => (
