@@ -4,7 +4,7 @@ import React from 'react';
 import { FieldArrayWithId, UseFormReturn, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { IconAdd, IconDelete } from '@/assets/icons';
-import { Button, InputControlled, SelectControlled, SelectItem } from '@/components/ui';
+import { Button, InputUncontrolled, SelectItem, SelectUncontrolled } from '@/components/ui';
 import { ButtonIcon } from '@/components/ui/ButtonIcon';
 import { AmountType, RecipeIngredient } from '@/types';
 
@@ -49,14 +49,14 @@ const IngredientsRow = ({
   return (
     <tr key={field.id}>
       <td className="pr-3 pb-3 w-1/3">
-        <SelectControlled name={`ingredients.${index}.ingredientId`} label="Ингредиент" items={recipeIngredientItems} />
+        <SelectUncontrolled name={`ingredients.${index}.ingredientId`} label="Ингредиент" items={recipeIngredientItems} />
       </td>
       <td className="px-3 pb-3 w-1/3">
-        <InputControlled name={`ingredients.${index}.count`} type="number" label="Количество" min={0} required />
+        <InputUncontrolled name={`ingredients.${index}.count`} type="number" label="Количество" min={0} required />
       </td>
       <td className="pl-3 pb-3 flex flex-nowrap items-center w-1/3 min-w-[18rem]">
         <div className="flex items-center w-full">
-          <SelectControlled
+          <SelectUncontrolled
             name={`ingredients.${index}.amountTypeId`}
             className="flex-1"
             label="Единицы измерения"

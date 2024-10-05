@@ -21,7 +21,7 @@ export const variants = cva('inline-flex flex-nowrap items-center rounded-lg py-
     },
   },
   defaultVariants: {
-    variant: 'filled',
+    variant: 'outline',
   },
 });
 

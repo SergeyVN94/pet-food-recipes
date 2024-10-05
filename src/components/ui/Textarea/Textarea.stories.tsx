@@ -13,7 +13,7 @@ const meta: Meta<typeof Textarea> = {
 export default meta;
 type Story = StoryObj<typeof Textarea>;
 
-export const FilledUncontrolled: Story = {
+export const Controlled: Story = {
   args: {
     variant: 'filled',
     disabled: false,
@@ -34,7 +34,7 @@ export const FilledUncontrolled: Story = {
   },
 };
 
-export const FilledControlled: Story = {
+export const Uncontrolled: Story = {
   args: {
     variant: 'filled',
     disabled: false,

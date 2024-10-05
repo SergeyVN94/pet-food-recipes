@@ -4,7 +4,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Checkbox, CheckboxControlled } from '.';
+import { Checkbox, CheckboxUncontrolled } from '.';
 import { Button } from '../Button';
 
 const meta: Meta<typeof Checkbox> = {
@@ -61,7 +61,7 @@ export const DefaultControlled: Story = {
     return (
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-col gap-5">
-          <CheckboxControlled {...props} name="story" label="checkbox" />
+          <CheckboxUncontrolled {...props} name="story" label="checkbox" />
           <Button type="submit" className="self-start">
             submit
           </Button>

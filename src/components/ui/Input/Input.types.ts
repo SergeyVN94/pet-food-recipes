@@ -1,4 +1,4 @@
-export type AutoCompleteItem = {
+export type InputAutocompleteItem = {
   id: string;
   label: string;
 };

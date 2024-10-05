@@ -1,1 +1,1 @@
-export { default as Select, SelectControlled, type SelectItem } from './Select';
+export { default as Select, SelectUncontrolled, type SelectItem } from './Select';

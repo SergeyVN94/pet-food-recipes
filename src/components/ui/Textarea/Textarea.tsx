@@ -8,7 +8,8 @@ import { mergeRefs } from 'react-merge-refs';
 import { IconCancel } from '@/assets/icons';
 
 import { ButtonIcon } from '../ButtonIcon';
-import { InputVariantProps, labelVariants, updateTextareaHeight, wrapVariants } from './Input.lib';
+import { labelVariants, wrapVariants } from '../Input/Input.lib';
+import { TextareaVariantProps, updateTextareaHeight } from './Textarea.lib';
 
 type TextareaProps = {
   label?: string;
@@ -18,7 +19,7 @@ type TextareaProps = {
   onChange?: (ev: React.ChangeEvent<HTMLTextAreaElement>, value: string) => void;
   onClear?: () => void;
 } & Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> &
-  Omit<InputVariantProps, 'focus'>;
+  Omit<TextareaVariantProps, 'focus'>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ variant, label, subText, maxRows, onChange, onClear, className = '', ...other }, ref) => {
@@ -50,6 +51,10 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
       if (onClear) {
         onClear();
+
+        if (localRef.current) {
+          updateTextareaHeight(localRef.current);
+        }
       }
     };
 

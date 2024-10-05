@@ -1,2 +1,2 @@
-export { default as Input, InputControlled } from './Input';
-export { default as Textarea, TextareaControlled } from './Textarea';
+export { default as Input, InputUncontrolled } from './Input';
+export type { InputAutocompleteItem } from './Input.types';

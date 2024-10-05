@@ -72,9 +72,9 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 );
 Checkbox.displayName = 'Checkbox';
 
-type CheckboxControlledProps = Omit<CheckboxProps, 'onChange' | 'checked' | 'value'>;
+type CheckboxUncontrolledProps = Omit<CheckboxProps, 'onChange' | 'checked' | 'value'>;
 
-export const CheckboxControlled = (props: CheckboxControlledProps) => {
+export const CheckboxUncontrolled = (props: CheckboxUncontrolledProps) => {
   const methods = useFormContext();
 
   return (

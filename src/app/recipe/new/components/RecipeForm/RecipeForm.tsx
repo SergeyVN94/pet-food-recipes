@@ -5,7 +5,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Button, FileInputControlled, InputControlled, TextareaControlled } from '@/components/ui';
+import { Button, FileInputUncontrolled, InputUncontrolled, TextareaControlled } from '@/components/ui';
 import { useAmountTypes, useMakeRecipe, useRecipeIngredients } from '@/hooks';
 import { RecipeDtoIngredient } from '@/types';
 
@@ -63,9 +63,9 @@ const RecipeForm = ({ className }: { className?: string }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
-        <InputControlled name="title" label="Название" required disabled={isLoading} />
+        <InputUncontrolled name="title" label="Название" required disabled={isLoading} />
         <TextareaControlled name="description" label="Описание" className="mt-4" required disabled={isLoading} />
-        <FileInputControlled
+        <FileInputUncontrolled
           name="images"
           label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"
           multiple

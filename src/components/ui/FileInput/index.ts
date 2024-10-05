@@ -1,1 +1,1 @@
-export { default as FileInput, FileInputControlled } from './FileInput';
+export { default as FileInput, FileInputUncontrolled } from './FileInput';

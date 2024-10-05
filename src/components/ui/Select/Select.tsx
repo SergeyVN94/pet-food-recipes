@@ -143,9 +143,9 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
   );
 };
 
-type SelectControlledProps = Omit<SelectProps, 'onChange' | 'value'>;
+type SelectUncontrolledProps = Omit<SelectProps, 'onChange' | 'value'>;
 
-export const SelectControlled = ({ ...other }: SelectControlledProps) => {
+export const SelectUncontrolled = ({ ...other }: SelectUncontrolledProps) => {
   const { control } = useFormContext();
 
   return (

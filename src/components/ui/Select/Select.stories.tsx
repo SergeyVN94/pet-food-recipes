@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Select, SelectControlled, SelectItem } from '.';
+import { Select, SelectItem, SelectUncontrolled } from '.';
 import { Button } from '../Button';
 
 const meta: Meta<typeof Select> = {
@@ -54,7 +54,7 @@ export const FilledControlled: Story = {
     return (
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)} className="flex gap-4">
-          <SelectControlled {...props} name="controlled" items={items} />
+          <SelectUncontrolled {...props} name="controlled" items={items} />
           {/* <Button type="submit">submit</Button> */}
         </form>
       </FormProvider>

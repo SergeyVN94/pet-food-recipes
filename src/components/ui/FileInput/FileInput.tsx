@@ -98,11 +98,11 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(({ className, onC
 });
 FileInput.displayName = 'FileInput';
 
-type InputControlledProps = Omit<FileInputProps, 'onChange' | 'value' | 'onBlur' | 'onFocus' | 'name'> & {
+type InputUncontrolledProps = Omit<FileInputProps, 'onChange' | 'value' | 'onBlur' | 'onFocus' | 'name'> & {
   name: string;
 };
 
-export const FileInputControlled = (props: InputControlledProps) => {
+export const FileInputUncontrolled = (props: InputUncontrolledProps) => {
   const methods = useFormContext();
 
   const handleClear = () => {
