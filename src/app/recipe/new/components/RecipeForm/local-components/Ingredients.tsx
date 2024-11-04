@@ -31,7 +31,7 @@ const IngredientsRow = ({
 }: IngredientsRowProps) => {
   const context = useFormContext();
 
-  const ingredientId: RecipeIngredient['id'] | undefined = useWatch({
+  const ingredientId: string = useWatch({
     name: `ingredients.${index}.ingredientId`,
     control: context.control,
   });
@@ -41,9 +41,9 @@ const IngredientsRow = ({
       return amountTypeItems;
     }
 
-    const ingredient = recipeIngredientMap.get(ingredientId)!;
+    const ingredient = recipeIngredientMap.get(Number(ingredientId))!;
 
-    return amountTypeItems.filter(i => ingredient.amountTypes.some(j => j.id === i.id));
+    return amountTypeItems.filter(amountType => ingredient.amountTypes.some(j => j.id === Number(amountType.id)));
   }, [amountTypeItems, ingredientId, recipeIngredientMap]);
 
   return (
@@ -81,18 +81,18 @@ type IngredientsProps = {
 const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: IngredientsProps) => {
   const amountTypeItems: SelectItem[] = React.useMemo(
     () =>
-      amountTypes.map(i => ({
-        id: i.id,
-        label: i.name,
+      amountTypes.map(amountType => ({
+        id: String(amountType.id),
+        label: amountType.name,
       })),
     [amountTypes],
   );
 
   const recipeIngredientItems: SelectItem[] = React.useMemo(
     () =>
-      recipeIngredients.map(i => ({
-        id: i.id,
-        label: i.name,
+      recipeIngredients.map(recipeIngredient => ({
+        id: String(recipeIngredient.id),
+        label: recipeIngredient.name,
       })),
     [recipeIngredients],
   );
@@ -102,7 +102,7 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
     [recipeIngredients],
   );
 
-  const { append, remove, fields, move } = useFieldArray<FormFields, 'ingredients'>({
+  const { append, remove, fields } = useFieldArray<FormFields, 'ingredients'>({
     name: 'ingredients',
     control: methods.control,
   });
@@ -118,9 +118,9 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
   };
 
   const recipeIngredientItemsFiltered: SelectItem[] = React.useMemo(() => {
-    const selectedIngredientsSet = fields.reduce((acc, value) => acc.add(value.id), new Set());
+    const selectedIngredientsSet = fields.reduce((acc, value) => acc.add(value.ingredientId), new Set());
 
-    return recipeIngredientItems.filter(i => !selectedIngredientsSet.has(i.id));
+    return recipeIngredientItems.filter(recipeIngredient => !selectedIngredientsSet.has(recipeIngredient.id));
   }, [recipeIngredientItems, fields]);
 
   return (

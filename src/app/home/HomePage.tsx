@@ -1,4 +1,5 @@
-import { Header, SearchBar } from '@/components';
+import { SearchBar } from '@/components';
+import { PageLayout } from '@/layouts';
 import { RecipeService } from '@/services';
 
 import { ActualRecipesList, Filters } from './components';
@@ -17,20 +18,15 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
   const res = await RecipeService.postRecipesSearch(filter);
 
   return (
-    <div>
-      <Header />
-      <main>
-        <div className="container py-12 grid grid-cols-[minmax(400px,1fr),minmax(200px,300px)] gap-4">
-          <div>
-            <SearchBar delay={350} placeholder="Введите запрос" isClearable />
-            <ActualRecipesList initialRecipes={res.data} />
-          </div>
-          <aside>
-            <Filters />
-          </aside>
-        </div>
-      </main>
-    </div>
+    <PageLayout className="grid grid-cols-[minmax(400px,1fr),minmax(200px,300px)] gap-4">
+      <div>
+        <SearchBar delay={350} placeholder="Введите запрос" isClearable />
+        <ActualRecipesList initialRecipes={res.data} />
+      </div>
+      <aside>
+        <Filters />
+      </aside>
+    </PageLayout>
   );
 };
 

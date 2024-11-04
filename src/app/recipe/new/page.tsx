@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { Header } from '@/components';
+import { PageLayout } from '@/layouts';
 
 import { RecipeForm } from './components';
 
@@ -10,15 +10,10 @@ export const metadata: Metadata = {
 
 const NewRecipePage = () => {
   return (
-    <div>
-      <Header />
-      <main>
-        <div className="container py-12">
-          <h1 className="headline-l">Добавить рецепт</h1>
-          <RecipeForm className="mt-8" />
-        </div>
-      </main>
-    </div>
+    <PageLayout>
+      <h1 className="headline-l">Добавить рецепт</h1>
+      <RecipeForm className="mt-8" />
+    </PageLayout>
   );
 };
 

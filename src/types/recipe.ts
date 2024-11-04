@@ -1,5 +1,5 @@
 export type AmountType = {
-  id: string;
+  id: number;
   name: string;
   slug: string;
   createdAt: string;
@@ -7,7 +7,7 @@ export type AmountType = {
 };
 
 export type RecipeIngredient = {
-  id: string;
+  id: number;
   slug: string;
   name: string;
   description: string;
