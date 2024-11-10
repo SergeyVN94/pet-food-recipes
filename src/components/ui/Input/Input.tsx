@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Controller, useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 
@@ -20,6 +19,7 @@ type InputProps = {
   iconLeft?: React.JSX.Element;
   iconRight?: React.JSX.Element;
   autocompleteItems?: InputAutocompleteItem[];
+  errorMessage?: string;
   onAutoCompleteSelect?: (id: string) => void;
   onChange?: (ev: React.ChangeEvent<HTMLInputElement>, value: string) => void;
   onClear?: () => void;
@@ -44,11 +44,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onBlur,
       onAutoCompleteSelect,
       onRightButtonClick,
+      errorMessage,
       ...other
     },
     ref,
   ) => {
-    const [autocompleteOpen, setAutocompleteOpen] = React.useState(false);
     const localRef = React.useRef<HTMLInputElement>(null);
     const labelRef = React.useRef<HTMLSpanElement>(null);
     const buttonClearRef = React.useRef<HTMLButtonElement>(null);
@@ -63,19 +63,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const handleFocus: React.FocusEventHandler<HTMLInputElement> = ev => {
       onFocus?.(ev);
-
-      if (autocompleteItems !== undefined) {
-        setAutocompleteOpen(true);
-      }
     };
 
     const handleBlur: React.FocusEventHandler<HTMLInputElement> = ev => {
       onBlur?.(ev);
     };
 
-    const handleRootClick = () => {
+    const handleRootClick: React.MouseEventHandler<HTMLDivElement> = ev => {
+      if (!(ev.target instanceof HTMLDivElement) || ev.target.getAttribute('data-type') !== 'root') {
+        return;
+      }
+
       localRef.current?.focus();
-      setAutocompleteOpen(true);
     };
 
     const handleClear: React.MouseEventHandler<HTMLButtonElement> = ev => {
@@ -96,12 +95,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const handleRightButtonClick: React.MouseEventHandler<HTMLButtonElement> = ev => {
       ev.stopPropagation();
       onRightButtonClick?.();
-    };
-
-    const handleOpenChange = (state: boolean) => {
-      console.log('handleOpenChange', state);
-
-      setAutocompleteOpen(state);
     };
 
     React.useEffect(() => {
@@ -134,76 +127,55 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }, [other.value]);
 
     return (
-      <DropdownMenu.Root open={autocompleteOpen} onOpenChange={handleOpenChange} modal={false}>
-        <div className={className}>
-          <DropdownMenu.Trigger asChild>
-            <div className={wrapVariants({ variant })} onClick={handleRootClick} data-icon-left={!!iconLeft}>
-              {iconLeft &&
-                React.cloneElement(iconLeft, {
-                  width: 48,
-                  height: 48,
-                  className: 'p-3',
-                })}
-              <label className="flex-1">
-                <input
-                  className={inputVariants({ variant })}
-                  {...other}
-                  onBlur={handleBlur}
-                  onFocus={handleFocus}
-                  data-with-label={!!label}
-                  onChange={handleChange}
-                  ref={mergeRefs([ref, localRef])}
-                />
-                {label && (
-                  <span
-                    className={labelVariants({ variant })}
-                    ref={labelRef}
-                    data-icon-left={!!iconLeft}
-                    data-force-focus={!!(other.value ?? '') || other.placeholder || isFocus}
-                  >
-                    {label}
-                  </span>
-                )}
-              </label>
-              {onClear && (
-                <ButtonIcon className="hidden" onClick={handleClear} type="button" ref={buttonClearRef} layoutSize={48}>
-                  <IconCancel />
-                </ButtonIcon>
-              )}
-              {iconRight && (
-                <ButtonIcon onClick={handleRightButtonClick} type="button">
-                  {iconRight}
-                </ButtonIcon>
-              )}
-            </div>
-          </DropdownMenu.Trigger>
-          {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
-          <DropdownMenu.Portal>
-            <DropdownMenu.Content
-              className="rounded py-2 bg-surf-cont-high max-w-80"
-              align="start"
-              onFocusOutside={ev => ev.preventDefault()}
-              onMouseOver={ev => ev.preventDefault()}
-            >
-              <div className="max-h-[21rem] overflow-y-auto">
-                {autocompleteItems?.length === 0 && (
-                  <DropdownMenu.Item className="body-l py-2 px-3 cursor-default outline-none">Ничего не найдено</DropdownMenu.Item>
-                )}
-                {autocompleteItems?.map(item => (
-                  <DropdownMenu.Item
-                    className="flex items-center body-l py-1 px-3 transition-colors hover:bg-surf-cont-highest cursor-pointer outline-none focus:bg-surf-cont-highest line-clamp-2 h-14"
-                    onClick={() => onAutoCompleteSelect?.(item.id)}
-                    key={item.id}
-                    onMouseOver={ev => ev.preventDefault()}
-                  >
-                    <p>{item.label}</p>
-                  </DropdownMenu.Item>
-                ))}
-              </div>
-            </DropdownMenu.Content>
-          </DropdownMenu.Portal>
+      <div className={className}>
+        <div
+          className={wrapVariants({ variant, withError: !!errorMessage })}
+          onClick={handleRootClick}
+          data-icon-left={!!iconLeft}
+          data-type="root"
+        >
+          {iconLeft &&
+            React.cloneElement(iconLeft, {
+              width: 48,
+              height: 48,
+              className: 'p-3',
+            })}
+          <label className="flex-1">
+            <input
+              className={inputVariants({ variant })}
+              {...other}
+              value={other.value ?? ''}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              data-with-label={!!label}
+              onChange={handleChange}
+              ref={mergeRefs([ref, localRef])}
+            />
+            {label && (
+              <span
+                className={labelVariants({ variant })}
+                ref={labelRef}
+                data-icon-left={!!iconLeft}
+                data-force-focus={!!(other.value ?? '') || other.placeholder || isFocus}
+              >
+                {label}
+              </span>
+            )}
+          </label>
+          {onClear && (
+            <ButtonIcon className="hidden" onClick={handleClear} type="button" ref={buttonClearRef} layoutSize={48}>
+              <IconCancel />
+            </ButtonIcon>
+          )}
+          {iconRight && (
+            <ButtonIcon onClick={handleRightButtonClick} type="button">
+              {iconRight}
+            </ButtonIcon>
+          )}
         </div>
-      </DropdownMenu.Root>
+        {subText && !errorMessage && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
+        {errorMessage && <p className="pt-1 px-4 body-s text-error">{errorMessage}</p>}
+      </div>
     );
   },
 );
@@ -218,6 +190,8 @@ export const InputUncontrolled = ({ isClearable = true, ...other }: InputUncontr
   const methods = useFormContext();
 
   const handleClear = () => {
+    console.log('clear', other.name);
+
     methods.resetField(other.name);
 
     if (other.onClear) {
@@ -229,9 +203,20 @@ export const InputUncontrolled = ({ isClearable = true, ...other }: InputUncontr
     <Controller
       name={other.name}
       control={methods.control}
-      render={({ field }) => (
-        <Input {...other} onChange={(ev, value) => field.onChange(value)} onBlur={field.onBlur} value={field.value} onClear={handleClear} />
-      )}
+      render={({ field, fieldState }) => {
+        console.log(fieldState);
+
+        return (
+          <Input
+            {...other}
+            onChange={(ev, value) => field.onChange(value)}
+            onBlur={field.onBlur}
+            value={field.value}
+            onClear={handleClear}
+            errorMessage={fieldState.error?.message}
+          />
+        );
+      }}
     />
   );
 };

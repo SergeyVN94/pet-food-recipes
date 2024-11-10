@@ -8,7 +8,18 @@ export const wrapVariants = cva('group outline-none flex flex-nowrap items-start
       outline:
         'py-1 pl-4 outline outline-1 -outline-offset-1 outline-outline rounded min-h-[3.5rem] hover:outline-on-surface focus-within:outline-primary hover:focus-within:outline-primary focus-within:outline-[3px] focus-within:-outline-offset-[3px] data-[icon-left="true"]:pl-0',
     },
+    withError: {
+      true: '',
+      false: '',
+    },
   },
+  compoundVariants: [
+    {
+      variant: 'filled',
+      withError: true,
+      class: 'bg-error-container',
+    },
+  ],
   defaultVariants: {
     variant: 'filled',
   },
