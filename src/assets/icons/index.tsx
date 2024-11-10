@@ -73,3 +73,5 @@ export { default as IconStar } from './star.svg';
 export { default as IconSticker } from './sticker.svg';
 export { default as IconToday } from './today.svg';
 export { default as IconTranslate } from './translate.svg';
+export { default as IconEyeOpen } from './eye_open.svg';
+export { default as IconEyeClosed } from './eye_closed.svg';

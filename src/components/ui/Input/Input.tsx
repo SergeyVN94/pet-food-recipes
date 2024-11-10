@@ -23,6 +23,7 @@ type InputProps = {
   onAutoCompleteSelect?: (id: string) => void;
   onChange?: (ev: React.ChangeEvent<HTMLInputElement>, value: string) => void;
   onClear?: () => void;
+  onRightButtonClick?: () => void;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
   Omit<InputVariantProps, 'focus'>;
 
@@ -42,6 +43,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onFocus,
       onBlur,
       onAutoCompleteSelect,
+      onRightButtonClick,
       ...other
     },
     ref,
@@ -76,7 +78,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       setAutocompleteOpen(true);
     };
 
-    const handleClear = () => {
+    const handleClear: React.MouseEventHandler<HTMLButtonElement> = ev => {
+      ev.stopPropagation();
+
       if (localRef.current) {
         labelRef.current?.setAttribute('data-focus', 'false');
         localRef.current.style.height = '';
@@ -86,9 +90,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         buttonClearRef.current.classList.add('hidden');
       }
 
-      if (onClear) {
-        onClear();
-      }
+      onClear?.();
+    };
+
+    const handleRightButtonClick: React.MouseEventHandler<HTMLButtonElement> = ev => {
+      ev.stopPropagation();
+      onRightButtonClick?.();
     };
 
     const handleOpenChange = (state: boolean) => {
@@ -163,12 +170,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                   <IconCancel />
                 </ButtonIcon>
               )}
-              {iconRight &&
-                React.cloneElement(iconRight, {
-                  width: 48,
-                  height: 48,
-                  className: 'p-3',
-                })}
+              {iconRight && (
+                <ButtonIcon onClick={handleRightButtonClick} type="button">
+                  {iconRight}
+                </ButtonIcon>
+              )}
             </div>
           </DropdownMenu.Trigger>
           {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}

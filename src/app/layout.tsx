@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React from 'react';
 
 import { Roboto } from 'next/font/google';
 import 'normalize.css';
@@ -17,7 +17,7 @@ export const metadata = {
   description: 'Сайт с разными рецептами',
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => (
+const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="ru" className="h-full">
     <body className={`${roboto.variable} h-full`}>
       <StoreProvider>

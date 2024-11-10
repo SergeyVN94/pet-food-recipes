@@ -12,6 +12,7 @@ const TanStackProvider = ({ children }: { children: React.ReactNode }) => {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
+            staleTime: 60 * 1000 * 2,
           },
         },
       }),

@@ -258,6 +258,10 @@ module.exports = {
           'border-radius': '5px',
           animation: '1.3s shine linear infinite',
         },
+
+        '.link': {
+          '@apply cursor-pointer text-primary font-bold underline': {},
+        },
       });
     },
   ],
