@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
-import { TokenResponseDto } from '@/types/auth';
+import { TokenResponseDto } from '@/types';
 
 import { apiInstance } from './lib';
 

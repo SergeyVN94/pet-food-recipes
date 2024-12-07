@@ -14,7 +14,8 @@ type HomePageProps = {
 };
 
 const HomePage = async ({ searchParams }: HomePageProps) => {
-  const filter = searchParamsToFilter(searchParams);
+  const localSearchParams = await searchParams;
+  const filter = searchParamsToFilter(localSearchParams);
   const res = await RecipeService.postRecipesSearch(filter);
 
   return (

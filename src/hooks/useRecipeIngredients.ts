@@ -1,9 +1,11 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 
 import { RecipeIngredientService } from '@/services';
-import { RecipeIngredient } from '@/types';
+import { RecipeIngredientDto } from '@/types';
 
-const useRecipeIngredients = (config: UseQueryOptions<RecipeIngredient[] | null, Error, RecipeIngredient[] | null> = {}) =>
+const useRecipeIngredients = (
+  config: Omit<UseQueryOptions<RecipeIngredientDto[] | null, Error, RecipeIngredientDto[] | null>, 'queryKey' | 'queryFn'> = {},
+) =>
   useQuery({
     queryKey: ['recipe-ingredients', 'get'],
     queryFn: async ({ signal }) => {
@@ -11,7 +13,6 @@ const useRecipeIngredients = (config: UseQueryOptions<RecipeIngredient[] | null,
 
       return response.data;
     },
-    initialData: null,
     refetchOnWindowFocus: false,
     ...config,
   });

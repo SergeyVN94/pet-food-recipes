@@ -1,4 +1,4 @@
-export type AmountType = {
+export type AmountTypeDto = {
   id: number;
   name: string;
   slug: string;
@@ -6,54 +6,53 @@ export type AmountType = {
   updateAt: string;
 };
 
-export type RecipeIngredient = {
+export type RecipeIngredientDto = {
   id: number;
   slug: string;
   name: string;
   description: string;
-  amountTypes: AmountType[];
+  amountTypes: AmountTypeDto[];
   createdAt: string;
   updateAt: string;
   image?: string;
 };
 
-export type RecipeIngredientUnit = {
+export type RecipeIngredientUnitDto = {
   id: string;
   count: number;
-  ingredient: RecipeIngredient;
-  amountType: AmountType;
+  ingredient: RecipeIngredientDto;
+  amountType: AmountTypeDto;
   createdAt: string;
 };
 
-export type Recipe = {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  ingredients: RecipeIngredientUnit[];
-  images: string[];
-  steps: string[];
-  createdAt: string;
-  updateAt: string;
-};
-
-export type RecipeDtoStep = {
+export type RecipeStepDto = {
   order: number;
   value: string;
 };
 
-export type RecipeDtoIngredient = {
-  ingredientId: RecipeIngredient['id'];
-  amountTypeId: AmountType['id'];
-  count: number;
+export type RecipeDto = {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  images: string[];
+  steps: RecipeStepDto[];
+  ingredients: RecipeIngredientUnitDto[];
 };
 
-export type RecipeDto = {
+export type RecipeIngredientUnitCreateDto = {
+  count: number;
+  ingredientId: number;
+  amountTypeId: number;
+};
+
+export type RecipeCreateDto = {
   title: string;
   description: string;
-  images?: FileList | File[];
-  steps: RecipeDtoStep[];
-  ingredients: RecipeDtoIngredient[];
+  tags: string[];
+  images: string[];
+  steps: string[];
+  ingredients: RecipeIngredientUnitCreateDto[];
 };
 
 export type RecipeFilter = {

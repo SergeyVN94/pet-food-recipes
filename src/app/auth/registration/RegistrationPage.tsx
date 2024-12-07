@@ -29,8 +29,8 @@ const RegistrationPage = () => {
       <h1 className="headline-l mb-5">Регистрация</h1>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-col gap-4 w-full">
-          <InputUncontrolled name="userName" required label="Имя пользователя" />
-          <InputUncontrolled name="email" type="email" required label="Электронная почта" />
+          <InputUncontrolled name="userName" required label="Имя пользователя" autoComplete="username" />
+          <InputUncontrolled name="email" type="email" required label="Электронная почта" autoComplete="email" />
           <InputUncontrolled
             name="password"
             type={passwordFieldType}
@@ -38,6 +38,7 @@ const RegistrationPage = () => {
             onRightButtonClick={handleShowPassword}
             required
             label="Пароль"
+            autoComplete="off"
           />
           <InputUncontrolled
             name="confirmPassword"
@@ -46,6 +47,7 @@ const RegistrationPage = () => {
             onRightButtonClick={handleShowPassword}
             required
             label="Подтвердите пароль"
+            autoComplete="off"
           />
           <Button type="submit">Зарегистрироваться</Button>
         </form>

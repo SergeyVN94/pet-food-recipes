@@ -1,9 +1,9 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 
 import { RecipeIngredientService } from '@/services';
-import { AmountType } from '@/types';
+import { AmountTypeDto } from '@/types';
 
-const useAmountTypes = (config: UseQueryOptions<AmountType[] | null, Error, AmountType[]> = {}) =>
+const useAmountTypes = (config: Omit<UseQueryOptions<AmountTypeDto[] | null, Error, AmountTypeDto[]>, 'queryKey' | 'queryFn'> = {}) =>
   useQuery({
     queryKey: ['amount-types', 'get'],
     queryFn: async ({ signal }) => {
@@ -11,7 +11,6 @@ const useAmountTypes = (config: UseQueryOptions<AmountType[] | null, Error, Amou
 
       return response.data;
     },
-    initialData: null,
     refetchOnWindowFocus: false,
     ...config,
   });

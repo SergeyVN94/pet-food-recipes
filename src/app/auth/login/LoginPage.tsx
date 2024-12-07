@@ -4,12 +4,13 @@ import React from 'react';
 
 import { vestResolver } from '@hookform/resolvers/vest';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import { create, enforce, test } from 'vest';
 
 import { IconEyeClosed, IconEyeOpen } from '@/assets/icons';
 import { Button, InputUncontrolled } from '@/components/ui';
-import { useLogin } from '@/hooks';
+import { useAuthStore, useLogin } from '@/hooks';
 
 import { LoginFormFields } from '../Auth.types';
 
@@ -32,22 +33,26 @@ const validationSuite = create((data: Partial<LoginFormFields> = {}) => {
 });
 
 const LoginPage = () => {
+  const authStore = useAuthStore();
+  const navigate = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const methods = useForm<LoginFormFields>({
     resolver: vestResolver<LoginFormFields, unknown>(validationSuite),
   });
 
-  const { isLoading, mutateAsync: login } = useLogin({
+  const { isPending, mutateAsync: login } = useLogin({
     onError: error => {
-      console.log(error);
-
       if (error.response?.data?.message === 'User not found') {
         methods.setError('email', {
           type: 'validate',
           message: 'Пользователь не найден',
         });
       }
+    },
+    onSuccess: data => {
+      authStore.login(data.accessToken, data.refreshToken);
+      navigate.push('/');
     },
   });
 
@@ -56,7 +61,7 @@ const LoginPage = () => {
   };
 
   const handleSubmit = (formFields: LoginFormFields) => {
-    if (isLoading) {
+    if (isPending) {
       return;
     }
 
@@ -68,16 +73,17 @@ const LoginPage = () => {
       <h1 className="headline-l mb-5">Авторизация</h1>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-col gap-4 w-full">
-          <InputUncontrolled name="email" type="email" label="Электронная почта" disabled={isLoading} />
+          <InputUncontrolled name="email" type="email" label="Электронная почта" disabled={isPending} autoComplete="email" />
           <InputUncontrolled
             name="password"
             label="Пароль"
             type={showPassword ? 'text' : 'password'}
             iconRight={showPassword ? <IconEyeOpen className="size-6" /> : <IconEyeClosed className="size-6" />}
             onRightButtonClick={handleShowPassword}
-            disabled={isLoading}
+            disabled={isPending}
+            autoComplete="password"
           />
-          <Button type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isPending}>
             Войти
           </Button>
         </form>

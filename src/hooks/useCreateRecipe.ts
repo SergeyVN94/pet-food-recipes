@@ -1,19 +1,19 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 
 import { RecipeService } from '@/services';
-import { Recipe, RecipeDto } from '@/types';
+import { RecipeCreateDto, RecipeDto } from '@/types';
 
-const mutationFn = async (dto: RecipeDto) => {
+const mutationFn = async (dto: RecipeCreateDto) => {
   const response = await RecipeService.postRecipe(dto);
 
-  return response.data as Recipe;
+  return response.data;
 };
 
-const useMakeRecipe = (config: UseMutationOptions<Recipe, unknown, RecipeDto, unknown> = {}) =>
+const useCreateRecipe = (config: UseMutationOptions<RecipeDto, unknown, RecipeCreateDto, unknown> = {}) =>
   useMutation({
     mutationFn,
     mutationKey: ['recipe', 'post'],
     ...config,
   });
 
-export default useMakeRecipe;
+export default useCreateRecipe;

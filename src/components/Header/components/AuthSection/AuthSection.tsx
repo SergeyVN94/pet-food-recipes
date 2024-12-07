@@ -5,14 +5,20 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { ButtonLink } from '@/components/ui';
-import { useAuthStore } from '@/hooks';
+import { useUser } from '@/hooks';
 
-const AuthSection = observer(() => {
-  const authStore = useAuthStore();
+const AuthSection = () => {
+  const { data: user, isLoading } = useUser({
+    staleTime: Infinity,
+  });
 
-  return authStore.userName ? (
+  if (isLoading) {
+    return <div className="skeleton w-[150px] h-[2.5rem] cursor-progress rounded-full" />;
+  }
+
+  return user ? (
     <div>
-      <p className="headline-l">{authStore.userName}</p>
+      <p className="headline-m">{user?.userName}</p>
     </div>
   ) : (
     <>
@@ -24,6 +30,6 @@ const AuthSection = observer(() => {
       </ButtonLink>
     </>
   );
-});
+};
 
 export default AuthSection;

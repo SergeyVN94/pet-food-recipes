@@ -2,52 +2,54 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
-import { Header } from '@/components';
 import { Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
-import { Recipe } from '@/types';
+import { RecipeService } from '@/services';
 
-const RecipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
+const recipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
 
 type RecipePageProps = {
   slug: string;
 };
 
 export const generateMetadata = async ({ params }: { params: RecipePageProps }): Promise<Metadata> => {
-  const { slug } = params;
-  const response = await fetch(`${process.env.NEXT_BASE_API_URL}/api/v1/recipes/${slug}`);
+  const { slug } = await params;
+  const response = await RecipeService.getRecipe(slug);
 
   if (response.status !== 200) {
     redirect('/404');
   }
 
-  const recipe: Recipe = await response.json();
+  const recipe = response.data;
 
   return {
     title: recipe.title,
   };
 };
 
-const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => {
-  const response = await fetch(`${process.env.NEXT_BASE_API_URL}/api/v1/recipes/${slug}`);
+const RecipePage = async ({ params }: { params: RecipePageProps }) => {
+  const { slug } = await params;
+  const response = await RecipeService.getRecipe(slug);
+
+  console.log(response.data);
 
   if (response.status !== 200) {
     redirect('/404');
   }
 
-  const recipe: Recipe = await response.json();
+  const recipe = response.data;
 
-  const tableRows = recipe.ingredients.map(i => ({
-    id: i.id,
-    ingredientName: i.ingredient.name,
-    amountTypeValue: `${i.count} ${i.amountType.name}`,
+  const tableRows = recipe.ingredients.map(ingredientUnit => ({
+    id: ingredientUnit.id,
+    ingredientName: ingredientUnit.ingredient.name,
+    amountTypeValue: ingredientUnit.amountType.name,
   }));
 
   return (
     <PageLayout>
       <h1 className="headline-l">{recipe.title}</h1>
       <p className="body-l mt-8">{recipe.description}</p>
-      {recipe.images.length > 0 && (
+      {recipe.images && recipe.images.length > 0 && (
         <section className="mt-16 flex flex-wrap gap-4">
           {recipe.images.map((src, index) => (
             <div key={src} className="flex-1 basis-[32%]">
@@ -63,14 +65,14 @@ const RecipePage = async ({ params: { slug } }: { params: RecipePageProps }) => 
       )}
       <section className="mt-16">
         <h3 className="headline-l">Ингредиенты</h3>
-        <Table columns={RecipesTableColumns} showTableHead={false} rows={tableRows} />
+        <Table columns={recipesTableColumns} showTableHead={false} rows={tableRows} />
       </section>
       <section className="mt-16">
         <h3 className="headline-l">Этапы приготовления</h3>
         {recipe.steps.map((step, index) => (
           <div key={index} className=" mt-8 border-b border-primary/50 pb-4">
             <h4 className="title-l">Этап {index + 1}</h4>
-            <p className="body-l mt-3">{step}</p>
+            <p className="body-l mt-3">{step.value}</p>
           </div>
         ))}
       </section>

@@ -1,45 +1,51 @@
+import { deleteCookie, getCookie, setCookie } from 'cookies-next/client';
 import { makeAutoObservable } from 'mobx';
 
 class AuthStore {
   private _authToken = '';
   private _refreshToken = '';
-  private _userName = '';
-  private _email = '';
+  private _isAuthenticated = false;
 
   constructor() {
     makeAutoObservable(this);
+
+    this._authToken = getCookie('authToken') ?? '';
+    this._refreshToken = getCookie('refreshToken') ?? '';
+    this._isAuthenticated = !!this._authToken;
+  }
+
+  public get isAuthenticated() {
+    return this._isAuthenticated;
+  }
+
+  public set isAuthenticated(v: boolean) {
+    this._isAuthenticated = v;
   }
 
   public get authToken() {
     return this._authToken;
   }
 
-  public set authToken(v: string) {
-    this._authToken = v;
-  }
-
   public get refreshToken() {
     return this._refreshToken;
   }
 
-  public set refreshToken(v: string) {
-    this._refreshToken = v;
+  public login(authToken: string, refreshToken: string) {
+    this._authToken = authToken;
+    this._refreshToken = refreshToken;
+    this._isAuthenticated = true;
+
+    setCookie('authToken', authToken);
+    setCookie('refreshToken', refreshToken);
   }
 
-  public get userName() {
-    return this._userName;
-  }
+  public logout() {
+    this._authToken = '';
+    this._refreshToken = '';
+    this._isAuthenticated = false;
 
-  public set userName(v: string) {
-    this._userName = v;
-  }
-
-  public get email() {
-    return this._email;
-  }
-
-  public set email(v: string) {
-    this._email = v;
+    deleteCookie('authToken');
+    deleteCookie('refreshToken');
   }
 }
 

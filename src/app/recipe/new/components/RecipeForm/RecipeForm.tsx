@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button, FileInputUncontrolled, InputUncontrolled, TextareaControlled } from '@/components/ui';
-import { useAmountTypes, useMakeRecipe, useRecipeIngredients } from '@/hooks';
-import { RecipeDtoIngredient } from '@/types';
+import { useAmountTypes, useCreateRecipe, useRecipeIngredients } from '@/hooks';
+import { RecipeIngredientUnitCreateDto } from '@/types';
 
 import { FormFields } from './RecipeForm.types';
 import { Ingredients, Steps } from './local-components';
@@ -20,8 +20,9 @@ const RecipeForm = ({ className }: { className?: string }) => {
   const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useRecipeIngredients({
     refetchOnMount: true,
   });
+  console.log(recipeIngredients);
 
-  const { mutateAsync, isLoading } = useMakeRecipe({
+  const { mutateAsync, isPending } = useCreateRecipe({
     onSuccess: data => {
       navigate.push(`/recipe/${data.slug}`);
     },
@@ -30,12 +31,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
     defaultValues: {
       title: '',
       description: '',
-      steps: [
-        {
-          order: 0,
-          value: '',
-        },
-      ],
+      steps: [''],
       ingredients: [
         {
           count: 0,
@@ -45,15 +41,14 @@ const RecipeForm = ({ className }: { className?: string }) => {
   });
 
   const handleSubmit = (formFields: FormFields) => {
-    if (isLoading) {
+    if (isPending) {
       return;
     }
 
-    const ingredients: RecipeDtoIngredient[] = formFields.ingredients.filter(
-      i => i.count && i.amountTypeId && i.ingredientId,
-    ) as RecipeDtoIngredient[];
+    const ingredients = formFields.ingredients.filter(
+      ingredient => ingredient.count && ingredient.amountTypeId && ingredient.ingredientId,
+    ) as RecipeIngredientUnitCreateDto[];
 
-    console.log(formFields);
     mutateAsync({
       ...formFields,
       ingredients,
@@ -63,28 +58,28 @@ const RecipeForm = ({ className }: { className?: string }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
-        <InputUncontrolled name="title" label="Название" required disabled={isLoading} />
-        <TextareaControlled name="description" label="Описание" className="mt-4" required disabled={isLoading} />
+        <InputUncontrolled name="title" label="Название" required disabled={isPending} />
+        <TextareaControlled name="description" label="Описание" className="mt-4" required disabled={isPending} />
         <FileInputUncontrolled
           name="images"
           label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"
           multiple
           accept="image/png image/jpg image/jpeg"
           className="mt-4"
-          disabled={isLoading}
+          disabled={isPending}
         />
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
           <div className="skeleton mt-4 h-48" />
         ) : (
           <Ingredients
             methods={methods}
-            isLoading={isLoading}
+            isLoading={isPending}
             amountTypes={amountTypes ?? []}
             recipeIngredients={recipeIngredients ?? []}
           />
         )}
-        <Steps methods={methods} isLoading={isLoading} />
-        <Button className="mt-8" disabled={isLoading}>
+        <Steps methods={methods} isLoading={isPending} />
+        <Button className="mt-8" disabled={isPending}>
           Сохранить
         </Button>
       </form>

@@ -203,20 +203,16 @@ export const InputUncontrolled = ({ isClearable = true, ...other }: InputUncontr
     <Controller
       name={other.name}
       control={methods.control}
-      render={({ field, fieldState }) => {
-        console.log(fieldState);
-
-        return (
-          <Input
-            {...other}
-            onChange={(ev, value) => field.onChange(value)}
-            onBlur={field.onBlur}
-            value={field.value}
-            onClear={handleClear}
-            errorMessage={fieldState.error?.message}
-          />
-        );
-      }}
+      render={({ field, fieldState }) => (
+        <Input
+          {...other}
+          onChange={(ev, value) => field.onChange(value)}
+          onBlur={field.onBlur}
+          value={field.value}
+          onClear={handleClear}
+          errorMessage={fieldState.error?.message}
+        />
+      )}
     />
   );
 };

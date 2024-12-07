@@ -1,5 +1,5 @@
-import { RecipeDto, RecipeDtoIngredient } from '@/types';
+import { RecipeCreateDto, RecipeIngredientUnitCreateDto } from '@/types';
 
-export type FormFields = Omit<RecipeDto, 'ingredients'> & {
-  ingredients: Partial<RecipeDtoIngredient>[];
+export type FormFields = Omit<RecipeCreateDto, 'ingredients'> & {
+  ingredients: Partial<RecipeIngredientUnitCreateDto>[];
 };
