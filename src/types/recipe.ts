@@ -1,3 +1,5 @@
+import { UserDto } from './user';
+
 export type AmountTypeDto = {
   id: number;
   name: string;
@@ -27,7 +29,7 @@ export type RecipeIngredientUnitDto = {
 
 export type RecipeStepDto = {
   order: number;
-  value: string;
+  content: string;
 };
 
 export type RecipeDto = {
@@ -38,6 +40,9 @@ export type RecipeDto = {
   images: string[];
   steps: RecipeStepDto[];
   ingredients: RecipeIngredientUnitDto[];
+  user: UserDto;
+  createdAt: string;
+  updateAt: string;
 };
 
 export type RecipeIngredientUnitCreateDto = {

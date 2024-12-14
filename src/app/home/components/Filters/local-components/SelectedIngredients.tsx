@@ -2,23 +2,23 @@
 
 import { IconDelete } from '@/assets/icons';
 import { ButtonIcon } from '@/components/ui';
-import { RecipeIngredient } from '@/types';
+import { RecipeIngredientDto } from '@/types';
 
 import { FormFields } from '../Filters.types';
 
 type SelectedIngredientsProps = {
   selectedIngredients: FormFields['includesIngredients'];
-  ingredientsMap: Map<string, RecipeIngredient>;
-  onDelete: (id: string) => void;
+  ingredientsMap: Map<RecipeIngredientDto['id'], RecipeIngredientDto>;
+  onDelete: (id: RecipeIngredientDto['id']) => void;
 };
 
 const SelectedIngredients = ({ selectedIngredients, ingredientsMap, onDelete }: SelectedIngredientsProps) => {
   const ingredientsCards = Object.keys(selectedIngredients).reduce<React.ReactNode[]>((acc, ingredientId) => {
-    if (selectedIngredients[ingredientId]) {
+    if (selectedIngredients[Number(ingredientId)]) {
       acc.push(
         <div key={ingredientId} className="flex items-center flex-1 justify-start">
-          <p className="body-l mx-2">{ingredientsMap.get(ingredientId)?.name}</p>
-          <ButtonIcon onClick={() => onDelete(ingredientId)} className="ml-auto">
+          <p className="body-l mx-2">{ingredientsMap.get(Number(ingredientId))?.name}</p>
+          <ButtonIcon onClick={() => onDelete(Number(ingredientId))} className="ml-auto">
             <IconDelete />
           </ButtonIcon>
         </div>,

@@ -11,7 +11,7 @@ const Header = () => (
       <Link href="/">
         <h1 className="headline-m">Рецепты</h1>
       </Link>
-      <div className="flex flex-nowrap gap-2 ml-auto">
+      <div className="flex flex-nowrap gap-2 ml-auto items-center">
         <AuthSection />
         <ButtonLink href="/recipe/new" variant="filled" iconLeft={<IconAdd width={18} height={18} />}>
           Добавить рецепт

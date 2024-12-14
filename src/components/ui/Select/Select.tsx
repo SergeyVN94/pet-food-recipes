@@ -8,7 +8,7 @@ import debounce from 'lodash-es/debounce';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { IconArrowLeft, IconSearch } from '@/assets/icons';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 
 import { Input } from '../Input';
 

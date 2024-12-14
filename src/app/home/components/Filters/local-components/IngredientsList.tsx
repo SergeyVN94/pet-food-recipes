@@ -7,18 +7,18 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { IconAdd } from '@/assets/icons';
 import { SearchBar } from '@/components';
 import { ButtonIcon } from '@/components/ui';
-import { RecipeIngredient } from '@/types';
+import { RecipeIngredientDto } from '@/types';
 
 import { FormFields } from '../Filters.types';
 import SelectedIngredients from './SelectedIngredients';
 
 type IngredientsListProp = {
-  ingredientsMap: Map<string, RecipeIngredient>;
+  ingredientsMap: Map<RecipeIngredientDto['id'], RecipeIngredientDto>;
   selectedIngredients: FormFields['includesIngredients'];
   allSelectedIngredients: FormFields['includesIngredients'];
-  onAddIngredient: (id: string) => void;
-  onDeleteIngredient: (id: string) => void;
-  ingredients?: RecipeIngredient[] | null;
+  onAddIngredient: (id: RecipeIngredientDto['id']) => void;
+  onDeleteIngredient: (id: RecipeIngredientDto['id']) => void;
+  ingredients?: RecipeIngredientDto[] | null;
 };
 
 const IngredientsList = ({
@@ -34,6 +34,7 @@ const IngredientsList = ({
 
   const filteredIngredients = React.useMemo(() => {
     const normalizedSearch = search.toLowerCase();
+
     return (ingredients ?? []).filter(
       ingredient => !allSelectedIngredients[ingredient.id] && ingredient.name.toLowerCase().includes(normalizedSearch),
     );
@@ -48,7 +49,7 @@ const IngredientsList = ({
 
   return (
     <>
-      <SearchBar className="mb-4" onChange={setSearch} delay={200} placeholder="Поиск" isClearable searchParamName="" />
+      <SearchBar className="mb-4" onChange={setSearch} delay={250} placeholder="Поиск" isClearable searchParamName="" />
       {search.trim() && filteredIngredients.length === 0 && <p className="body-l my-1">По запросу «{search}» ничего не найдено</p>}
       <SelectedIngredients selectedIngredients={selectedIngredients} ingredientsMap={ingredientsMap} onDelete={onDeleteIngredient} />
       <div className="overflow-y-auto flex-1 max-h-[15rem]" ref={containerRef}>

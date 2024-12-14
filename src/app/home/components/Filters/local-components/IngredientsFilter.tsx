@@ -4,7 +4,7 @@ import React from 'react';
 
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { RecipeIngredient } from '@/types';
+import { RecipeIngredientDto } from '@/types';
 
 import { FormFields } from '../Filters.types';
 import Accordion from './Accordion';
@@ -12,14 +12,14 @@ import FiltersSection from './FiltersSection';
 import IngredientsList from './IngredientsList';
 
 type IngredientsFilterProps = {
-  ingredients?: RecipeIngredient[] | null;
+  ingredients?: RecipeIngredientDto[] | null;
 };
 
 const IngredientsFilter = ({ ingredients }: IngredientsFilterProps) => {
   const methods = useFormContext<FormFields>();
 
-  const ingredientsMap: Map<string, RecipeIngredient> = React.useMemo(
-    () => ingredients?.reduce((acc, ingredient) => acc.set(ingredient.id, ingredient), new Map<string, RecipeIngredient>()) ?? new Map(),
+  const ingredientsMap: Map<number, RecipeIngredientDto> = React.useMemo(
+    () => ingredients?.reduce((acc, ingredient) => acc.set(ingredient.id, ingredient), new Map<number, RecipeIngredientDto>()) ?? new Map(),
     [ingredients],
   );
 
@@ -38,21 +38,21 @@ const IngredientsFilter = ({ ingredients }: IngredientsFilterProps) => {
     [selectedIncludesIngredients, selectedExcludesIngredients],
   );
 
-  const handleIncludeClick = (id: string) => {
+  const handleIncludeClick = (id: RecipeIngredientDto['id']) => {
     methods.setValue('includesIngredients', {
       ...selectedIncludesIngredients,
       [id]: true,
     });
   };
 
-  const handleExcludeClick = (id: string) => {
+  const handleExcludeClick = (id: RecipeIngredientDto['id']) => {
     methods.setValue('excludesIngredients', {
       ...selectedExcludesIngredients,
       [id]: true,
     });
   };
 
-  const handleDeleteClick = (id: string) => {
+  const handleDeleteClick = (id: RecipeIngredientDto['id']) => {
     if (selectedIncludesIngredients[id]) {
       const nextSelected = { ...selectedIncludesIngredients };
       delete nextSelected[id];

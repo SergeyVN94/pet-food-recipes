@@ -19,8 +19,7 @@ const Steps = ({ methods, isLoading }: StepsProps) => {
 
   const handleAddStepBtnClick = () => {
     append({
-      order: fields.length,
-      value: '',
+      content: '',
     });
   };
 
@@ -42,7 +41,7 @@ const Steps = ({ methods, isLoading }: StepsProps) => {
       <div className="mt-4">
         {fields.map((field, index) => (
           <div key={field.id} className="mt-3 first:mt-0 flex flex-nowrap items-start">
-            <TextareaControlled className="flex-1" name={`steps.${index}.value`} label={`Этап ${index + 1}`} required rows={5} />
+            <TextareaControlled className="flex-1" name={`steps.${index}.content`} label={`Этап ${index + 1}`} required rows={5} />
             <div className="flex flex-col">
               <ButtonIcon onClick={() => handleRemoveStepBtnClick(index)} disabled={fields.length === 1}>
                 <IconDelete className="group-hover/button-icon:text-error" />

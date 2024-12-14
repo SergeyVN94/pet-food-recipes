@@ -81,6 +81,7 @@ const SearchBar = ({ delay, defaultValue, className, placeholder, onChange, isCl
       placeholder={placeholder}
       iconLeft={<IconSearch />}
       onClear={handleClear}
+      autoComplete="off"
     />
   );
 };

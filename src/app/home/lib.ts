@@ -1,9 +1,11 @@
 import { RecipeFilter } from '@/types';
 
 export const urlSearchParamsToFilter = (params: URLSearchParams): RecipeFilter => {
-  const filters: RecipeFilter = {
-    q: params.get('q') ?? '',
-  };
+  const filters: RecipeFilter = {};
+
+  if (params.get('q')?.trim()) {
+    filters.q = params.get('q')?.trim() ?? '';
+  }
 
   const includesIngredients = params
     .getAll('ingr-inc[]')
@@ -31,15 +33,21 @@ export const urlSearchParamsToFilter = (params: URLSearchParams): RecipeFilter =
 };
 
 export const searchParamsToFilter = (params: Record<string, string | string[]>): RecipeFilter => {
-  const filters: RecipeFilter = {
-    q: String(params.q ?? ''),
-  };
+  const filters: RecipeFilter = {};
 
-  const includesIngredients = (Array.isArray(params['ingr-inc[]']) ? params['ingr-inc[]'] : [])
+  if (params.q) {
+    filters.q = (params.q ?? '') as string;
+  }
+
+  const includesIngredients = (
+    params['ingr-inc[]'] ? (Array.isArray(params['ingr-inc[]']) ? params['ingr-inc[]'] : [params['ingr-inc[]']]) : []
+  )
     .map(i => i.trim().toLowerCase())
     .filter(Boolean);
 
-  const excludesIngredients = (Array.isArray(params['ingr-exc[]']) ? params['ingr-exc[]'] : [])
+  const excludesIngredients = (
+    params['ingr-exc[]'] ? (Array.isArray(params['ingr-exc[]']) ? params['ingr-exc[]'] : [params['ingr-exc[]']]) : []
+  )
     .map(i => i.trim().toLowerCase())
     .filter(Boolean);
 

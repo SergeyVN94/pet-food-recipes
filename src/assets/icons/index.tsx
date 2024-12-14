@@ -75,3 +75,4 @@ export { default as IconToday } from './today.svg';
 export { default as IconTranslate } from './translate.svg';
 export { default as IconEyeOpen } from './eye_open.svg';
 export { default as IconEyeClosed } from './eye_closed.svg';
+export { default as IconSchedule } from './schedule.svg';

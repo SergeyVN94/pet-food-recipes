@@ -6,7 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 
 import { IconAdd, IconCancel } from '@/assets/icons';
-import { cn, getNoun } from '@/lib/utils';
+import { cn, getNoun } from '@/utils/utils';
 
 import { ButtonIcon } from '../ButtonIcon';
 

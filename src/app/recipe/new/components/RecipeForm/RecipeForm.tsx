@@ -31,7 +31,11 @@ const RecipeForm = ({ className }: { className?: string }) => {
     defaultValues: {
       title: '',
       description: '',
-      steps: [''],
+      steps: [
+        {
+          content: '',
+        },
+      ],
       ingredients: [
         {
           count: 0,
@@ -52,6 +56,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
     mutateAsync({
       ...formFields,
       ingredients,
+      steps: formFields.steps.map(step => step.content),
     });
   };
 
@@ -64,6 +69,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
           name="images"
           label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"
           multiple
+          max={3}
           accept="image/png image/jpg image/jpeg"
           className="mt-4"
           disabled={isPending}

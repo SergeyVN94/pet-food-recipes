@@ -1,5 +1,5 @@
 import { Header } from '@/components';
-import { cn } from '@/lib';
+import { cn } from '@/utils';
 
 type PageLayoutProps = {
   children: React.ReactNode;

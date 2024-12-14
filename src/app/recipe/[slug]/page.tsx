@@ -2,9 +2,11 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
+import { IconSchedule } from '@/assets/icons';
 import { Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
 import { RecipeService } from '@/services';
+import { getNoun, getTimeSince } from '@/utils';
 
 const recipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
 
@@ -31,8 +33,6 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
   const { slug } = await params;
   const response = await RecipeService.getRecipe(slug);
 
-  console.log(response.data);
-
   if (response.status !== 200) {
     redirect('/404');
   }
@@ -42,12 +42,16 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
   const tableRows = recipe.ingredients.map(ingredientUnit => ({
     id: ingredientUnit.id,
     ingredientName: ingredientUnit.ingredient.name,
-    amountTypeValue: ingredientUnit.amountType.name,
+    amountTypeValue: `${ingredientUnit.count} ${ingredientUnit.amountType.name}`,
   }));
 
   return (
     <PageLayout>
-      <h1 className="headline-l">{recipe.title}</h1>
+      <p className="title-m flex flex-nowrap items-center gap-1 mb-2">
+        <IconSchedule className="size-6" />
+        <span>{getTimeSince(recipe.createdAt)}</span>
+      </p>
+      <h1 className="headline-l text-primary">{recipe.title}</h1>
       <p className="body-l mt-8">{recipe.description}</p>
       {recipe.images && recipe.images.length > 0 && (
         <section className="mt-16 flex flex-wrap gap-4">
@@ -71,8 +75,8 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
         <h3 className="headline-l">Этапы приготовления</h3>
         {recipe.steps.map((step, index) => (
           <div key={index} className=" mt-8 border-b border-primary/50 pb-4">
-            <h4 className="title-l">Этап {index + 1}</h4>
-            <p className="body-l mt-3">{step.value}</p>
+            <h4 className="title-l">Шаг {index + 1}</h4>
+            <p className="body-l mt-3">{step.content}</p>
           </div>
         ))}
       </section>

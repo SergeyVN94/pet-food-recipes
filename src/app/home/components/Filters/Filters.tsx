@@ -40,13 +40,13 @@ const Filters = () => {
     }
 
     Object.keys(includesIngredients).forEach(id => {
-      if (includesIngredients[id]) {
+      if (includesIngredients[Number(id)]) {
         nextParams.append('ingr-inc[]', id);
       }
     });
 
     Object.keys(excludesIngredients).forEach(id => {
-      if (excludesIngredients[id]) {
+      if (excludesIngredients[Number(id)]) {
         nextParams.append('ingr-exc[]', id);
       }
     });
