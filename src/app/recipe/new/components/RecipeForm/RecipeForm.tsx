@@ -20,7 +20,6 @@ const RecipeForm = ({ className }: { className?: string }) => {
   const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useRecipeIngredients({
     refetchOnMount: true,
   });
-  console.log(recipeIngredients);
 
   const { mutateAsync, isPending } = useCreateRecipe({
     onSuccess: data => {

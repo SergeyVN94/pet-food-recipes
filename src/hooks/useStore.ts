@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { authStoreContext } from '@/providers';
+import { storeContext } from '@/providers';
 
-const useAuthStore = () => {
-  const context = React.useContext(authStoreContext);
+const useStore = () => {
+  const context = React.useContext(storeContext);
 
   if (context === undefined) {
     throw new Error('useRootStore must be used within RootStoreProvider');
@@ -12,4 +12,4 @@ const useAuthStore = () => {
   return context;
 };
 
-export default useAuthStore;
+export default useStore;

@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { IconSchedule } from '@/assets/icons';
 import { Chip } from '@/components/ui';
+import { Avatar } from '@/components/ui/Avatar';
 import { RecipeDto } from '@/types';
 import { getTimeSince } from '@/utils';
 
@@ -23,9 +24,11 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
     >
       <Image alt={recipe.title} src={imageUrl} className="object-contain" width={256} height={256} />
       <div className="flex flex-col w-full self-stretch">
-        <div>{JSON.stringify(recipe.user)}</div>
-        <div className="flex items-center flex-nowrap mb-1 gap-4">
-          <p className="title-m">{recipe.user?.userName}</p>
+        <div className="flex items-center flex-nowrap mb-2 gap-4">
+          <p className="flex items-center gap-1">
+            {recipe.user && <Avatar user={recipe.user} className="size-8" />}
+            <span className="title-m">{recipe.user?.userName}</span>
+          </p>
           <p className="title-s flex flex-nowrap items-center gap-1">
             <IconSchedule className="size-5" />
             <span>{getTimeSince(recipe.createdAt)}</span>

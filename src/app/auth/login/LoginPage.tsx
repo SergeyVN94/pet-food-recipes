@@ -10,7 +10,7 @@ import { create, enforce, test } from 'vest';
 
 import { IconEyeClosed, IconEyeOpen } from '@/assets/icons';
 import { Button, InputUncontrolled } from '@/components/ui';
-import { useAuthStore, useLogin } from '@/hooks';
+import { useLogin, useStore } from '@/hooks';
 
 import { LoginFormFields } from '../Auth.types';
 
@@ -33,7 +33,7 @@ const validationSuite = create((data: Partial<LoginFormFields> = {}) => {
 });
 
 const LoginPage = () => {
-  const authStore = useAuthStore();
+  const store = useStore();
   const navigate = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -51,7 +51,7 @@ const LoginPage = () => {
       }
     },
     onSuccess: data => {
-      authStore.login(data.accessToken, data.refreshToken);
+      store.authStore.login(data.accessToken, data.refreshToken);
       navigate.push('/');
     },
   });

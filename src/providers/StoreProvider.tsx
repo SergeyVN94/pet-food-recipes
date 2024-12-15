@@ -2,18 +2,22 @@
 
 import React from 'react';
 
-import { AuthStore } from '@/store';
+import { useQueryClient } from '@tanstack/react-query';
 
-let store: AuthStore;
+import { RootStore } from '@/store';
 
-export const authStoreContext = React.createContext<AuthStore | undefined>(undefined);
+let store: RootStore;
+
+export const storeContext = React.createContext<RootStore | undefined>(undefined);
 
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = useQueryClient();
+
   if (!store) {
-    store = new AuthStore();
+    store = new RootStore(queryClient);
   }
 
-  return <authStoreContext.Provider value={store}>{children}</authStoreContext.Provider>;
+  return <storeContext.Provider value={store}>{children}</storeContext.Provider>;
 };
 
 export default StoreProvider;

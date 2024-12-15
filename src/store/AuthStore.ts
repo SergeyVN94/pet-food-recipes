@@ -1,12 +1,18 @@
+import { QueryClient } from '@tanstack/react-query';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next/client';
 import { makeAutoObservable } from 'mobx';
+
+import { RootStore } from '.';
 
 class AuthStore {
   private _authToken = '';
   private _refreshToken = '';
   private _isAuthenticated = false;
 
-  constructor() {
+  constructor(
+    private readonly rootStore: RootStore,
+    private readonly queryClient: QueryClient,
+  ) {
     makeAutoObservable(this);
 
     this._authToken = getCookie('authToken') ?? '';
@@ -16,10 +22,6 @@ class AuthStore {
 
   public get isAuthenticated() {
     return this._isAuthenticated;
-  }
-
-  public set isAuthenticated(v: boolean) {
-    this._isAuthenticated = v;
   }
 
   public get authToken() {
@@ -46,6 +48,11 @@ class AuthStore {
 
     deleteCookie('authToken');
     deleteCookie('refreshToken');
+
+    this.queryClient.resetQueries({
+      queryKey: ['user'],
+      exact: true,
+    });
   }
 }
 

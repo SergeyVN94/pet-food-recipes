@@ -1,4 +1,4 @@
-import './environment';
+/// <reference types="./environment.d.ts" />
 
 export type SVGIcon = React.ReactComponentElement<React.FC<React.SVGProps<SVGSVGElement>>>;
 

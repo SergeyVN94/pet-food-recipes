@@ -20,9 +20,9 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="ru" className="h-full">
     <body className={`${roboto.variable} h-full`}>
-      <StoreProvider>
-        <TanStackProvider>{children}</TanStackProvider>
-      </StoreProvider>
+      <TanStackProvider>
+        <StoreProvider>{children}</StoreProvider>
+      </TanStackProvider>
     </body>
   </html>
 );
