@@ -8,7 +8,7 @@ export type UserDto = {
   userName: string;
   email: string;
   role: UserRoles;
-  avatar?: string;
+  avatar: string | null;
   createdAt: string;
   updateAt: string;
 };

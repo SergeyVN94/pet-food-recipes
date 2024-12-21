@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import Image from 'next/image';
+
 import { UserDto } from '@/types';
 import { cn } from '@/utils';
 
@@ -18,7 +20,7 @@ const Avatar = ({ className, user }: AvatarProps) => {
   };
 
   return (
-    <img
+    <Image
       className={cn('size-10 rounded-xl block', className)}
       src={user.avatar ?? '/user-avatar-placeholder.png'}
       alt={`Аватар пользователя ${user.userName}`}

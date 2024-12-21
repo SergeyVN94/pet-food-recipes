@@ -52,6 +52,10 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
     count: filteredItems.length,
     getScrollElement: () => itemsParentRef.current,
     estimateSize: () => 56,
+    getItemKey: (index: number) => filteredItems[index].id,
+    onChange: instance => {
+      console.log(instance.options);
+    },
   });
 
   useEffect(() => {

@@ -7,18 +7,18 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { IconAdd } from '@/assets/icons';
 import { SearchBar } from '@/components';
 import { ButtonIcon } from '@/components/ui';
-import { RecipeIngredientDto } from '@/types';
+import { IngredientDto } from '@/types';
 
 import { FormFields } from '../Filters.types';
 import SelectedIngredients from './SelectedIngredients';
 
 type IngredientsListProp = {
-  ingredientsMap: Map<RecipeIngredientDto['id'], RecipeIngredientDto>;
+  ingredientsMap: Map<IngredientDto['id'], IngredientDto>;
   selectedIngredients: FormFields['includesIngredients'];
   allSelectedIngredients: FormFields['includesIngredients'];
-  onAddIngredient: (id: RecipeIngredientDto['id']) => void;
-  onDeleteIngredient: (id: RecipeIngredientDto['id']) => void;
-  ingredients?: RecipeIngredientDto[] | null;
+  onAddIngredient: (id: IngredientDto['id']) => void;
+  onDeleteIngredient: (id: IngredientDto['id']) => void;
+  ingredients?: IngredientDto[] | null;
 };
 
 const IngredientsList = ({

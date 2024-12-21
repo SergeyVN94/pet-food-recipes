@@ -1,18 +1,20 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import { IconSchedule } from '@/assets/icons';
+import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
 import { Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
 import { RecipeService } from '@/services';
-import { getNoun, getTimeSince } from '@/utils';
+import { AmountTypeDto, IngredientDto } from '@/types';
+import { getTimeSince } from '@/utils';
 
 const recipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
 
-type RecipePageProps = {
+type RecipePageProps = Promise<{
   slug: string;
-};
+}>;
 
 export const generateMetadata = async ({ params }: { params: RecipePageProps }): Promise<Metadata> => {
   const { slug } = await params;
@@ -31,18 +33,30 @@ export const generateMetadata = async ({ params }: { params: RecipePageProps }):
 
 const RecipePage = async ({ params }: { params: RecipePageProps }) => {
   const { slug } = await params;
-  const response = await RecipeService.getRecipe(slug);
+  const [recipeResponse, ingredients, amountTypes] = await Promise.all([RecipeService.getRecipe(slug), getIngredients(), getAmountTypes()]);
 
-  if (response.status !== 200) {
-    redirect('/404');
+  if (recipeResponse.status !== 200) {
+    notFound();
   }
 
-  const recipe = response.data;
+  const recipe = recipeResponse.data;
 
-  const tableRows = recipe.ingredients.map(ingredientUnit => ({
-    id: ingredientUnit.id,
-    ingredientName: ingredientUnit.ingredient.name,
-    amountTypeValue: `${ingredientUnit.count} ${ingredientUnit.amountType.name}`,
+  const ingredientsMap = ingredients.reduce<Record<IngredientDto['id'], IngredientDto>>((acc, ingredient) => {
+    acc[ingredient.id] = ingredient;
+
+    return acc;
+  }, {});
+
+  const amountTypesMap = amountTypes.reduce<Record<AmountTypeDto['id'], AmountTypeDto>>((acc, amountType) => {
+    acc[amountType.id] = amountType;
+
+    return acc;
+  }, {});
+
+  const tableRows = recipe.ingredients.map(recipeIngredient => ({
+    id: recipeIngredient.id,
+    ingredientName: ingredientsMap[recipeIngredient.ingredientId].name,
+    amountTypeValue: `${recipeIngredient.count} ${amountTypesMap[recipeIngredient.amountTypeId].name}`,
   }));
 
   return (

@@ -6,14 +6,15 @@ import Link from 'next/link';
 import { IconSchedule } from '@/assets/icons';
 import { Chip } from '@/components/ui';
 import { Avatar } from '@/components/ui/Avatar';
-import { RecipeDto } from '@/types';
+import { IngredientDto, RecipeDto } from '@/types';
 import { getTimeSince } from '@/utils';
 
 type RecipeCardProps = {
   recipe: RecipeDto;
+  ingredientsMap: Map<number, IngredientDto>;
 };
 
-const RecipeCard = ({ recipe }: RecipeCardProps) => {
+const RecipeCard = ({ recipe, ingredientsMap }: RecipeCardProps) => {
   const firstImagePath = recipe.images?.[0];
   const imageUrl = firstImagePath ? `${process.env.NEXT_STATIC_SERVER_URL}${firstImagePath}` : '/recipe-card-placeholder.png';
 
@@ -37,8 +38,8 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
         <h3 className="headline-m text-primary font-semibold line-clamp-2">{recipe.title}</h3>
         <p className="body-l mt-4 line-clamp-3 mb-2">{recipe.description}</p>
         <div className="flex flex-wrap items-center gap-2 mt-auto">
-          {recipe.ingredients.map(ingredientUnit => (
-            <Chip label={ingredientUnit.ingredient?.name} key={ingredientUnit.id} variant="outline" />
+          {recipe.ingredients.map(ingredient => (
+            <Chip label={ingredientsMap.get(ingredient.ingredientId)?.name ?? ''} key={ingredient.ingredientId} variant="outline" />
           ))}
         </div>
         <p className="flex flex-nowrap items-center gap-2 title-s mt-4">

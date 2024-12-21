@@ -2,14 +2,14 @@
 
 import { IconDelete } from '@/assets/icons';
 import { ButtonIcon } from '@/components/ui';
-import { RecipeIngredientDto } from '@/types';
+import { IngredientDto } from '@/types';
 
 import { FormFields } from '../Filters.types';
 
 type SelectedIngredientsProps = {
   selectedIngredients: FormFields['includesIngredients'];
-  ingredientsMap: Map<RecipeIngredientDto['id'], RecipeIngredientDto>;
-  onDelete: (id: RecipeIngredientDto['id']) => void;
+  ingredientsMap: Map<IngredientDto['id'], IngredientDto>;
+  onDelete: (id: IngredientDto['id']) => void;
 };
 
 const SelectedIngredients = ({ selectedIngredients, ingredientsMap, onDelete }: SelectedIngredientsProps) => {

@@ -5,7 +5,7 @@ import { FieldArrayWithId, useFormContext, useWatch } from 'react-hook-form';
 import { IconDelete } from '@/assets/icons';
 import { InputUncontrolled, SelectItem, SelectUncontrolled } from '@/components/ui';
 import { ButtonIcon } from '@/components/ui/ButtonIcon';
-import { RecipeIngredientDto } from '@/types';
+import { IngredientDto } from '@/types';
 
 import { FormFields } from '../RecipeForm.types';
 
@@ -14,7 +14,7 @@ type IngredientsRowProps = {
   index: number;
   isCanDelete: boolean;
   amountTypeItems: SelectItem[];
-  recipeIngredientMap: Map<RecipeIngredientDto['id'], RecipeIngredientDto>;
+  recipeIngredientMap: Map<IngredientDto['id'], IngredientDto>;
   recipeIngredientItems: SelectItem[];
   onRemoveIngredient: (index: number) => void;
 };
@@ -42,7 +42,7 @@ const IngredientsRow = ({
 
     const ingredient = recipeIngredientMap.get(Number(ingredientId))!;
 
-    return amountTypeItems.filter(amountType => ingredient.amountTypes.some(j => j.id === Number(amountType.id)));
+    return amountTypeItems.filter(amountType => ingredient.amountTypes.includes(Number(amountType.id)));
   }, [amountTypeItems, ingredientId, recipeIngredientMap]);
 
   return (

@@ -1,5 +1,4 @@
 import { AxiosRequestConfig } from 'axios';
-import merge from 'lodash-es/merge';
 
 import { RecipeCreateDto, RecipeDto, RecipeFilter } from '@/types';
 
@@ -32,18 +31,13 @@ class RecipeService {
     });
     formData.append('tags[]', '');
 
-    return apiInstance.post<RecipeDto>(
-      `${BASE_API_URL}`,
-      formData,
-      merge(
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-        config,
-      ),
-    );
+    return apiInstance.post<RecipeDto>(`${BASE_API_URL}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        ...config.headers,
+      },
+      ...config,
+    });
   }
 }
 

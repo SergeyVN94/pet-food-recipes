@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui';
-import { useRecipeIngredients } from '@/hooks';
+import { useIngredients } from '@/hooks';
 
 import { searchParamsToFormFields } from './Filters.lib';
 import { FormFields } from './Filters.types';
@@ -21,7 +21,7 @@ const Filters = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { data: ingredients } = useRecipeIngredients();
+  const { data: ingredients } = useIngredients();
   const values = React.useMemo(
     () => searchParamsToFormFields({ params: searchParams, ingredients: ingredients ?? [] }),
     [searchParams, ingredients],

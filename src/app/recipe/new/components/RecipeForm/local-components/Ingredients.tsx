@@ -4,7 +4,7 @@ import { UseFormReturn, useFieldArray } from 'react-hook-form';
 
 import { IconAdd } from '@/assets/icons';
 import { Button, SelectItem } from '@/components/ui';
-import { AmountTypeDto, RecipeIngredientDto } from '@/types';
+import { AmountTypeDto, IngredientDto } from '@/types';
 
 import { FormFields } from '../RecipeForm.types';
 import IngredientsRow from './IngredientsRow';
@@ -13,7 +13,7 @@ type IngredientsProps = {
   methods: UseFormReturn<FormFields, any, undefined>;
   isLoading: boolean;
   amountTypes: AmountTypeDto[];
-  recipeIngredients: RecipeIngredientDto[];
+  recipeIngredients: IngredientDto[];
 };
 
 const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: IngredientsProps) => {
@@ -35,7 +35,7 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
     [recipeIngredients],
   );
 
-  const recipeIngredientMap: Map<RecipeIngredientDto['id'], RecipeIngredientDto> = React.useMemo(
+  const recipeIngredientMap: Map<IngredientDto['id'], IngredientDto> = React.useMemo(
     () => recipeIngredients.reduce((acc, val) => acc.set(val.id, val), new Map()),
     [recipeIngredients],
   );

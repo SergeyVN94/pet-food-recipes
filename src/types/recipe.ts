@@ -8,22 +8,22 @@ export type AmountTypeDto = {
   updateAt: string;
 };
 
-export type RecipeIngredientDto = {
+export type IngredientDto = {
   id: number;
   slug: string;
   name: string;
   description: string;
-  amountTypes: AmountTypeDto[];
+  amountTypes: number[];
   createdAt: string;
   updateAt: string;
   image?: string;
 };
 
-export type RecipeIngredientUnitDto = {
+export type RecipeIngredientDto = {
   id: string;
   count: number;
-  ingredient: RecipeIngredientDto;
-  amountType: AmountTypeDto;
+  ingredientId: number;
+  amountTypeId: number;
   createdAt: string;
 };
 
@@ -39,13 +39,13 @@ export type RecipeDto = {
   description: string;
   images: string[];
   steps: RecipeStepDto[];
-  ingredients: RecipeIngredientUnitDto[];
+  ingredients: RecipeIngredientDto[];
   user: UserDto;
   createdAt: string;
   updateAt: string;
 };
 
-export type RecipeIngredientUnitCreateDto = {
+export type RecipeIngredientCreateDto = {
   count: number;
   ingredientId: number;
   amountTypeId: number;
@@ -57,7 +57,7 @@ export type RecipeCreateDto = {
   tags: string[];
   images: string[];
   steps: string[];
-  ingredients: RecipeIngredientUnitCreateDto[];
+  ingredients: RecipeIngredientCreateDto[];
 };
 
 export type RecipeFilter = {

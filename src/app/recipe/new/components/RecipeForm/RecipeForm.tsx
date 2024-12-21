@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button, FileInputUncontrolled, InputUncontrolled, TextareaControlled } from '@/components/ui';
-import { useAmountTypes, useCreateRecipe, useRecipeIngredients } from '@/hooks';
-import { RecipeIngredientUnitCreateDto } from '@/types';
+import { useAmountTypes, useCreateRecipe, useIngredients } from '@/hooks';
+import { RecipeIngredientCreateDto } from '@/types';
 
 import { FormFields } from './RecipeForm.types';
 import { Ingredients, Steps } from './local-components';
@@ -17,7 +17,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
   const { data: amountTypes, isFetching: isAmountTypesFetching } = useAmountTypes({
     refetchOnMount: true,
   });
-  const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useRecipeIngredients({
+  const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useIngredients({
     refetchOnMount: true,
   });
 
@@ -50,7 +50,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
 
     const ingredients = formFields.ingredients.filter(
       ingredient => ingredient.count && ingredient.amountTypeId && ingredient.ingredientId,
-    ) as RecipeIngredientUnitCreateDto[];
+    ) as RecipeIngredientCreateDto[];
 
     mutateAsync({
       ...formFields,

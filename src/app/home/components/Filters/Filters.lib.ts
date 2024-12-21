@@ -1,6 +1,6 @@
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
-import { RecipeIngredient } from '@/types';
+import { IngredientDto } from '@/types';
 
 import { FormFields } from './Filters.types';
 
@@ -9,9 +9,9 @@ export const searchParamsToFormFields = ({
   ingredients,
 }: {
   params: ReadonlyURLSearchParams;
-  ingredients: RecipeIngredient[];
+  ingredients: IngredientDto[];
 }): FormFields => {
-  const existIngredientsIdMap = ingredients.reduce<Record<string, RecipeIngredient>>((acc, ingredient) => {
+  const existIngredientsIdMap = ingredients.reduce<Record<string, IngredientDto>>((acc, ingredient) => {
     acc[ingredient.id] = ingredient;
 
     return acc;

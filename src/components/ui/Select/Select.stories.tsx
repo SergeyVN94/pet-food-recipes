@@ -11,15 +11,12 @@ const meta: Meta<typeof Select> = {
   component: Select,
 };
 
-const items: SelectItem[] = [
-  { id: '0', label: '0000' },
-  { id: '1', label: '1111' },
-  { id: '2', label: '2222' },
-  { id: '3', label: '3333' },
-  { id: '4', label: '4444' },
-  { id: '5', label: '5555' },
-  { id: '6', label: '6666' },
-];
+const items: SelectItem[] = Array(50000)
+  .fill(null)
+  .map<SelectItem>((_, i) => ({
+    id: String(i),
+    label: `item: ${i}`,
+  }));
 
 export default meta;
 type Story = StoryObj<typeof Select>;
