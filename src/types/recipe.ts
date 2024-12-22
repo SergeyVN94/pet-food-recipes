@@ -61,6 +61,7 @@ export type RecipeCreateDto = {
 };
 
 export type RecipeFilter = {
+  isDeleted?: boolean;
   q?: string;
   ingredients?: {
     includes?: string[];

@@ -22,6 +22,8 @@ const Avatar = ({ className, user }: AvatarProps) => {
   return (
     <Image
       className={cn('size-10 rounded-xl block', className)}
+      width={40}
+      height={40}
       src={user.avatar ?? '/user-avatar-placeholder.png'}
       alt={`Аватар пользователя ${user.userName}`}
       decoding="async"

@@ -2,12 +2,11 @@
 
 import React from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/navigation';
 
-import { Menu } from '@/components/ui';
-import { Avatar } from '@/components/ui/Avatar';
+import { IconBookmarkBorder, IconLogout, IconNotificationBorder, IconPersonOutline, IconSettings } from '@/assets/icons';
+import { Avatar, Menu } from '@/components/ui';
 import { useStore } from '@/hooks';
 import { UserDto } from '@/types';
 
@@ -15,38 +14,42 @@ type UserControlsProps = {
   user: UserDto;
 };
 
-const UserControls = observer((props: UserControlsProps) => {
+const UserControls = observer(({ user }: UserControlsProps) => {
   const navigate = useRouter();
   const store = useStore();
-  const queryClient = useQueryClient();
 
   const menuItems = [
     {
       label: 'Профиль',
+      icon: <IconPersonOutline className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push('/profile');
+        navigate.push(`/profile`);
       },
     },
     {
       label: 'Закладки',
+      icon: <IconBookmarkBorder className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push('/bookmarks');
+        navigate.push(`/profile/bookmarks`);
       },
     },
     {
       label: 'Уведомления',
+      icon: <IconNotificationBorder className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push('/notifications');
+        navigate.push(`/profile/notifications`);
       },
     },
     {
       label: 'Настройки',
+      icon: <IconSettings className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push('/settings');
+        navigate.push(`/profile/settings`);
       },
     },
     {
       label: 'Выход',
+      icon: <IconLogout className="size-6 text-primary" />,
       onSelect: () => {
         store.authStore.logout();
         window?.location.reload();
@@ -56,11 +59,12 @@ const UserControls = observer((props: UserControlsProps) => {
 
   return (
     <Menu
-      trigger={<Avatar user={props.user} className="cursor-pointer" />}
+      trigger={<Avatar user={user} className="cursor-pointer" />}
       contentProps={{
         side: 'bottom',
         align: 'end',
         sideOffset: 10,
+        className: 'min-w-[13.5rem]',
       }}
       itemSize="sm"
       items={menuItems}

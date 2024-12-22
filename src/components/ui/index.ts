@@ -4,6 +4,7 @@ export * from './Input';
 export * from './Table';
 export * from './Button';
 export * from './Select';
+export * from './Avatar';
 export * from './Checkbox';
 export * from './Textarea';
 export * from './FileInput';

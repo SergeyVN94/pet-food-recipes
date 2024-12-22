@@ -6,10 +6,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 
 import { IconCheckBox, IconCheckBoxOutlineBlank, IconIndeterminateCheckboxFilled } from '@/assets/icons';
+import { cn } from '@/utils';
 
 type CheckboxProps = Omit<React.ComponentProps<'input'>, 'type' | 'onChange' | 'name' | 'placeholder' | 'value' | 'isIndeterminate'> & {
   name: string;
   label?: string;
+  className?: string;
 } & (
     | {
         isIndeterminate: true;
@@ -24,7 +26,7 @@ type CheckboxProps = Omit<React.ComponentProps<'input'>, 'type' | 'onChange' | '
   );
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ label, value = false, isIndeterminate = false, onChange, ...other }, ref) => {
+  ({ label, value = false, isIndeterminate = false, onChange, className = '', ...other }, ref) => {
     const localRef = React.useRef<HTMLInputElement>(null);
 
     const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +54,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     };
 
     return (
-      <label className="flex flex-nowrap items-center cursor-pointer">
+      <label className={cn('flex flex-nowrap items-center cursor-pointer', className)}>
         <input
           {...other}
           type="checkbox"

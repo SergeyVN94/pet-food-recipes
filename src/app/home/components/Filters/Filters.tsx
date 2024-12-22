@@ -1,18 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { use } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Button } from '@/components/ui';
-import { useIngredients } from '@/hooks';
+import { Button, CheckboxUncontrolled } from '@/components/ui';
+import { useIngredients, useUser } from '@/hooks';
+import { UserRoles } from '@/types';
 
 import { searchParamsToFormFields } from './Filters.lib';
 import { FormFields } from './Filters.types';
 import IngredientsFilter from './local-components/IngredientsFilter';
 
 const defaultValues: FormFields = {
+  isDeleted: false,
   excludesIngredients: {},
   includesIngredients: {},
 };
@@ -26,13 +28,14 @@ const Filters = () => {
     () => searchParamsToFormFields({ params: searchParams, ingredients: ingredients ?? [] }),
     [searchParams, ingredients],
   );
+  const { data: user } = useUser();
 
   const methods = useForm<FormFields>({
     values,
     defaultValues,
   });
 
-  const handleSubmit = ({ includesIngredients, excludesIngredients }: FormFields) => {
+  const handleSubmit = ({ includesIngredients, excludesIngredients, isDeleted = false }: FormFields) => {
     const nextParams = new URLSearchParams();
 
     if (searchParams.get('q')?.trim()) {
@@ -51,6 +54,10 @@ const Filters = () => {
       }
     });
 
+    if (isDeleted) {
+      nextParams.append('isDeleted', 'true');
+    }
+
     replace(`${pathname}?${nextParams.toString()}`);
   };
 
@@ -67,6 +74,7 @@ const Filters = () => {
       >
         <h3 className="headline-m">Фильтры</h3>
         <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
+          {user?.role === UserRoles.ADMIN && <CheckboxUncontrolled name="isDeleted" label="Удаленные рецепты" className="mb-2" />}
           <IngredientsFilter ingredients={ingredients} />
         </div>
         <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-white">

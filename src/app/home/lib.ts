@@ -7,6 +7,10 @@ export const urlSearchParamsToFilter = (params: URLSearchParams): RecipeFilter =
     filters.q = params.get('q')?.trim() ?? '';
   }
 
+  if (params.get('isDeleted') === 'true') {
+    filters.isDeleted = true;
+  }
+
   const includesIngredients = params
     .getAll('ingr-inc[]')
     .map(i => i.trim().toLowerCase())
@@ -37,6 +41,10 @@ export const searchParamsToFilter = (params: Record<string, string | string[]>):
 
   if (params.q) {
     filters.q = (params.q ?? '') as string;
+  }
+
+  if (params.isDeleted === 'true') {
+    filters.isDeleted = true;
   }
 
   const includesIngredients = (
