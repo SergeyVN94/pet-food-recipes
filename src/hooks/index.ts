@@ -5,3 +5,5 @@ export { default as useRecipes } from './useRecipes';
 export { default as useIngredients } from './useIngredients';
 export { default as useAmountTypes } from './useAmountTypes';
 export { default as useCreateRecipe } from './useCreateRecipe';
+export { default as useRecipeFilter } from './useRecipeFilter';
+export { default as useQueryIngredients } from './useQueryIngredients';

@@ -27,7 +27,7 @@ const RecipeCard = ({ recipe, ingredientsMap }: RecipeCardProps) => {
       <div className="flex flex-col w-full self-stretch">
         <div className="flex items-center flex-nowrap mb-2 gap-4">
           <p className="flex items-center gap-1">
-            {recipe.user && <Avatar user={recipe.user} className="size-8" />}
+            {recipe.user && <Avatar user={recipe.user} size={32} />}
             <span className="title-m">{recipe.user?.userName}</span>
           </p>
           <p className="title-s flex flex-nowrap items-center gap-1">

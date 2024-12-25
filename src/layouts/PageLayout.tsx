@@ -9,9 +9,7 @@ type PageLayoutProps = {
 const PageLayout = ({ className, children }: PageLayoutProps) => (
   <>
     <Header />
-    <main>
-      <div className={cn('container py-12 pb-16', className)}>{children}</div>
-    </main>
+    <main className={cn('container py-12 pb-16', className)}>{children}</main>
   </>
 );
 

@@ -9,10 +9,11 @@ import { cn } from '@/utils';
 
 type AvatarProps = {
   user: UserDto;
+  size?: number;
   className?: string;
 };
 
-const Avatar = ({ className, user }: AvatarProps) => {
+const Avatar = ({ className, user, size = 40 }: AvatarProps) => {
   const handleError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
     if (event.currentTarget.src !== '/user-avatar-placeholder.png') {
       event.currentTarget.src = '/user-avatar-placeholder.png';
@@ -21,9 +22,9 @@ const Avatar = ({ className, user }: AvatarProps) => {
 
   return (
     <Image
-      className={cn('size-10 rounded-xl block', className)}
-      width={40}
-      height={40}
+      className={cn('rounded-xl block', className)}
+      width={size}
+      height={size}
       src={user.avatar ?? '/user-avatar-placeholder.png'}
       alt={`Аватар пользователя ${user.userName}`}
       decoding="async"

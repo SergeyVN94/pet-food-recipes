@@ -6,7 +6,7 @@ class RootStore {
   public authStore: AuthStore;
 
   constructor(private readonly queryClient: QueryClient) {
-    this.authStore = new AuthStore(this, queryClient);
+    this.authStore = new AuthStore(this, this.queryClient);
   }
 }
 

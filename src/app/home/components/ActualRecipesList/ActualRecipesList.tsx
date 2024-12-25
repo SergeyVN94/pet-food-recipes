@@ -2,24 +2,22 @@
 
 import React from 'react';
 
-import { useSearchParams } from 'next/navigation';
+import { observer } from 'mobx-react-lite';
 
-import { useIngredients } from '@/hooks';
+import { useIngredients, useRecipeFilter } from '@/hooks';
 import useRecipes from '@/hooks/useRecipes';
 import { IngredientDto, RecipeDto } from '@/types';
 
-import { urlSearchParamsToFilter } from '../../lib';
 import { RecipeCard } from '../RecipeCard';
 import ActualRecipesListSkeleton from './ActualRecipesListSkeleton';
 
 type ActualRecipesListProps = {
-  initialRecipes: RecipeDto[];
-  initialIngredients: IngredientDto[];
+  initialRecipes?: RecipeDto[];
+  initialIngredients?: IngredientDto[];
 };
 
-const ActualRecipesList = ({ initialRecipes = [], initialIngredients = [] }: ActualRecipesListProps) => {
-  const searchParams = useSearchParams();
-  const filter = React.useMemo(() => urlSearchParamsToFilter(searchParams), [searchParams]);
+const ActualRecipesList = observer(({ initialRecipes = [], initialIngredients = [] }: ActualRecipesListProps) => {
+  const filter = useRecipeFilter();
 
   const { data: recipes, isFetching: isRecipesFetching } = useRecipes(filter, {
     refetchOnMount: true,
@@ -27,9 +25,8 @@ const ActualRecipesList = ({ initialRecipes = [], initialIngredients = [] }: Act
   });
 
   const { data: ingredients, isFetching: isIngredientsFetching } = useIngredients({
-    refetchOnMount: true,
     initialData: initialIngredients,
-    staleTime: 1000 * 60 * 3, // 3 minutes
+    staleTime: Infinity,
   });
 
   const ingredientsMap = React.useMemo(
@@ -51,6 +48,6 @@ const ActualRecipesList = ({ initialRecipes = [], initialIngredients = [] }: Act
       {!isFetching && recipes?.length === 0 && filter.q && <li>{`По запросу «${filter.q}» ничего не найдено`}</li>}
     </ul>
   );
-};
+});
 
 export default ActualRecipesList;

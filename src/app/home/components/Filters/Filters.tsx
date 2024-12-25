@@ -1,15 +1,14 @@
 'use client';
 
-import React, { use } from 'react';
+import React from 'react';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { parseAsBoolean, useQueryState } from 'nuqs';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button, CheckboxUncontrolled } from '@/components/ui';
-import { useIngredients, useUser } from '@/hooks';
-import { UserRoles } from '@/types';
+import { useAmountTypes, useIngredients, useQueryIngredients, useUser } from '@/hooks';
+import { AmountTypeDto, IngredientDto, UserRoles } from '@/types';
 
-import { searchParamsToFormFields } from './Filters.lib';
 import { FormFields } from './Filters.types';
 import IngredientsFilter from './local-components/IngredientsFilter';
 
@@ -19,14 +18,33 @@ const defaultValues: FormFields = {
   includesIngredients: {},
 };
 
-const Filters = () => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
-  const { data: ingredients } = useIngredients();
+const booleanParser = parseAsBoolean.withDefault(false);
+
+type FiltersProps = {
+  initialIngredients: IngredientDto[];
+  initialAmountTypes: AmountTypeDto[];
+};
+
+const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
+  const [includesIngredients, setIncludesIngredients] = useQueryIngredients('includes');
+  const [excludesIngredients, setExcludesIngredients] = useQueryIngredients('excludes');
+  const [isDeleted, setIsDeleted] = useQueryState('isDeleted', booleanParser);
+
+  const { data: ingredients } = useIngredients({
+    initialData: initialIngredients,
+    staleTime: Infinity,
+  });
+  const { data: amountTypes } = useAmountTypes({
+    initialData: initialAmountTypes,
+    staleTime: Infinity,
+  });
   const values = React.useMemo(
-    () => searchParamsToFormFields({ params: searchParams, ingredients: ingredients ?? [] }),
-    [searchParams, ingredients],
+    () => ({
+      isDeleted,
+      includesIngredients: includesIngredients?.reduce((acc, val) => ({ ...acc, [val]: true }), {}) ?? {},
+      excludesIngredients: excludesIngredients?.reduce((acc, val) => ({ ...acc, [val]: true }), {}) ?? {},
+    }),
+    [includesIngredients, excludesIngredients, isDeleted],
   );
   const { data: user } = useUser();
 
@@ -36,29 +54,25 @@ const Filters = () => {
   });
 
   const handleSubmit = ({ includesIngredients, excludesIngredients, isDeleted = false }: FormFields) => {
-    const nextParams = new URLSearchParams();
+    setIsDeleted(isDeleted);
+    setIncludesIngredients(
+      Object.entries(includesIngredients).reduce<number[]>((acc, [key, val]) => {
+        if (val) {
+          acc.push(Number(key));
+        }
 
-    if (searchParams.get('q')?.trim()) {
-      nextParams.set('q', searchParams.get('q') ?? '');
-    }
+        return acc;
+      }, []),
+    );
+    setExcludesIngredients(
+      Object.entries(excludesIngredients).reduce<number[]>((acc, [key, val]) => {
+        if (val) {
+          acc.push(Number(key));
+        }
 
-    Object.keys(includesIngredients).forEach(id => {
-      if (includesIngredients[Number(id)]) {
-        nextParams.append('ingr-inc[]', id);
-      }
-    });
-
-    Object.keys(excludesIngredients).forEach(id => {
-      if (excludesIngredients[Number(id)]) {
-        nextParams.append('ingr-exc[]', id);
-      }
-    });
-
-    if (isDeleted) {
-      nextParams.append('isDeleted', 'true');
-    }
-
-    replace(`${pathname}?${nextParams.toString()}`);
+        return acc;
+      }, []),
+    );
   };
 
   const handleReset = () => {

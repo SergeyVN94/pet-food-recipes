@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Roboto } from 'next/font/google';
 import 'normalize.css';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import { StoreProvider, TanStackProvider } from '@/providers';
 import '@/styles/globals.css';
@@ -21,7 +22,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="ru" className="h-full">
     <body className={`${roboto.variable} h-full`}>
       <TanStackProvider>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </StoreProvider>
       </TanStackProvider>
     </body>
   </html>

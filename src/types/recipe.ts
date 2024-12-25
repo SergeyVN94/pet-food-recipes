@@ -64,7 +64,7 @@ export type RecipeFilter = {
   isDeleted?: boolean;
   q?: string;
   ingredients?: {
-    includes?: string[];
-    excludes?: string[];
+    includes?: IngredientDto['id'][];
+    excludes?: IngredientDto['id'][];
   };
 };
