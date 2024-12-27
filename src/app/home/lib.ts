@@ -25,11 +25,11 @@ export const urlSearchParamsToFilter = (params: URLSearchParams): RecipeFilter =
     filters.ingredients = {};
 
     if (includesIngredients.length > 0) {
-      filters.ingredients.includes = includesIngredients;
+      filters.ingredients.includes = includesIngredients.map(Number).filter(Boolean);
     }
 
     if (excludesIngredients.length > 0) {
-      filters.ingredients.excludes = excludesIngredients;
+      filters.ingredients.excludes = excludesIngredients.map(Number).filter(Boolean);
     }
   }
 
@@ -63,11 +63,11 @@ export const searchParamsToFilter = (params: Record<string, string | string[]>):
     filters.ingredients = {};
 
     if (includesIngredients.length > 0) {
-      filters.ingredients.includes = includesIngredients;
+      filters.ingredients.includes = includesIngredients.map(Number).filter(Boolean);
     }
 
     if (excludesIngredients.length > 0) {
-      filters.ingredients.excludes = excludesIngredients;
+      filters.ingredients.excludes = excludesIngredients.map(Number).filter(Boolean);
     }
   }
 
