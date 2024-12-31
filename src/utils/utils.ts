@@ -47,3 +47,18 @@ export const getTimeSince = (date: string) => {
     }
   }
 };
+
+export const arrayToDictionary = <T extends Record<string, any>, K extends keyof T, V extends keyof T | undefined = undefined>(
+  array: T[],
+  key: K,
+  keyForValue?: V,
+): Record<T[K], V extends keyof T ? T[V] : T> => {
+  type Acc = Record<T[K], V extends keyof T ? T[V] : T>;
+
+  return array.reduce<Acc>((acc, item) => {
+    // @ts-ignore
+    acc[item[key]] = keyForValue ? item[keyForValue] : item;
+
+    return acc;
+  }, {} as Acc);
+};

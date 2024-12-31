@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import * as SelectPrimitives from '@radix-ui/react-select';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import debounce from 'lodash-es/debounce';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { IconArrowLeft, IconSearch } from '@/assets/icons';
+import { IconArrowLeft, IconClose } from '@/assets/icons';
 import { cn } from '@/utils/utils';
 
-import { Input } from '../Input';
+import { Button } from '../Button';
+import { ButtonIcon } from '../ButtonIcon';
 
 export type SelectItem = {
   id: string;
@@ -23,56 +23,38 @@ type SelectProps = {
   className?: string;
   items: SelectItem[];
   name: string;
-  value?: SelectItem['id'];
+  value?: SelectItem['id'] | null;
   error?: string;
   onChange: (id: SelectItem['id']) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  onClear?: () => void;
 };
 
-const Select = ({ ariaLabel, items, value, error, label, name, className, onChange, onBlur, onFocus }: SelectProps) => {
-  const selectedItemLabel = React.useMemo(() => items.find(i => i.id === value)?.label, [items, value]);
-  const [inputValue, setInputValue] = React.useState(selectedItemLabel ?? '');
-  const [filter, setFilter] = React.useState(selectedItemLabel ?? '');
-  const setFilterDebounced = React.useMemo(() => debounce(setFilter, 250), [setFilter]);
-  const filteredItems = React.useMemo(() => {
-    const normalizedFilter = filter.trim().toLowerCase();
-    return normalizedFilter.length > 0 ? items.filter(i => i.label.toLowerCase().includes(normalizedFilter)) : items;
-  }, [filter, items]);
-  const searchInputRef = React.useRef<HTMLInputElement>(null);
+const Select = ({ ariaLabel, items, value, error, label, name, className, onChange, onBlur, onFocus, onClear }: SelectProps) => {
+  const selectedItemLabel = React.useMemo(() => items.find(item => item.id === value)?.label, [items, value]);
   const [isOpen, setIsOpen] = React.useState(false);
   const itemsParentRef = React.useRef<HTMLDivElement>(null);
-
-  const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {
-    setInputValue(value);
-    setFilterDebounced(value);
-  };
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   const rowVirtualizer = useVirtualizer({
-    count: filteredItems.length,
+    count: items.length,
     getScrollElement: () => itemsParentRef.current,
     estimateSize: () => 56,
-    getItemKey: (index: number) => filteredItems[index].id,
-    onChange: instance => {
-      console.log(instance.options);
-    },
+    getItemKey: index => items[index].id,
   });
 
-  useEffect(() => {
-    if (isOpen) {
-      searchInputRef.current?.focus();
-    }
-  }, [isOpen]);
+  const handleClearClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
+    ev.stopPropagation();
+    ev.preventDefault();
 
-  useEffect(() => {
-    if (selectedItemLabel) {
-      setInputValue('');
-      setFilter('');
+    if (onClear) {
+      onClear();
     }
-  }, [selectedItemLabel]);
+  };
 
   return (
-    <SelectPrimitives.Root onValueChange={onChange} onOpenChange={setIsOpen} open={isOpen} name={name} value={value}>
+    <SelectPrimitives.Root onValueChange={onChange} onOpenChange={setIsOpen} open={isOpen} name={name} value={value ?? undefined}>
       <SelectPrimitives.Trigger
         className={cn(
           'outline-none w-full cursor-pointer py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface  hover:bg-on-surface/10 focus:after:h-0.5 focus:after:bg-primary min-w-[10rem]',
@@ -81,6 +63,7 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
         aria-label={ariaLabel}
         onFocus={onFocus}
         onBlur={onBlur}
+        ref={triggerRef}
       >
         {label && (
           <span
@@ -91,29 +74,35 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
           </span>
         )}
         <span className="flex items-center w-full">
-          <span className="body-l data-[label='true']:pt-3 whitespace-nowrap overflow-ellipsis" data-label={!!label}>
+          <span className="body-l data-[label='true']:pt-3 whitespace-nowrap overflow-ellipsis block" data-label={Boolean(label)}>
             {selectedItemLabel}
           </span>
-          <IconArrowLeft
-            className="ml-auto mr-3 -rotate-90 data-[open='true']:rotate-90 transition-all"
-            data-open={isOpen}
-            width={24}
-            height={24}
-          />
+          <span className="ml-auto flex flex-nowrap items-center">
+            <IconArrowLeft
+              className="ml-auto mr-3 -rotate-90 data-[open='true']:rotate-90 transition-all"
+              data-open={isOpen}
+              width={24}
+              height={24}
+            />
+          </span>
         </span>
       </SelectPrimitives.Trigger>
       <SelectPrimitives.Portal>
-        <SelectPrimitives.Content sideOffset={4} alignOffset={0} position="popper" autoFocus={false}>
-          <SelectPrimitives.Viewport className="rounded-md bg-surf-cont flex flex-col w-full shadow-elevation-2" autoFocus={false}>
-            <Input
-              value={inputValue}
-              onChange={handleInputChange}
-              name={`select-search-${name}`}
-              ref={searchInputRef}
-              iconLeft={<IconSearch />}
-            />
+        <SelectPrimitives.Content sideOffset={4} alignOffset={0} position="popper">
+          <SelectPrimitives.Viewport className="rounded-md bg-surf-cont flex flex-col w-full shadow-elevation-2">
+            {onClear && (
+              <div className="p-2">
+                <Button onClick={handleClearClick} className="w-full">
+                  Очистить
+                </Button>
+              </div>
+            )}
             {/* 21rem == 6 items */}
-            <div className="max-h-[21rem] overflow-y-auto" ref={itemsParentRef}>
+            <div
+              className="max-h-[21rem] w-64 overflow-y-auto"
+              ref={itemsParentRef}
+              style={{ minWidth: `${triggerRef.current?.offsetWidth ?? 0}px` }}
+            >
               <div className="w-full relative" style={{ height: `${rowVirtualizer.getTotalSize()}px` }}>
                 {rowVirtualizer.getVirtualItems().map(virtualItem => (
                   <div
@@ -125,21 +114,16 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
                     }}
                   >
                     <SelectPrimitives.Item
-                      key={filteredItems[virtualItem.index].id}
+                      key={items[virtualItem.index].id}
                       className="px-3 py-4 w-full text-left hover:bg-surf-cont-highest transition-all body-l max-w-xs text-ellipsis select-none cursor-pointer focus:bg-surf-cont-high outline-none"
-                      value={filteredItems[virtualItem.index].id}
+                      value={items[virtualItem.index].id}
                     >
-                      <SelectPrimitives.ItemText>{filteredItems[virtualItem.index].label}</SelectPrimitives.ItemText>
+                      <SelectPrimitives.ItemText>{items[virtualItem.index].label}</SelectPrimitives.ItemText>
                     </SelectPrimitives.Item>
                   </div>
                 ))}
               </div>
             </div>
-            {filteredItems.length === 0 && (
-              <p className="px-3 py-4 w-full text-left hover:bg-surf-cont-highest transition-all body-l max-w-xs text-ellipsis select-none cursor-default focus:bg-surf-cont-high outline-none">
-                Ничего не найдено
-              </p>
-            )}
           </SelectPrimitives.Viewport>
         </SelectPrimitives.Content>
       </SelectPrimitives.Portal>

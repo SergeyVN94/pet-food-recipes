@@ -7,8 +7,12 @@ import { apiInstance } from './lib';
 const BASE_API_URL = '/api/v1/recipes';
 
 class RecipeService {
-  static getRecipe(slug: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.get<RecipeDto>(`${BASE_API_URL}/${slug}`, config);
+  static getRecipeBySlug(slug: string, config: AxiosRequestConfig = {}) {
+    return apiInstance.get<RecipeDto>(`${BASE_API_URL}/slug/${slug}`, config);
+  }
+
+  static getRecipeById(id: string, config: AxiosRequestConfig = {}) {
+    return apiInstance.get<RecipeDto>(`${BASE_API_URL}/${id}`, config);
   }
 
   static postRecipesSearch(filter: RecipeFilter = {}, config: AxiosRequestConfig = {}) {

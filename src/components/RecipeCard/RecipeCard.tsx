@@ -9,6 +9,8 @@ import { Avatar } from '@/components/ui/Avatar';
 import { IngredientDto, RecipeDto } from '@/types';
 import { getTimeSince } from '@/utils';
 
+import { RecipeBookmarkSelect } from '../RecipeBookmarkSelect';
+
 type RecipeCardProps = {
   recipe: RecipeDto;
   ingredientsMap: Map<number, IngredientDto>;
@@ -34,6 +36,7 @@ const RecipeCard = ({ recipe, ingredientsMap }: RecipeCardProps) => {
             <IconSchedule className="size-5" />
             <span>{getTimeSince(recipe.createdAt)}</span>
           </p>
+          <RecipeBookmarkSelect recipeId={recipe.id} className="ml-auto min-w-60" />
         </div>
         <h3 className="headline-m text-primary font-semibold line-clamp-2">{recipe.title}</h3>
         <p className="body-l mt-4 line-clamp-3 mb-2">{recipe.description}</p>

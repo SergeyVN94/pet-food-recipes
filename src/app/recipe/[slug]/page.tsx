@@ -18,7 +18,7 @@ type RecipePageProps = Promise<{
 
 export const generateMetadata = async ({ params }: { params: RecipePageProps }): Promise<Metadata> => {
   const { slug } = await params;
-  const response = await RecipeService.getRecipe(slug);
+  const response = await RecipeService.getRecipeBySlug(slug);
 
   if (response.status !== 200) {
     redirect('/404');
@@ -33,7 +33,11 @@ export const generateMetadata = async ({ params }: { params: RecipePageProps }):
 
 const RecipePage = async ({ params }: { params: RecipePageProps }) => {
   const { slug } = await params;
-  const [recipeResponse, ingredients, amountTypes] = await Promise.all([RecipeService.getRecipe(slug), getIngredients(), getAmountTypes()]);
+  const [recipeResponse, ingredients, amountTypes] = await Promise.all([
+    RecipeService.getRecipeBySlug(slug),
+    getIngredients(),
+    getAmountTypes(),
+  ]);
 
   if (recipeResponse.status !== 200) {
     notFound();

@@ -35,23 +35,29 @@ const variants = cva(
   },
 );
 
-type ButtonIconProps = {
+type ButtonIconProps<T extends React.ElementType> = {
   children: SVGIcon;
+  asTag?: T;
 } & VariantProps<typeof variants> &
   VariantProps<typeof buttonVariants> &
-  React.ButtonHTMLAttributes<HTMLButtonElement>;
+  React.ComponentProps<T>;
 
-const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonIconProps>(
-  ({ children, className, variant, layoutSize, type = 'button', ...other }, ref) => (
-    <button className={buttonVariants({ layoutSize, className })} type={type} ref={ref} {...other}>
-      <span className={variants({ variant })}>
-        {React.cloneElement(children, {
-          width: 24,
-          height: 24,
-        })}
-      </span>
-    </button>
-  ),
+const ButtonIcon = <T extends React.ElementType = 'button'>({
+  children,
+  className,
+  variant,
+  layoutSize,
+  asTag: Component = 'button',
+  ...other
+}: ButtonIconProps<T>) => (
+  <Component className={buttonVariants({ layoutSize, className })} {...other}>
+    <span className={variants({ variant })}>
+      {React.cloneElement(children, {
+        width: 24,
+        height: 24,
+      })}
+    </span>
+  </Component>
 );
 ButtonIcon.displayName = 'ButtonIcon';
 
