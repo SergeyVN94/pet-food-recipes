@@ -23,9 +23,8 @@ deploy-pm2-job:
   dependencies:
     - build-job
   script: 
+    - rm -rf /var/www/recipe/frontend
     - mkdir -p /var/www/recipe/frontend
-    - rm -rf /var/www/recipe/frontend/*
-    - rm -rf /var/www/recipe/frontend/.* 2> /dev/null
     - cp -r .next node_modules ecosystem.config.js package.json /var/www/recipe/frontend
     - cd /var/www/recipe/frontend
     - pm2 startOrRestart ecosystem.config.js
