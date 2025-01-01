@@ -5,6 +5,7 @@ import React from 'react';
 import { useBookmarksRecipes, useRemoveRecipeFromBookmark, userAddRecipeToBookmark } from '@/hooks';
 import useBookmarks from '@/hooks/useBookmarks';
 import { RecipeDto } from '@/types';
+import { showToast } from '@/utils';
 
 import { Select, SelectItem } from '../ui';
 
@@ -43,31 +44,29 @@ const RecipeBookmarkSelect = ({ className, recipeId }: RecipeBookmarkSelectProps
   React.useEffect(() => {
     if (recipeBookmarkRemoveError) {
       setBookmarkId(selectedBookmarkId ? selectedBookmarkId : null);
+      showToast('error', 'Не удалось удалить рецепт из закладки');
     }
   }, [recipeBookmarkRemoveError, selectedBookmarkId]);
 
   React.useEffect(() => {
     if (recipeBookmarkRemove) {
       refetch();
+      showToast('info', 'Рецепт удален из закладок');
     }
   }, [recipeBookmarkRemove]);
 
   React.useEffect(() => {
     if (recipeBookmarkError) {
       setBookmarkId(selectedBookmarkId ? selectedBookmarkId : null);
+      showToast('error', 'Не удалось добавить рецепт в закладки');
     }
   }, [recipeBookmarkError, selectedBookmarkId]);
-
-  React.useEffect(() => {
-    if (recipeBookmarkError) {
-      setBookmarkId(null);
-    }
-  }, [recipeBookmarkError]);
 
   React.useEffect(() => {
     if (recipeBookmark) {
       setBookmarkId(recipeBookmark.bookmarkId);
       refetch();
+      showToast('info', 'Рецепт добавлен в закладки');
     }
   }, [recipeBookmark]);
 

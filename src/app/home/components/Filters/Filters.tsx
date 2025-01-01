@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { parseAsBoolean, useQueryState } from 'nuqs';
+import { parseAsArrayOf, parseAsBoolean, parseAsInteger, useQueryState } from 'nuqs';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button, CheckboxUncontrolled } from '@/components/ui';
@@ -37,6 +37,7 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
   const { data: amountTypes } = useAmountTypes({
     initialData: initialAmountTypes,
     staleTime: Infinity,
+    enabled: false,
   });
   const values = React.useMemo(
     () => ({
@@ -54,25 +55,24 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
   });
 
   const handleSubmit = ({ includesIngredients, excludesIngredients, isDeleted = false }: FormFields) => {
+    const includes = Object.entries(includesIngredients).reduce<number[]>((acc, [key, val]) => {
+      if (val) {
+        acc.push(Number(key));
+      }
+
+      return acc;
+    }, []);
+    const excludes = Object.entries(excludesIngredients).reduce<number[]>((acc, [key, val]) => {
+      if (val) {
+        acc.push(Number(key));
+      }
+
+      return acc;
+    }, []);
+
     setIsDeleted(isDeleted);
-    setIncludesIngredients(
-      Object.entries(includesIngredients).reduce<number[]>((acc, [key, val]) => {
-        if (val) {
-          acc.push(Number(key));
-        }
-
-        return acc;
-      }, []),
-    );
-    setExcludesIngredients(
-      Object.entries(excludesIngredients).reduce<number[]>((acc, [key, val]) => {
-        if (val) {
-          acc.push(Number(key));
-        }
-
-        return acc;
-      }, []),
-    );
+    setIncludesIngredients(includes);
+    setExcludesIngredients(excludes);
   };
 
   const handleReset = () => {

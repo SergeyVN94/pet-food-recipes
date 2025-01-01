@@ -1,40 +1,8 @@
+import { parseAsArrayOf, parseAsInteger } from 'nuqs/server';
+
 import { RecipeFilter } from '@/types';
 
-export const urlSearchParamsToFilter = (params: URLSearchParams): RecipeFilter => {
-  const filters: RecipeFilter = {};
-
-  if (params.get('q')?.trim()) {
-    filters.q = params.get('q')?.trim() ?? '';
-  }
-
-  if (params.get('isDeleted') === 'true') {
-    filters.isDeleted = true;
-  }
-
-  const includesIngredients = params
-    .getAll('ingr-inc[]')
-    .map(i => i.trim().toLowerCase())
-    .filter(Boolean);
-
-  const excludesIngredients = params
-    .getAll('ingr-exc[]')
-    .map(i => i.trim().toLowerCase())
-    .filter(Boolean);
-
-  if (includesIngredients.length > 0 || excludesIngredients.length > 0) {
-    filters.ingredients = {};
-
-    if (includesIngredients.length > 0) {
-      filters.ingredients.includes = includesIngredients.map(Number).filter(Boolean);
-    }
-
-    if (excludesIngredients.length > 0) {
-      filters.ingredients.excludes = excludesIngredients.map(Number).filter(Boolean);
-    }
-  }
-
-  return filters;
-};
+const parserIngredients = parseAsArrayOf(parseAsInteger);
 
 export const searchParamsToFilter = (params: Record<string, string | string[]>): RecipeFilter => {
   const filters: RecipeFilter = {};
@@ -47,17 +15,8 @@ export const searchParamsToFilter = (params: Record<string, string | string[]>):
     filters.isDeleted = true;
   }
 
-  const includesIngredients = (
-    params['ingr-inc[]'] ? (Array.isArray(params['ingr-inc[]']) ? params['ingr-inc[]'] : [params['ingr-inc[]']]) : []
-  )
-    .map(i => i.trim().toLowerCase())
-    .filter(Boolean);
-
-  const excludesIngredients = (
-    params['ingr-exc[]'] ? (Array.isArray(params['ingr-exc[]']) ? params['ingr-exc[]'] : [params['ingr-exc[]']]) : []
-  )
-    .map(i => i.trim().toLowerCase())
-    .filter(Boolean);
+  const includesIngredients = parserIngredients.parse(params['inc[]']?.toString() ?? '') ?? [];
+  const excludesIngredients = parserIngredients.parse(params['inc[]']?.toString() ?? '') ?? [];
 
   if (includesIngredients.length > 0 || excludesIngredients.length > 0) {
     filters.ingredients = {};

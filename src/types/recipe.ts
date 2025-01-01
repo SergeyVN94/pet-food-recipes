@@ -61,6 +61,7 @@ export type RecipeCreateDto = {
 };
 
 export type RecipeFilter = {
+  userId?: string;
   isDeleted?: boolean;
   q?: string;
   ingredients?: {

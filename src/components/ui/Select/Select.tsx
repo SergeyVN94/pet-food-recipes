@@ -89,13 +89,6 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
       <SelectPrimitives.Portal>
         <SelectPrimitives.Content sideOffset={4} alignOffset={0} position="popper">
           <SelectPrimitives.Viewport className="rounded-md bg-surf-cont flex flex-col w-full shadow-elevation-2">
-            {onClear && (
-              <div className="p-2">
-                <Button onClick={handleClearClick} className="w-full">
-                  Очистить
-                </Button>
-              </div>
-            )}
             {/* 21rem == 6 items */}
             <div
               className="max-h-[21rem] w-64 overflow-y-auto"
@@ -123,6 +116,13 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
                 ))}
               </div>
             </div>
+            {onClear && (
+              <div className="p-2">
+                <Button onClick={handleClearClick} className="w-full">
+                  Очистить
+                </Button>
+              </div>
+            )}
           </SelectPrimitives.Viewport>
         </SelectPrimitives.Content>
       </SelectPrimitives.Portal>

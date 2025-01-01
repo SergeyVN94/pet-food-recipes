@@ -8,7 +8,7 @@ import { Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
 import { RecipeService } from '@/services';
 import { AmountTypeDto, IngredientDto } from '@/types';
-import { getTimeSince } from '@/utils';
+import { arrayToDictionary, getTimeSince } from '@/utils';
 
 const recipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
 
@@ -44,18 +44,8 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
   }
 
   const recipe = recipeResponse.data;
-
-  const ingredientsMap = ingredients.reduce<Record<IngredientDto['id'], IngredientDto>>((acc, ingredient) => {
-    acc[ingredient.id] = ingredient;
-
-    return acc;
-  }, {});
-
-  const amountTypesMap = amountTypes.reduce<Record<AmountTypeDto['id'], AmountTypeDto>>((acc, amountType) => {
-    acc[amountType.id] = amountType;
-
-    return acc;
-  }, {});
+  const ingredientsMap = arrayToDictionary(ingredients ?? [], 'id');
+  const amountTypesMap = arrayToDictionary(amountTypes ?? [], 'id');
 
   const tableRows = recipe.ingredients.map(recipeIngredient => ({
     id: recipeIngredient.id,
@@ -69,8 +59,8 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
         <IconSchedule className="size-6" />
         <span>{getTimeSince(recipe.createdAt)}</span>
       </p>
-      <h1 className="headline-l text-primary">{recipe.title}</h1>
-      <p className="body-l mt-8">{recipe.description}</p>
+      <h1 className="headline-l text-primary text-balance">{recipe.title}</h1>
+      <p className="body-l mt-8 text-pretty">{recipe.description}</p>
       {recipe.images && recipe.images.length > 0 && (
         <section className="mt-16 flex flex-wrap gap-4">
           {recipe.images.map((src, index) => (
@@ -94,7 +84,7 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
         {recipe.steps.map((step, index) => (
           <div key={index} className=" mt-8 border-b border-primary/50 pb-4">
             <h4 className="title-l">Шаг {index + 1}</h4>
-            <p className="body-l mt-3">{step.content}</p>
+            <p className="body-l mt-3 text-pretty">{step.content}</p>
           </div>
         ))}
       </section>

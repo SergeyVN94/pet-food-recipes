@@ -39,7 +39,7 @@ const RecipeCard = ({ recipe, ingredientsMap }: RecipeCardProps) => {
           <RecipeBookmarkSelect recipeId={recipe.id} className="ml-auto min-w-60" />
         </div>
         <h3 className="headline-m text-primary font-semibold line-clamp-2">{recipe.title}</h3>
-        <p className="body-l mt-4 line-clamp-3 mb-2">{recipe.description}</p>
+        <p className="body-l mt-4 line-clamp-3 mb-2 text-pretty">{recipe.description}</p>
         <div className="flex flex-wrap items-center gap-2 mt-auto">
           {recipe.ingredients.map(ingredient => (
             <Chip label={ingredientsMap.get(ingredient.ingredientId)?.name ?? ''} key={ingredient.ingredientId} variant="outline" />

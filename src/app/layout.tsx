@@ -4,7 +4,8 @@ import { Roboto } from 'next/font/google';
 import 'normalize.css';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
-import { StoreProvider, TanStackProvider } from '@/providers';
+import { AskCookie } from '@/components';
+import { StoreProvider, TanStackProvider, ToastProvider } from '@/providers';
 import '@/styles/globals.css';
 
 const roboto = Roboto({
@@ -21,9 +22,12 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="ru" className="h-full">
     <body className={`${roboto.variable} h-full`}>
+      <AskCookie />
       <TanStackProvider>
         <StoreProvider>
-          <NuqsAdapter>{children}</NuqsAdapter>
+          <NuqsAdapter>
+            <ToastProvider>{children}</ToastProvider>
+          </NuqsAdapter>
         </StoreProvider>
       </TanStackProvider>
     </body>
