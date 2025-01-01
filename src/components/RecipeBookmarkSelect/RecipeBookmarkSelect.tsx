@@ -41,6 +41,12 @@ const RecipeBookmarkSelect = ({ className, recipeId }: RecipeBookmarkSelectProps
   };
 
   React.useEffect(() => {
+    if (recipeBookmarkRemoveError) {
+      setBookmarkId(selectedBookmarkId ? selectedBookmarkId : null);
+    }
+  }, [recipeBookmarkRemoveError, selectedBookmarkId]);
+
+  React.useEffect(() => {
     if (recipeBookmarkRemove) {
       refetch();
     }

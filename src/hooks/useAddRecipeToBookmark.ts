@@ -13,11 +13,11 @@ const mutationFn = async ({ bookmarkId, recipeId }: MutationVariables) => {
   return (await BookmarkService.addRecipeToBookmark(recipeId, bookmarkId)).data;
 };
 
-const userAddRecipeToBookmark = (config: UseMutationOptions<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables> = {}) =>
+const useAddRecipeToBookmark = (config: UseMutationOptions<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables> = {}) =>
   useMutation<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables>({
     mutationFn,
     mutationKey: ['bookmarks-recipes', 'add-recipe'],
     ...config,
   });
 
-export default userAddRecipeToBookmark;
+export default useAddRecipeToBookmark;

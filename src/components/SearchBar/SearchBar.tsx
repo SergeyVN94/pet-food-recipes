@@ -32,7 +32,7 @@ const SearchBar = ({ delay, className, placeholder, onChange, isClearable = fals
     };
 
     return delay ? debounce(changeQuery, delay) : changeQuery;
-  }, [delay, searchParamName, onChangeRef, setSearch]);
+  }, [delay, searchParamName, setSearch]);
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>, nextValue: string) => {
     setValue(nextValue);

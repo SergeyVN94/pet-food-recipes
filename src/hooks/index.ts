@@ -10,5 +10,6 @@ export { default as useCreateRecipe } from './useCreateRecipe';
 export { default as useRecipeFilter } from './useRecipeFilter';
 export { default as useQueryIngredients } from './useQueryIngredients';
 export { default as useBookmarksRecipes } from './useBookmarksRecipes';
-export { default as userAddRecipeToBookmark } from './userAddRecipeToBookmark';
+export { default as useAddRecipeToBookmark } from './useAddRecipeToBookmark';
+export { default as userAddRecipeToBookmark } from './useAddRecipeToBookmark';
 export { default as useRemoveRecipeFromBookmark } from './useRemoveRecipeFromBookmark';

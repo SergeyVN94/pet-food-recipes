@@ -6,11 +6,10 @@ import * as SelectPrimitives from '@radix-ui/react-select';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { IconArrowLeft, IconClose } from '@/assets/icons';
+import { IconArrowLeft } from '@/assets/icons';
 import { cn } from '@/utils/utils';
 
 import { Button } from '../Button';
-import { ButtonIcon } from '../ButtonIcon';
 
 export type SelectItem = {
   id: string;

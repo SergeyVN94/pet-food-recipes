@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { parseAsStringEnum, useQueryState } from 'nuqs';
 
@@ -11,6 +11,8 @@ import { IngredientDto, RecipeDto } from '@/types';
 import { BookmarkDto } from '@/types/bookmarks';
 import { arrayToDictionary } from '@/utils';
 
+import { BookmarksMenu } from './components';
+
 const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeDto['id']; ingredientsMap: Map<number, IngredientDto> }) => {
   const { data: recipe, isFetching } = useRecipeById(recipeId);
 
@@ -20,30 +22,6 @@ const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeDto['
     recipe && <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} key={recipe.id} />
   );
 };
-
-type BookmarksMenuProps = {
-  bookmarks: BookmarkDto[];
-  onClick: (slug: string) => void;
-  selected: string;
-};
-
-const BookmarksMenu = ({ bookmarks, onClick, selected }: BookmarksMenuProps) => (
-  <div className="w-72 rounded-xl overflow-hidden">
-    {bookmarks?.map(bookmark => (
-      <div
-        className="bg-surf-cont-low hover:bg-surf-cont-high transition-colors w-full data-[selected='true']:bg-surf-cont-highest"
-        data-selected={selected === bookmark.slug}
-      >
-        <button
-          className="py-2 px-4 max-w-full outline-none border-none body-l cursor-pointer text-left line-clamp-2 text-on-surface w-full "
-          onClick={() => onClick(bookmark.slug)}
-        >
-          {bookmark.title}
-        </button>
-      </div>
-    ))}
-  </div>
-);
 
 const BookmarksPage = () => {
   const { data: bookmarks, isFetching: isBookmarksFetching } = useBookmarks();
@@ -117,4 +95,10 @@ const BookmarksPage = () => {
   );
 };
 
-export default BookmarksPage;
+const PageWrapper = () => (
+  <Suspense fallback={<div className="skeleton w-full h-full min-h-[calc(100vh-8rem)]" />}>
+    <BookmarksPage />
+  </Suspense>
+);
+
+export default PageWrapper;
