@@ -5,7 +5,7 @@ stages:
 build-image:
   stage: build
   script:
-    - docker build -t recipes-frontend:latest .
+    - docker build -t recipes-frontend:latest . --no-cache
 
 deploy:
   stage: deploy
