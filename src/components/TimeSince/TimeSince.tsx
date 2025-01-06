@@ -19,6 +19,8 @@ const TimeSince = ({ startTime, icon = <IconSchedule className="size-6" />, clas
       setFormattedTime(getTimeSince(startTime));
     }, 1000 * 60);
 
+    setFormattedTime(getTimeSince(startTime));
+
     return () => clearInterval(interval);
   }, [startTime]);
 

@@ -4,16 +4,18 @@ services:
   frontend:
     image: recipes-frontend:latest
     container_name: recipes-frontend
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - '3000:3000'
     restart: unless-stopped
     networks:
-      - public
+      - host
       - app
 
 networks:
-  public:
+  host:
     driver: bridge
   app:
     driver: bridge
