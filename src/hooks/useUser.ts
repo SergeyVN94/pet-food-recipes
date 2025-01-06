@@ -9,7 +9,7 @@ const useUser = (config: Omit<UseQueryOptions<UserDto, unknown, UserDto, ['user'
     queryKey: ['user'],
     queryFn: async ({ signal }) => (await UserService.getUser({ signal })).data,
     retry: (failureCount, error) => {
-      if (axios.isAxiosError(error) && error.response?.status === 401) {
+      if (axios.isAxiosError(error) && (error.response?.status === 401 || error.response?.status === 404)) {
         return false;
       }
 

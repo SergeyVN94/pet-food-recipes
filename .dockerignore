@@ -1,0 +1,6 @@
+.git
+.env
+.enc.local
+.next
+.vscode
+node_modules

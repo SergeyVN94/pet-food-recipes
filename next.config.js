@@ -1,21 +1,25 @@
-const staticServerUrl = new URL(process.env.NEXT_STATIC_SERVER_URL);
-const staticApiUrl = new URL(process.env.NEXT_BASE_API_URL);
-const imagesRemotePatterns = [staticServerUrl, staticApiUrl]
-  .map((i) =>
-    i.hostname
-      ? {
-          protocol: i.protocol?.slice(0, -1) ?? 'http',
-          hostname: i.hostname,
-          port: i.port,
-        }
-      : null,
-  )
-  .filter(Boolean);
+const imagesRemotePatterns = [process.env.NEXT_PUBLIC_STATIC_SERVER_URL, process.env.NEXT_PUBLIC_API_SERVER_URL].reduce((acc, url) => {
+  try {
+    const url = new URL(url);
+
+    if (url.hostname) {
+      acc.push({
+        protocol: url.protocol?.slice(0, -1) ?? 'http',
+        hostname: url.hostname,
+        port: url.port,
+      });
+    }
+  } catch (e) {}
+
+  return acc;
+}, []);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
-    const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg')) ?? {};
+  output: 'standalone',
+  productionBrowserSourceMaps: false,
+  webpack: config => {
+    const fileLoaderRule = config.module.rules.find(rule => rule.test?.test?.('.svg')) ?? {};
 
     config.module.rules.push(
       // Reapply the existing rule, but only for svg imports ending in ?url
@@ -26,7 +30,6 @@ const nextConfig = {
       },
       {
         test: /\.svg$/i,
-        // issuer: /\.[jt]sx?$/,
         resourceQuery: { not: /url/ }, // exclude if *.svg?url
         use: ['@svgr/webpack'],
       },
@@ -40,8 +43,8 @@ const nextConfig = {
     remotePatterns: imagesRemotePatterns,
   },
   env: {
-    NEXT_BASE_API_URL: process.env.NEXT_BASE_API_URL,
-    NEXT_STATIC_SERVER_URL: process.env.NEXT_STATIC_SERVER_URL,
+    NEXT_PUBLIC_API_SERVER_URL: process.env.NEXT_PUBLIC_API_SERVER_URL ?? 'http://localhost:8000',
+    NEXT_PUBLIC_STATIC_SERVER_URL: process.env.NEXT_PUBLIC_STATIC_SERVER_URL ?? 'http://localhost:9000',
   },
 };
 

@@ -1,0 +1,26 @@
+ARG NEXT_PUBLIC_API_SERVER_URL
+ARG NEXT_PUBLIC_STATIC_SERVER_URL
+ARG PORT=3000
+ARG HOSTNAME="0.0.0.0"
+
+FROM node:23-alpine as builder
+ENV NEXT_PUBLIC_API_SERVER_URL=$NEXT_PUBLIC_API_SERVER_URL
+ENV NEXT_PUBLIC_STATIC_SERVER_URL=$NEXT_PUBLIC_STATIC_SERVER_URL
+WORKDIR /app
+COPY package*.json /app/
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:23-alpine as runner
+WORKDIR /app
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+USER nextjs
+COPY --chown=nextjs:nodejs --from=builder /app/.next/standalone ./
+COPY --chown=nextjs:nodejs--from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+EXPOSE 3000
+ENV PORT=$PORT
+ENV HOSTNAME=$HOSTNAME
+CMD ["node", "./server.js"]

@@ -4,10 +4,10 @@ import { notFound, redirect } from 'next/navigation';
 
 import { IconSchedule } from '@/assets/icons';
 import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
+import { TimeSince } from '@/components';
 import { Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
 import { RecipeService } from '@/services';
-import { AmountTypeDto, IngredientDto } from '@/types';
 import { arrayToDictionary, getTimeSince } from '@/utils';
 
 const recipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
@@ -55,10 +55,7 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
 
   return (
     <PageLayout>
-      <p className="title-m flex flex-nowrap items-center gap-1 mb-2">
-        <IconSchedule className="size-6" />
-        <span>{getTimeSince(recipe.createdAt)}</span>
-      </p>
+      <TimeSince startTime={recipe.createdAt} className="mb-2" />
       <h1 className="headline-l text-primary text-balance">{recipe.title}</h1>
       <p className="body-l mt-8 text-pretty">{recipe.description}</p>
       {recipe.images && recipe.images.length > 0 && (
@@ -68,7 +65,7 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
               <Image
                 fill
                 alt={`Изображение ${index}`}
-                src={`${process.env.NEXT_STATIC_SERVER_URL}${src}`}
+                src={`${process.env.NEXT_PUBLIC_STATIC_SERVER_URL}${src}`}
                 className="!static block max-h-[400px] object-cover rounded"
               />
             </div>

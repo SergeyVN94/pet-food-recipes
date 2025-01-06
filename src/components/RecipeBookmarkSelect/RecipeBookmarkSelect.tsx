@@ -53,7 +53,7 @@ const RecipeBookmarkSelect = ({ className, recipeId }: RecipeBookmarkSelectProps
       refetch();
       showToast('info', 'Рецепт удален из закладок');
     }
-  }, [recipeBookmarkRemove]);
+  }, [recipeBookmarkRemove, refetch]);
 
   React.useEffect(() => {
     if (recipeBookmarkError) {
@@ -68,7 +68,7 @@ const RecipeBookmarkSelect = ({ className, recipeId }: RecipeBookmarkSelectProps
       refetch();
       showToast('info', 'Рецепт добавлен в закладки');
     }
-  }, [recipeBookmark]);
+  }, [recipeBookmark, refetch]);
 
   React.useEffect(() => {
     setBookmarkId(selectedBookmarkId ? selectedBookmarkId : null);

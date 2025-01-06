@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  frontend:
+    image: recipes-frontend:latest
+    container_name: recipes-frontend
+    build: .
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    networks:
+      - public
+      - app
+
+networks:
+  public:
+    driver: bridge
+  app:
+    driver: bridge
