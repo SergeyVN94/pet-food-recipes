@@ -2,6 +2,11 @@ services:
   frontend:
     image: recipes-frontend:latest
     container_name: recipes-frontend
+    environment:
+      - NEXT_PUBLIC_API_SERVER_URL="http://192.168.0.231:8000"
+      - NEXT_PUBLIC_STATIC_SERVER_URL="http://192.168.0.231:9000"
+      - HOSTNAME="0.0.0.0"
+      - PORT="3000"
     build:
       context: .
       dockerfile: Dockerfile

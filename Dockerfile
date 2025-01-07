@@ -4,8 +4,8 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm ci
 COPY . .
-ARG NEXT_PUBLIC_API_SERVER_URL="http://192.168.0.231:8000"
-ARG NEXT_PUBLIC_STATIC_SERVER_URL="http://192.168.0.231:9000"
+ARG NEXT_PUBLIC_API_SERVER_URL
+ARG NEXT_PUBLIC_STATIC_SERVER_URL
 ENV NEXT_PUBLIC_API_SERVER_URL=$NEXT_PUBLIC_API_SERVER_URL
 ENV NEXT_PUBLIC_STATIC_SERVER_URL=$NEXT_PUBLIC_STATIC_SERVER_URL
 ENV NODE_ENV=production
@@ -19,8 +19,8 @@ USER nextjs
 COPY --chown=nextjs:nodejs --from=builder /app/.next/standalone ./
 COPY --chown=nextjs:nodejs --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-ARG PORT=3000
-ARG HOSTNAME="0.0.0.0"
+ARG PORT
+ARG HOSTNAME
 ENV PORT=$PORT
 ENV HOSTNAME=$HOSTNAME
 EXPOSE $PORT
