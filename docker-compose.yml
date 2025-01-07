@@ -4,7 +4,6 @@ services:
     container_name: recipes-frontend
     environment:
       HOSTNAME:
-      PORT: ${PORT}
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,5 +12,5 @@ services:
         NEXT_PUBLIC_STATIC_SERVER_URL:
       no_cache: true
     ports:
-      - ${PORT}:3000
+      - 3000:3000
     restart: unless-stopped
