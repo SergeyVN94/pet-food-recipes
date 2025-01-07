@@ -1,6 +1,10 @@
 .git
 .env
 .enc.local
-.next
 .vscode
+.dockerignore
+.editorconfig
+.gitignore
+.prettierrc
 node_modules
+README.md

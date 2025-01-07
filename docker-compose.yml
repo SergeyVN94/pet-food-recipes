@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   frontend:
     image: recipes-frontend:latest
@@ -10,12 +8,3 @@ services:
     ports:
       - '3000:3000'
     restart: unless-stopped
-    networks:
-      - host
-      - app
-
-networks:
-  host:
-    driver: bridge
-  app:
-    driver: bridge
