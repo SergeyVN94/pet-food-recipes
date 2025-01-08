@@ -48,9 +48,17 @@ const RecipeForm = ({ className }: { className?: string }) => {
       return;
     }
 
-    const ingredients = formFields.ingredients.filter(
-      ingredient => ingredient.count && ingredient.amountTypeId && ingredient.ingredientId,
-    ) as RecipeIngredientCreateDto[];
+    const ingredients = formFields.ingredients.reduce<RecipeIngredientCreateDto[]>((acc, val) => {
+      if (val.amountTypeId && val.ingredientId && val.count) {
+        acc.push({
+          count: val.count,
+          ingredientId: Number(val.ingredientId),
+          amountTypeId: Number(val.amountTypeId),
+        });
+      }
+
+      return acc;
+    }, []);
 
     mutateAsync({
       ...formFields,
@@ -62,9 +70,9 @@ const RecipeForm = ({ className }: { className?: string }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
-        <InputUncontrolled name="title" label="Название" required disabled={isPending} />
-        <TextareaControlled name="description" label="Описание" className="mt-4" required disabled={isPending} />
-        <FileInputUncontrolled
+        <InputUncontrolled name="title" label="Название" required disabled={isPending} maxLength={150} />
+        <TextareaControlled name="description" label="Описание" className="mt-4" required disabled={isPending} maxLength={500} />
+        {/* <FileInputUncontrolled
           name="images"
           label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"
           multiple
@@ -72,7 +80,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
           accept="image/png image/jpg image/jpeg"
           className="mt-4"
           disabled={isPending}
-        />
+        /> */}
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
           <div className="skeleton mt-4 h-48" />
         ) : (

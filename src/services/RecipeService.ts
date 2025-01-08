@@ -20,28 +20,7 @@ class RecipeService {
   }
 
   static postRecipe(dto: RecipeCreateDto, config: AxiosRequestConfig = {}) {
-    const formData = new FormData();
-
-    formData.set('title', dto.title);
-    formData.set('description', dto.description);
-    Array.from(dto.images ?? [])?.forEach(image => {
-      formData.append('images', image);
-    });
-    dto.steps.forEach((step, index) => {
-      formData.append(`steps[${index}]`, step);
-    });
-    dto.ingredients.forEach((ingredient, index) => {
-      formData.append(`ingredients[${index}]`, JSON.stringify(ingredient));
-    });
-    formData.append('tags[]', '');
-
-    return apiInstance.post<RecipeDto>(`${BASE_API_URL}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        ...config.headers,
-      },
-      ...config,
-    });
+    return apiInstance.post<RecipeDto>(`${BASE_API_URL}`, dto, config);
   }
 }
 

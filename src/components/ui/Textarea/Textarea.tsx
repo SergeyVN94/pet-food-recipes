@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 
 import { IconCancel } from '@/assets/icons';
@@ -16,6 +16,8 @@ type TextareaProps = {
   subText?: string;
   className?: string;
   maxRows?: number;
+  maxLength?: number;
+  required?: boolean;
   onChange?: (ev: React.ChangeEvent<HTMLTextAreaElement>, value: string) => void;
   onClear?: () => void;
 } & Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> &
@@ -112,15 +114,22 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           <label className="flex-1">
             <textarea
               className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-y-auto"
+              {...other}
               rows={other.rows ?? 3}
               data-max-rows={maxRows}
-              {...other}
+              value={other.value ?? ''}
               onChange={handleChange}
               ref={mergeRefs([ref, localRef])}
             />
             {label && (
               <span className={labelVariants({ variant })} ref={labelRef}>
                 {label}
+                {other.maxLength && (
+                  <span className="text-on-surface-var">
+                    &nbsp;({String(other.value ?? '').length}/{other.maxLength})
+                  </span>
+                )}
+                {other.required && <span className="text-error">&nbsp;*</span>}
               </span>
             )}
           </label>
@@ -137,16 +146,35 @@ Textarea.displayName = 'Textarea';
 
 type TextareaControlledProps = Omit<TextareaProps, 'onChange' | 'value' | 'onBlur' | 'onFocus' | 'name'> & {
   name: string;
+  isClearable?: boolean;
 };
 
-export const TextareaControlled = (props: TextareaControlledProps) => {
+export const TextareaControlled = ({ isClearable = true, ...other }: TextareaControlledProps) => {
   const methods = useFormContext();
 
   const handleClear = () => {
-    methods.resetField(props.name);
+    methods.resetField(other.name);
+
+    if (other.onClear) {
+      other.onClear();
+    }
   };
 
-  return <Textarea {...methods.register(props.name)} {...props} onClear={handleClear} />;
+  return (
+    <Controller
+      name={other.name}
+      control={methods.control}
+      render={({ field }) => (
+        <Textarea
+          {...other}
+          onChange={(ev, value) => field.onChange(value)}
+          onBlur={field.onBlur}
+          value={field.value}
+          onClear={handleClear}
+        />
+      )}
+    />
+  );
 };
 
 export default Textarea;

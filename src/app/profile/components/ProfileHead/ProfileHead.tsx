@@ -22,7 +22,9 @@ const ProfileItem = ({ label, value }: { label: string; value: string }) => (
 const MenuItem = ({ label, link }: { label: string; link: string }) => {
   const pathName = usePathname();
 
-  const selectedClasses = pathName === link ? 'border-on-surface' : 'border-transparent';
+  console.log(link, pathName);
+
+  const selectedClasses = pathName.startsWith(link) ? 'border-on-surface' : 'border-transparent';
 
   return (
     <Link
@@ -68,7 +70,7 @@ const ProfileHead = () => {
         <ProfileItem label="Дата регистрации" value={registrationDate} />
       </div>
       <nav className="flex flex-nowrap items-center">
-        <MenuItem label="Мои рецепты" link="/profile" />
+        <MenuItem label="Мои рецепты" link="/profile/recipes" />
         <MenuItem label="Закладки" link="/profile/bookmarks" />
         <MenuItem label="Уведомления" link="/profile/notifications" />
         <MenuItem label="Настройки" link="/profile/settings" />

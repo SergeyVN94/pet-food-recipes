@@ -9,9 +9,8 @@ type MutationVariables = {
   recipeId: string;
 };
 
-const mutationFn = async ({ bookmarkId, recipeId }: MutationVariables) => {
-  return (await BookmarkService.addRecipeToBookmark(recipeId, bookmarkId)).data;
-};
+const mutationFn = async ({ bookmarkId, recipeId }: MutationVariables) =>
+  (await BookmarkService.addRecipeToBookmark(recipeId, bookmarkId)).data;
 
 const useAddRecipeToBookmark = (config: UseMutationOptions<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables> = {}) =>
   useMutation<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables>({

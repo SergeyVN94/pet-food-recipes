@@ -20,6 +20,7 @@ type InputProps = {
   iconRight?: React.JSX.Element;
   autocompleteItems?: InputAutocompleteItem[];
   errorMessage?: string;
+  maxLength?: number;
   onAutoCompleteSelect?: (id: string) => void;
   onChange?: (ev: React.ChangeEvent<HTMLInputElement>, value: string) => void;
   onClear?: () => void;
@@ -59,14 +60,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       if (onChange && !other.readOnly) {
         onChange(ev, nextValue);
       }
-    };
-
-    const handleFocus: React.FocusEventHandler<HTMLInputElement> = ev => {
-      onFocus?.(ev);
-    };
-
-    const handleBlur: React.FocusEventHandler<HTMLInputElement> = ev => {
-      onBlur?.(ev);
     };
 
     const handleRootClick: React.MouseEventHandler<HTMLDivElement> = ev => {
@@ -145,8 +138,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               className={inputVariants({ variant })}
               {...other}
               value={other.value ?? ''}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
               data-with-label={!!label}
               onChange={handleChange}
               ref={mergeRefs([ref, localRef])}
@@ -156,9 +147,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 className={labelVariants({ variant })}
                 ref={labelRef}
                 data-icon-left={!!iconLeft}
-                data-force-focus={!!(other.value ?? '') || other.placeholder || isFocus}
+                data-force-focus={!!(other.value ?? '') || other.placeholder || isFocus || other.type === 'number'}
               >
                 {label}
+                {other.maxLength && (
+                  <span className="text-on-surface-var">
+                    &nbsp;({String(other.value ?? '').length}/{other.maxLength})
+                  </span>
+                )}
+                {other.required && <span className="text-error">&nbsp;*</span>}
               </span>
             )}
           </label>
@@ -190,8 +187,6 @@ export const InputUncontrolled = ({ isClearable = true, ...other }: InputUncontr
   const methods = useFormContext();
 
   const handleClear = () => {
-    console.log('clear', other.name);
-
     methods.resetField(other.name);
 
     if (other.onClear) {

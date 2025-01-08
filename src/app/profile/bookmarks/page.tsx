@@ -11,7 +11,7 @@ import { IngredientDto, RecipeDto } from '@/types';
 import { BookmarkDto } from '@/types/bookmarks';
 import { arrayToDictionary } from '@/utils';
 
-import { BookmarksMenu } from './components';
+import { Menu } from '../components';
 
 const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeDto['id']; ingredientsMap: Map<number, IngredientDto> }) => {
   const { data: recipe, isFetching } = useRecipeById(recipeId);
@@ -62,6 +62,11 @@ const BookmarksPage = () => {
     }, initialAcc);
   }, [bookmarksRecipes, bookmarks]);
 
+  const bookmarksMenuItems = React.useMemo(
+    () => (bookmarks ?? []).map(bookmark => ({ id: bookmark.slug, title: bookmark.title })),
+    [bookmarks],
+  );
+
   React.useEffect(() => {
     if (bookmarks && bookmarks.length > 0 && !bookmarks.some(item => item.slug === selectedBookmark)) {
       setSelectedBookmark(bookmarks[0].slug);
@@ -71,7 +76,7 @@ const BookmarksPage = () => {
   const bookmarksMenu = isBookmarksFetching ? (
     <div className="skeleton w-60 h-96" />
   ) : (
-    <BookmarksMenu bookmarks={bookmarks ?? []} onClick={setSelectedBookmark} selected={selectedBookmark ?? ''} />
+    <Menu items={bookmarksMenuItems} onClick={setSelectedBookmark} selectedId={selectedBookmark ?? ''} />
   );
 
   const recipesList =

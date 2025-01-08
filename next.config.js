@@ -42,6 +42,20 @@ const nextConfig = {
   images: {
     remotePatterns: imagesRemotePatterns,
   },
+  redirects: async () => {
+    return [
+      {
+        source: '/profile',
+        destination: '/profile/recipes',
+        permanent: true,
+      },
+      {
+        source: '/profile/settings',
+        destination: '/profile/settings/info',
+        permanent: true,
+      },
+    ];
+  },
   env: {
     NEXT_PUBLIC_API_SERVER_URL: process.env.NEXT_PUBLIC_API_SERVER_URL ?? 'http://localhost:8000',
     NEXT_PUBLIC_STATIC_SERVER_URL: process.env.NEXT_PUBLIC_STATIC_SERVER_URL ?? 'http://localhost:9000',

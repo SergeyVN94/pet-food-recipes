@@ -17,7 +17,7 @@ const EmptyRecipesListPlaceholder = () => (
   </li>
 );
 
-const ProfilePage = () => {
+const UserRecipesPage = () => {
   const { data: user } = useUser();
   const filter = React.useMemo<RecipeFilter>(
     () => ({
@@ -55,4 +55,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default UserRecipesPage;
