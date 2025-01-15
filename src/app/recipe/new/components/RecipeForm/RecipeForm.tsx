@@ -8,6 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Button, FileInputUncontrolled, InputUncontrolled, TextareaControlled } from '@/components/ui';
 import { useAmountTypes, useCreateRecipe, useIngredients } from '@/hooks';
 import { RecipeIngredientCreateDto } from '@/types';
+import { arrayToDictionary, showToast } from '@/utils';
 
 import { FormFields } from './RecipeForm.types';
 import { Ingredients, Steps } from './local-components';
@@ -20,6 +21,7 @@ const RecipeForm = ({ className }: { className?: string }) => {
   const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useIngredients({
     refetchOnMount: true,
   });
+  const amountTypesDict = React.useMemo(() => arrayToDictionary(amountTypes ?? [], 'id'), [amountTypes]);
 
   const { mutateAsync, isPending } = useCreateRecipe({
     onSuccess: data => {
@@ -49,9 +51,12 @@ const RecipeForm = ({ className }: { className?: string }) => {
     }
 
     const ingredients = formFields.ingredients.reduce<RecipeIngredientCreateDto[]>((acc, val) => {
-      if (val.amountTypeId && val.ingredientId && val.count) {
+      const amountType = amountTypesDict[val.amountTypeId!];
+      const isValidCount = Number(val.count) > 0 || amountType?.slug === 'po_vkusu';
+
+      if (amountType && val.ingredientId && isValidCount) {
         acc.push({
-          count: val.count,
+          count: Number(val.count),
           ingredientId: Number(val.ingredientId),
           amountTypeId: Number(val.amountTypeId),
         });
@@ -59,6 +64,11 @@ const RecipeForm = ({ className }: { className?: string }) => {
 
       return acc;
     }, []);
+
+    if (ingredients.length === 0) {
+      showToast('error', 'Добавьте хотя бы один ингредиент');
+      return;
+    }
 
     mutateAsync({
       ...formFields,

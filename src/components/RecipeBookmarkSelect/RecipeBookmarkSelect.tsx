@@ -2,7 +2,9 @@
 
 import React from 'react';
 
-import { useBookmarksRecipes, useRemoveRecipeFromBookmark, userAddRecipeToBookmark } from '@/hooks';
+import { observer } from 'mobx-react-lite';
+
+import { useBookmarksRecipes, useRemoveRecipeFromBookmark, useStore, userAddRecipeToBookmark } from '@/hooks';
 import useBookmarks from '@/hooks/useBookmarks';
 import { RecipeDto } from '@/types';
 import { showToast } from '@/utils';
@@ -89,4 +91,10 @@ const RecipeBookmarkSelect = ({ className, recipeId }: RecipeBookmarkSelectProps
   return <div className={className}>{isSomeLoading ? <div className="skeleton w-32 h-8" /> : select}</div>;
 };
 
-export default RecipeBookmarkSelect;
+const CheckAuthWrapper = observer((props: RecipeBookmarkSelectProps) => {
+  const store = useStore();
+
+  return store.authStore.isAuthenticated ? <RecipeBookmarkSelect {...props} /> : null;
+});
+
+export default CheckAuthWrapper;

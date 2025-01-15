@@ -6,10 +6,11 @@ import * as SelectPrimitives from '@radix-ui/react-select';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { IconArrowLeft } from '@/assets/icons';
+import { IconArrowLeft, IconSearch } from '@/assets/icons';
 import { cn } from '@/utils/utils';
 
 import { Button } from '../Button';
+import { Input } from '../Input';
 
 export type SelectItem = {
   id: string;
@@ -24,23 +25,48 @@ type SelectProps = {
   name: string;
   value?: SelectItem['id'] | null;
   error?: string;
+  withSearch?: boolean;
   onChange: (id: SelectItem['id']) => void;
   onFocus?: () => void;
   onBlur?: () => void;
   onClear?: () => void;
 };
 
-const Select = ({ ariaLabel, items, value, error, label, name, className, onChange, onBlur, onFocus, onClear }: SelectProps) => {
+const Select = ({
+  ariaLabel,
+  items,
+  value,
+  error,
+  label,
+  name,
+  className,
+  onChange,
+  onBlur,
+  onFocus,
+  onClear,
+  withSearch,
+}: SelectProps) => {
   const selectedItemLabel = React.useMemo(() => items.find(item => item.id === value)?.label, [items, value]);
   const [isOpen, setIsOpen] = React.useState(false);
   const itemsParentRef = React.useRef<HTMLDivElement>(null);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const [search, setSearch] = React.useState('');
+
+  const filteredItems = React.useMemo(() => {
+    if (!search) {
+      return items;
+    }
+
+    const normalizedSearch = search.toLowerCase();
+
+    return items.filter(item => item.label.toLowerCase().includes(normalizedSearch));
+  }, [items, search]);
 
   const rowVirtualizer = useVirtualizer({
-    count: items.length,
+    count: filteredItems.length,
     getScrollElement: () => itemsParentRef.current,
     estimateSize: () => 56,
-    getItemKey: index => items[index].id,
+    getItemKey: index => filteredItems[index].id,
   });
 
   const handleClearClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,6 +77,15 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
       onClear();
     }
   };
+
+  // TODO: add debounce
+  const handleSearchChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(ev.target.value);
+  };
+
+  React.useEffect(() => {
+    setSearch('');
+  }, [isOpen]);
 
   return (
     <SelectPrimitives.Root onValueChange={onChange} onOpenChange={setIsOpen} open={isOpen} name={name} value={value ?? undefined}>
@@ -89,6 +124,17 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
       <SelectPrimitives.Portal>
         <SelectPrimitives.Content sideOffset={4} alignOffset={0} position="popper">
           <SelectPrimitives.Viewport className="rounded-md bg-surf-cont flex flex-col w-full shadow-elevation-2">
+            {withSearch && (
+              <div className="p-2">
+                <Input
+                  variant="outline"
+                  placeholder="Search"
+                  value={search}
+                  onChange={handleSearchChange}
+                  iconLeft={<IconSearch className="size-6" />}
+                />
+              </div>
+            )}
             {/* 21rem == 6 items */}
             <div
               className="max-h-[21rem] w-64 overflow-y-auto"
@@ -106,16 +152,19 @@ const Select = ({ ariaLabel, items, value, error, label, name, className, onChan
                     }}
                   >
                     <SelectPrimitives.Item
-                      key={items[virtualItem.index].id}
+                      key={filteredItems[virtualItem.index].id}
                       className="px-3 py-4 w-full text-left hover:bg-surf-cont-highest transition-all body-l max-w-xs text-ellipsis select-none cursor-pointer focus:bg-surf-cont-high outline-none"
-                      value={items[virtualItem.index].id}
+                      value={filteredItems[virtualItem.index].id}
                     >
-                      <SelectPrimitives.ItemText>{items[virtualItem.index].label}</SelectPrimitives.ItemText>
+                      <SelectPrimitives.ItemText>{filteredItems[virtualItem.index].label}</SelectPrimitives.ItemText>
                     </SelectPrimitives.Item>
                   </div>
                 ))}
               </div>
             </div>
+            {withSearch && search.length > 0 && filteredItems.length === 0 && (
+              <p className="p-2 body-l text-on-surface">Поиск не дал результатов</p>
+            )}
             {onClear && (
               <div className="p-2">
                 <Button onClick={handleClearClick} className="w-full">

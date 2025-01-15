@@ -19,7 +19,7 @@ const middleware: NextMiddleware = async (request: NextRequest) => {
         })
       ).json();
 
-      if (!user) {
+      if (!user || !user?.id) {
         return NextResponse.redirect(loginUrl);
       }
     } catch (err) {

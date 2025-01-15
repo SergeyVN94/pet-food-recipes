@@ -16,10 +16,8 @@ const TimeSince = ({ startTime, icon = <IconSchedule className="size-6" />, clas
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setFormattedTime(getTimeSince(startTime));
+      setFormattedTime(getTimeSince(startTime) ?? 'только что');
     }, 1000 * 60);
-
-    setFormattedTime(getTimeSince(startTime));
 
     return () => clearInterval(interval);
   }, [startTime]);

@@ -48,7 +48,7 @@ const IngredientsRow = ({
   return (
     <tr key={field.id} className="">
       <td className="pr-3 pb-3 w-1/3">
-        <SelectUncontrolled name={`ingredients.${index}.ingredientId`} label="Ингредиент" items={recipeIngredientItems} />
+        <SelectUncontrolled name={`ingredients.${index}.ingredientId`} label="Ингредиент" items={recipeIngredientItems} withSearch />
       </td>
       <td className="px-3 pb-3 w-1/3">
         <InputUncontrolled name={`ingredients.${index}.count`} type="number" label="Количество" min={0} required />

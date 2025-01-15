@@ -3,11 +3,9 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { IconSchedule } from '@/assets/icons';
 import { Chip } from '@/components/ui';
 import { Avatar } from '@/components/ui/Avatar';
 import { IngredientDto, RecipeDto } from '@/types';
-import { getTimeSince } from '@/utils';
 
 import { RecipeBookmarkSelect } from '../RecipeBookmarkSelect';
 import { TimeSince } from '../TimeSince';
@@ -23,7 +21,7 @@ const RecipeCard = ({ recipe, ingredientsMap }: RecipeCardProps) => {
 
   return (
     <Link
-      className="w-full border-b border-neutral-90 group-last:border-none p-4 pl-0 relative flex items-start gap-6 pointer hover:shadow-md transition-all rounded-md"
+      className="w-full border-b border-neutral-90 group-last:border-none p-4 relative flex items-start gap-6 pointer hover:shadow-md transition-all rounded-md elevation-1"
       href={`/recipe/${recipe.slug}`}
     >
       <Image alt={recipe.title} src={imageUrl} className="object-contain block size-[16rem]" width={256} height={256} placeholder="empty" />
