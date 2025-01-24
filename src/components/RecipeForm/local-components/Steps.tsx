@@ -8,10 +8,9 @@ import { FormFields } from '../RecipeForm.types';
 
 type StepsProps = {
   methods: UseFormReturn<FormFields, any, undefined>;
-  isLoading: boolean;
 };
 
-const Steps = ({ methods, isLoading }: StepsProps) => {
+const Steps = ({ methods }: StepsProps) => {
   const { append, remove, fields, move } = useFieldArray<FormFields>({
     name: 'steps',
     control: methods.control,
@@ -37,7 +36,9 @@ const Steps = ({ methods, isLoading }: StepsProps) => {
 
   return (
     <fieldset className="mt-8 p-0">
-      <h4 className="headline-m">Этапы готовки</h4>
+      <h4 className="headline-m">
+        Этапы готовки <span className="text-primary">{`${fields.length}/50`}</span>
+      </h4>
       <div className="mt-4">
         {fields.map((field, index) => (
           <div key={field.id} className="mt-3 first:mt-0 flex flex-nowrap items-start">
@@ -56,13 +57,7 @@ const Steps = ({ methods, isLoading }: StepsProps) => {
           </div>
         ))}
       </div>
-      <Button
-        className="mt-4"
-        disabled={isLoading}
-        type="button"
-        iconLeft={<IconAdd width={24} height={24} />}
-        onClick={handleAddStepBtnClick}
-      >
+      <Button className="mt-4" type="button" iconLeft={<IconAdd width={24} height={24} />} onClick={handleAddStepBtnClick}>
         Добавить этап
       </Button>
     </fieldset>

@@ -2,18 +2,28 @@
 
 import React from 'react';
 
+import { vestResolver } from '@hookform/resolvers/vest';
 import { useRouter } from 'next/navigation';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
-import { Button, FileInputUncontrolled, InputUncontrolled, TextareaControlled } from '@/components/ui';
-import { useAmountTypes, useCreateRecipe, useIngredients } from '@/hooks';
-import { RecipeIngredientCreateDto } from '@/types';
+import { Button, InputUncontrolled, TextareaControlled } from '@/components/ui';
+import { useAmountTypes, useIngredients } from '@/hooks';
+import { RecipeCreateDto, RecipeDto, RecipeIngredientCreateDto } from '@/types';
 import { arrayToDictionary, showToast } from '@/utils';
 
 import { FormFields } from './RecipeForm.types';
+import { validationSuite } from './lib';
 import { Ingredients, Steps } from './local-components';
 
-const RecipeForm = ({ className }: { className?: string }) => {
+type RecipeFormProps = {
+  onSubmit: (formFields: RecipeCreateDto) => void;
+  isLoading?: boolean;
+  initialRecipe?: RecipeDto;
+  className?: string;
+  errors?: FieldErrors<FormFields>;
+};
+
+const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit }: RecipeFormProps) => {
   const navigate = useRouter();
   const { data: amountTypes, isFetching: isAmountTypesFetching } = useAmountTypes({
     refetchOnMount: true,
@@ -23,35 +33,32 @@ const RecipeForm = ({ className }: { className?: string }) => {
   });
   const amountTypesDict = React.useMemo(() => arrayToDictionary(amountTypes ?? [], 'id'), [amountTypes]);
 
-  const { mutateAsync, isPending } = useCreateRecipe({
-    onSuccess: data => {
-      navigate.push(`/recipe/${data.slug}`);
-    },
-  });
+  const defaultValues = React.useMemo(
+    () => ({
+      title: initialRecipe?.title ?? '',
+      description: initialRecipe?.description ?? '',
+      steps: initialRecipe?.steps.map(step => ({ content: step.content })) ?? [{ content: '' }],
+      ingredients: initialRecipe?.ingredients.map(ingredient => ({
+        count: ingredient.count,
+        ingredientId: String(ingredient.ingredientId),
+        amountTypeId: String(ingredient.amountTypeId),
+      })) ?? [{ count: 0 }],
+    }),
+    [initialRecipe],
+  );
+
   const methods = useForm<FormFields>({
-    defaultValues: {
-      title: '',
-      description: '',
-      steps: [
-        {
-          content: '',
-        },
-      ],
-      ingredients: [
-        {
-          count: 0,
-        },
-      ],
-    },
+    defaultValues,
+    errors,
   });
 
   const handleSubmit = (formFields: FormFields) => {
-    if (isPending) {
+    if (isLoading) {
       return;
     }
 
     const ingredients = formFields.ingredients.reduce<RecipeIngredientCreateDto[]>((acc, val) => {
-      const amountType = amountTypesDict[val.amountTypeId!];
+      const amountType = amountTypesDict[Number(val.amountTypeId)];
       const isValidCount = Number(val.count) > 0 || amountType?.slug === 'po_vkusu';
 
       if (amountType && val.ingredientId && isValidCount) {
@@ -70,18 +77,22 @@ const RecipeForm = ({ className }: { className?: string }) => {
       return;
     }
 
-    mutateAsync({
+    onSubmit({
       ...formFields,
       ingredients,
       steps: formFields.steps.map(step => step.content),
     });
   };
 
+  const handleCancel = () => {
+    navigate.back();
+  };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
-        <InputUncontrolled name="title" label="Название" required disabled={isPending} maxLength={150} />
-        <TextareaControlled name="description" label="Описание" className="mt-4" required disabled={isPending} maxLength={500} />
+        <InputUncontrolled name="title" label="Название" required maxLength={150} />
+        <TextareaControlled name="description" label="Описание" className="mt-4" required maxLength={500} />
         {/* <FileInputUncontrolled
           name="images"
           label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"
@@ -94,17 +105,17 @@ const RecipeForm = ({ className }: { className?: string }) => {
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
           <div className="skeleton mt-4 h-48" />
         ) : (
-          <Ingredients
-            methods={methods}
-            isLoading={isPending}
-            amountTypes={amountTypes ?? []}
-            recipeIngredients={recipeIngredients ?? []}
-          />
+          <Ingredients methods={methods} amountTypes={amountTypes ?? []} recipeIngredients={recipeIngredients ?? []} />
         )}
-        <Steps methods={methods} isLoading={isPending} />
-        <Button className="mt-8" disabled={isPending}>
-          Сохранить
-        </Button>
+        <Steps methods={methods} />
+        <div className="flex flex-nowrap gap-2 mt-8">
+          <Button disabled={isLoading}>Сохранить</Button>
+          {initialRecipe && (
+            <Button type="button" variant="outline" onClick={handleCancel}>
+              Отменить
+            </Button>
+          )}
+        </div>
       </form>
     </FormProvider>
   );

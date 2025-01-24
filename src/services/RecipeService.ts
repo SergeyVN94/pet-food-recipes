@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
-import { RecipeCreateDto, RecipeDto, RecipeFilter } from '@/types';
+import { RecipeCreateDto, RecipeDto, RecipeFilter, RecipeUpdateDto } from '@/types';
 
 import { apiInstance } from './lib';
 
@@ -21,6 +21,14 @@ class RecipeService {
 
   static postRecipe(dto: RecipeCreateDto, config: AxiosRequestConfig = {}) {
     return apiInstance.post<RecipeDto>(`${BASE_API_URL}`, dto, config);
+  }
+
+  static patchRecipe(slug: RecipeDto['slug'], dto: RecipeUpdateDto, config: AxiosRequestConfig = {}) {
+    return apiInstance.patch<RecipeDto>(`${BASE_API_URL}/${slug}`, dto, config);
+  }
+
+  static deleteRecipe(slug: RecipeDto['slug'], config: AxiosRequestConfig = {}) {
+    return apiInstance.delete<RecipeDto>(`${BASE_API_URL}/${slug}`, config);
   }
 }
 

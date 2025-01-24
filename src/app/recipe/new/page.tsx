@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
+import { RecipeForm } from '@/components';
 import { PageLayout } from '@/layouts';
-
-import { RecipeForm } from './components';
 
 export const metadata: Metadata = {
   title: 'Добавить рецепт',

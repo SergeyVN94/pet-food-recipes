@@ -60,6 +60,8 @@ export type RecipeCreateDto = {
   ingredients: RecipeIngredientCreateDto[];
 };
 
+export type RecipeUpdateDto = Partial<RecipeCreateDto>;
+
 export type RecipeFilter = {
   userId?: string;
   isDeleted?: boolean;

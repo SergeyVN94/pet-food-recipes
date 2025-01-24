@@ -8,7 +8,7 @@ const mutationFn = async (dto: RecipeCreateDto) => (await RecipeService.postReci
 const useCreateRecipe = (config: UseMutationOptions<RecipeDto, unknown, RecipeCreateDto, unknown> = {}) =>
   useMutation({
     mutationFn,
-    mutationKey: ['recipe', 'post'],
+    mutationKey: ['recipe', 'create'],
     ...config,
   });
 

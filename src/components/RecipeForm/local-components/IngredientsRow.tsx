@@ -46,7 +46,7 @@ const IngredientsRow = ({
   }, [amountTypeItems, ingredientId, recipeIngredientMap]);
 
   return (
-    <tr key={field.id} className="">
+    <tr key={field.id}>
       <td className="pr-3 pb-3 w-1/3">
         <SelectUncontrolled name={`ingredients.${index}.ingredientId`} label="Ингредиент" items={recipeIngredientItems} withSearch />
       </td>

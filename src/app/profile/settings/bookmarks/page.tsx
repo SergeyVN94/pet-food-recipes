@@ -35,7 +35,7 @@ const BookmarkItem = ({ bookmark }: BookmarkItemProps) => {
     if (error) {
       let message = 'Что-то пошло не так';
 
-      if (axios.isAxiosError(error) && error.response?.data?.message === 'Bookmark with this title already exists') {
+      if (axios.isAxiosError(error) && error.response?.data?.message === 'BOOKMARK_WITH_THIS_TITLE_ALREADY_EXISTS') {
         message = 'Закладка с таким названием уже существует';
       }
 
@@ -92,7 +92,7 @@ const BookmarksSettingsPage = () => {
     if (error) {
       let errorMessage = 'Произошла ошибка при создании закладки';
 
-      if (axios.isAxiosError(error) && error.response?.data?.message === 'Bookmark with this title already exists') {
+      if (axios.isAxiosError(error) && error.response?.data?.message === 'BOOKMARK_WITH_THIS_TITLE_ALREADY_EXISTS') {
         errorMessage = 'Закладка с таким названием уже существует';
       }
 

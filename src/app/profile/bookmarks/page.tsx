@@ -35,7 +35,7 @@ const BookmarksPage = () => {
     [ingredients],
   );
 
-  const bookmarksRecipesMap = React.useMemo(() => {
+  const bookmarksRecipesMap = React.useMemo<Record<BookmarkDto['slug'], RecipeDto['id'][]>>(() => {
     const bookmarksMapById = arrayToDictionary(bookmarks ?? [], 'id');
 
     const initialAcc =

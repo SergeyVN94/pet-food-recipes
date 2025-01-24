@@ -11,12 +11,11 @@ import IngredientsRow from './IngredientsRow';
 
 type IngredientsProps = {
   methods: UseFormReturn<FormFields, any, undefined>;
-  isLoading: boolean;
   amountTypes: AmountTypeDto[];
   recipeIngredients: IngredientDto[];
 };
 
-const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: IngredientsProps) => {
+const Ingredients = ({ methods, amountTypes, recipeIngredients }: IngredientsProps) => {
   const amountTypeItems: SelectItem[] = React.useMemo(
     () =>
       amountTypes.map(amountType => ({
@@ -63,7 +62,9 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
 
   return (
     <fieldset className="mt-8 p-0">
-      <h4 className="headline-m">Ингредиенты</h4>
+      <h4 className="headline-m">
+        Ингредиенты <span className="text-primary">{`${fields.length}/50`}</span>
+      </h4>
       <div className="mt-4">
         <table className="border-separate border-spacing-0 w-full">
           <tbody>
@@ -88,13 +89,7 @@ const Ingredients = ({ methods, isLoading, amountTypes, recipeIngredients }: Ing
             ))}
           </tbody>
         </table>
-        <Button
-          className="mt-1"
-          disabled={isLoading}
-          type="button"
-          iconLeft={<IconAdd width={24} height={24} />}
-          onClick={handleAddIngredientBtnClick}
-        >
+        <Button className="mt-1" type="button" iconLeft={<IconAdd width={24} height={24} />} onClick={handleAddIngredientBtnClick}>
           Добавить ингредиент
         </Button>
       </div>

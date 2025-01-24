@@ -4,11 +4,13 @@ import { notFound, redirect } from 'next/navigation';
 
 import { IconSchedule } from '@/assets/icons';
 import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
-import { TimeSince } from '@/components';
+import { RecipeBookmarkSelect, TimeSince } from '@/components';
 import { Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
 import { RecipeService } from '@/services';
 import { arrayToDictionary, getTimeSince } from '@/utils';
+
+import { RecipeControls } from './components';
 
 const recipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
 
@@ -55,8 +57,19 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
 
   return (
     <PageLayout>
-      <TimeSince startTime={recipe.createdAt} className="mb-2" />
-      <h1 className="headline-l text-primary text-balance">{recipe.title}</h1>
+      <div>
+        <div className="flex flex-nowrap items-center gap-3">
+          <p className="body-l">
+            <span>Автор: </span>
+            <span className="body-l">{recipe.user?.userName}</span>
+          </p>
+          <TimeSince startTime={recipe.createdAt} />
+          <RecipeControls recipe={recipe} className="ml-4" />
+          <RecipeBookmarkSelect recipeId={recipe.id} className="ml-5 min-w-60" />
+        </div>
+        <h1 className="headline-l text-primary text-balance mt-2">{recipe.title}</h1>
+      </div>
+
       <p className="body-l mt-8 text-pretty">{recipe.description}</p>
       {recipe.images && recipe.images.length > 0 && (
         <section className="mt-16 flex flex-wrap gap-4">
