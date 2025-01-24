@@ -25,7 +25,7 @@ const TimeSince = ({ startTime, icon = <IconSchedule className="size-6" />, clas
   return (
     <p className={cn('title-m flex flex-nowrap items-center gap-1', className)}>
       {icon}
-      <span>{formattedTime}</span>
+      <time dateTime={startTime}>{formattedTime}</time>
     </p>
   );
 };

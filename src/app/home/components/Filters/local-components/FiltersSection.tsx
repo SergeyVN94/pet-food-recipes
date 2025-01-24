@@ -33,13 +33,13 @@ const FiltersSection = ({ title, children, className, isLoading }: FiltersSectio
         </Button>
       )}
       <div
-        className="absolute top-0 left-0 w-full h-[calc(100%-2.75rem)] translate-x-full transition-all z-0 bg-white data-[open='true']:translate-x-0 data-[open='true']:z-20 flex flex-col"
+        className="absolute top-0 left-0 w-full h-[calc(100%-2.75rem)] translate-x-full transition-all z-0 bg-violet-50 data-[open='true']:translate-x-0 data-[open='true']:z-20 flex flex-col p-3 pb-0"
         data-open={String(isOpen)}
       >
-        <Button iconLeft={<IconArrowBack className="w-6 h-6" />} onClick={handleCloseBtnClick} className="self-start">
+        <Button iconLeft={<IconArrowBack className="w-6 h-6" />} onClick={handleCloseBtnClick} className="self-start" variant="filled">
           Назад
         </Button>
-        <div className="flex-1 mt-4 bg-white flex flex-col">{children}</div>
+        <div className="flex-1 mt-4 bg-violet-50 flex flex-col">{children}</div>
       </div>
     </section>
   );

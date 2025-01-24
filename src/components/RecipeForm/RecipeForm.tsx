@@ -50,6 +50,7 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
   const methods = useForm<FormFields>({
     defaultValues,
     errors,
+    resolver: vestResolver(validationSuite),
   });
 
   const handleSubmit = (formFields: FormFields) => {

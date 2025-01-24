@@ -62,3 +62,15 @@ export const arrayToDictionary = <T extends Record<string, any>, K extends keyof
     return acc;
   }, {} as Acc);
 };
+
+declare global {
+  interface Window {
+    ym: any;
+  }
+}
+
+export const yandexMetrica = (type: string, data: unknown) => {
+  if (typeof window !== 'undefined' && window.ym) {
+    window.ym(Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID), type, data);
+  }
+};

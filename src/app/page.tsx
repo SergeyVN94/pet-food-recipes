@@ -34,10 +34,16 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
           <ActualRecipesList initialRecipes={recipes.data} initialIngredients={ingredients} />
         </Suspense>
       </section>
-      <aside>
+      <aside className="flex flex-col gap-3">
         <Suspense fallback={<div className="skeleton w-full h-full" />}>
           <Filters initialIngredients={ingredients} initialAmountTypes={amountTypes} />
         </Suspense>
+        <div className="p-4 elevation-2">
+          <h4 className="font-semibold mb-2">Контакты</h4>
+          <a type="email" href="mailto:pet-food-recipes@yandex.ru" className="text-primary font-semibold body-l">
+            pet-food-recipes@yandex.ru
+          </a>
+        </div>
       </aside>
     </PageLayout>
   );

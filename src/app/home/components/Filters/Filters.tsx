@@ -84,14 +84,14 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(handleSubmit)}
-        className="w-full sticky top-4 bottom-4 h-[calc(100vh-8rem)] max-h-[80rem] overflow-hidden z-10"
+        className="w-full sticky top-4 bottom-4 h-[calc(100vh-8rem)] max-h-[80rem] overflow-hidden z-10 elevation-1 rounded-xl p-3"
       >
         <h3 className="headline-m">Фильтры</h3>
         <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
           {user?.role === UserRoles.ADMIN && <CheckboxUncontrolled name="isDeleted" label="Удаленные рецепты" className="mb-2" />}
           <IngredientsFilter ingredients={ingredients} />
         </div>
-        <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-white">
+        <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-transparent">
           <Button type="submit">Применить</Button>
           <Button type="button" variant="outline" onClick={handleReset}>
             Очистить

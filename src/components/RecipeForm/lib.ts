@@ -2,24 +2,24 @@ import { create, enforce, test } from 'vest';
 
 import { FormFields } from './RecipeForm.types';
 
-export const validationSuite = create((data: Partial<FormFields> = {}) => {
+export const validationSuite = create((data: FormFields) => {
   test('title', 'Заполните поле', () => {
-    enforce(data.title).isNotEmpty();
+    enforce(data?.title).isNotEmpty();
   });
 
   test('title', 'Максимум 150 символов', () => {
-    enforce(data.title).lessThanOrEquals(150);
+    enforce(data?.title).lessThanOrEquals(150);
   });
 
   test('description', 'Заполните поле', () => {
-    enforce(data.description).isNotEmpty();
+    enforce(data?.description).isNotEmpty();
   });
 
   test('description', 'Максимум 150 символов', () => {
-    enforce(data.description).lessThanOrEquals(500);
+    enforce(data?.description).lessThanOrEquals(500);
   });
 
-  data.ingredients?.forEach((ingredient, index) => {
+  data?.ingredients?.forEach((ingredient, index) => {
     test(`ingredients.${index}.count`, 'Заполните поле', () => {
       enforce(ingredient.count).isNotEmpty();
     });
@@ -37,7 +37,7 @@ export const validationSuite = create((data: Partial<FormFields> = {}) => {
     });
   });
 
-  data.steps?.forEach((step, index) => {
+  data?.steps?.forEach((step, index) => {
     test(`steps.${index}.content`, 'Заполните поле', () => {
       enforce(step.content).isNotEmpty();
     });
