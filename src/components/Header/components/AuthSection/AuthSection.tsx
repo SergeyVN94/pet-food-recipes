@@ -8,13 +8,7 @@ import { useUser } from '@/hooks';
 import { UserControls } from '../UserControls';
 
 const AuthSection = () => {
-  const { data: user, isLoading } = useUser({
-    staleTime: Infinity,
-  });
-
-  if (isLoading) {
-    return <div className="skeleton w-[2.5rem] h-[2.5rem] cursor-progress rounded-full" />;
-  }
+  const { data: user } = useUser();
 
   return user ? (
     <UserControls user={user} />

@@ -73,6 +73,7 @@ const palette = {
     92: '#ECE6F0',
     95: '#F5EFF7',
     96: '#F7F2FA',
+    98: '#FEF7FF',
     99: '#FFFBFE',
     100: '#FFFFFF',
   },
@@ -139,7 +140,7 @@ module.exports = {
         'on-tertiary-fixed-variant': palette.tertiary[30],
 
         'surface-dim': palette.neutral[90],
-        surface: palette.neutral[99],
+        surface: palette.neutral[98],
         'surface-bright': palette.neutral[99],
 
         'surf-cont-lowest': palette.neutral[100],
@@ -248,6 +249,14 @@ module.exports = {
 
         '.elevation-4': {
           '@apply bg-zinc-200 rounded-2xl shadow': {},
+        },
+
+        '.card-outlined': {
+          '@apply bg-surface rounded-xl outline outline-1 outline-outline-variant p-4': {},
+        },
+
+        '.card-elevated': {
+          '@apply bg-surface rounded-xl shadow-elevation-1 p-4': {},
         },
 
         '.skeleton': {

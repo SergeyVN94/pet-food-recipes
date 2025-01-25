@@ -38,7 +38,7 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
         <Suspense fallback={<div className="skeleton w-full h-full" />}>
           <Filters initialIngredients={ingredients} initialAmountTypes={amountTypes} />
         </Suspense>
-        <div className="p-4 elevation-2">
+        <div className="card-outlined">
           <h4 className="font-semibold mb-2">Контакты</h4>
           <a type="email" href="mailto:pet-food-recipes@yandex.ru" className="text-primary font-semibold body-l">
             pet-food-recipes@yandex.ru

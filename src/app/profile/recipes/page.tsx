@@ -4,16 +4,16 @@ import React from 'react';
 
 import { IconAdd } from '@/assets/icons';
 import { RecipeCard } from '@/components';
-import { Button } from '@/components/ui';
+import { ButtonLink } from '@/components/ui';
 import { useIngredients, useRecipes, useUser } from '@/hooks';
 import { RecipeFilter } from '@/types';
 
 const EmptyRecipesListPlaceholder = () => (
   <li>
     <p className="text-lg">Вы пока не добавили рецептов</p>
-    <Button iconLeft={<IconAdd className="w-6 h-6" />} className="mt-4">
+    <ButtonLink href="/recipe/new" iconLeft={<IconAdd className="w-6 h-6" />} className="mt-4">
       Добавить рецепт
-    </Button>
+    </ButtonLink>
   </li>
 );
 

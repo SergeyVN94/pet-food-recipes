@@ -46,7 +46,7 @@ const AskCookie = () => {
     }
   }, []);
 
-  return <div data-type="ask-cookie" data-state={String(isConfirmed)} />;
+  return <div data-type="ask-cookie" data-state={String(isConfirmed)} suppressHydrationWarning />;
 };
 
 export default AskCookie;

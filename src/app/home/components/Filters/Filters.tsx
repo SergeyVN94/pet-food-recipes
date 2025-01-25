@@ -84,7 +84,7 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(handleSubmit)}
-        className="w-full sticky top-4 bottom-4 h-[calc(100vh-8rem)] max-h-[80rem] overflow-hidden z-10 elevation-1 rounded-xl p-3"
+        className="card-outlined w-full relative h-[50rem] max-h-[80rem] overflow-hidden z-10"
       >
         <h3 className="headline-m">Фильтры</h3>
         <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">

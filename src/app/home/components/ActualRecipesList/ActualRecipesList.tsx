@@ -39,9 +39,9 @@ const ActualRecipesList = observer(({ initialRecipes = [], initialIngredients = 
     <ActualRecipesListSkeleton />
   ) : (
     <ul className="flex flex-col items-start flex-nowrap gap-4 pt-8 w-full">
-      {recipes?.map(recipe => (
+      {recipes?.map((recipe, index) => (
         <li key={recipe.id} className="w-full">
-          <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} />
+          <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} isVisiblePriority={index < 20} />
         </li>
       ))}
       {!isFetching && recipes?.length === 0 && filter.q && <li>{`По запросу «${filter.q}» ничего не найдено`}</li>}
