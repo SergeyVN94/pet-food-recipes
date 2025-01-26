@@ -51,6 +51,7 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
     defaultValues,
     errors,
     resolver: vestResolver(validationSuite),
+    mode: 'onChange',
   });
 
   const handleSubmit = (formFields: FormFields) => {

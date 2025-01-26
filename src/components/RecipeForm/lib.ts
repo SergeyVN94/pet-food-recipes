@@ -8,15 +8,19 @@ export const validationSuite = create((data: FormFields) => {
   });
 
   test('title', 'Максимум 150 символов', () => {
-    enforce(data?.title).lessThanOrEquals(150);
+    enforce(data?.title?.length ?? 0).lessThanOrEquals(150);
+  });
+
+  test('title', 'Недопустимые символы. Используйте только буквы, цифры и восклицательные знаки', () => {
+    enforce(/^[a-zA-Zа-яА-Я0-9!\ ]+$/.test(data?.title ?? '')).equals(true);
   });
 
   test('description', 'Заполните поле', () => {
-    enforce(data?.description).isNotEmpty();
+    enforce(data?.description?.trim()).isNotEmpty();
   });
 
   test('description', 'Максимум 150 символов', () => {
-    enforce(data?.description).lessThanOrEquals(500);
+    enforce(data?.description?.length ?? 0).lessThanOrEquals(500);
   });
 
   data?.ingredients?.forEach((ingredient, index) => {
@@ -40,6 +44,10 @@ export const validationSuite = create((data: FormFields) => {
   data?.steps?.forEach((step, index) => {
     test(`steps.${index}.content`, 'Заполните поле', () => {
       enforce(step.content).isNotEmpty();
+    });
+
+    test(`steps.${index}.content`, 'Максимум 3000 символов', () => {
+      enforce(step.content.length).lessThanOrEquals(3000);
     });
   });
 });

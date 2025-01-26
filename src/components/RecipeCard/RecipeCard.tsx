@@ -7,7 +7,6 @@ import { Chip } from '@/components/ui';
 import { Avatar } from '@/components/ui/Avatar';
 import { IngredientDto, RecipeDto } from '@/types';
 
-import { RecipeBookmarkSelect } from '../RecipeBookmarkSelect';
 import { TimeSince } from '../TimeSince';
 
 type RecipeCardProps = {
@@ -42,7 +41,6 @@ const RecipeCard = ({ recipe, ingredientsMap, isVisiblePriority = false }: Recip
             <span className="title-m">{recipe.user?.userName}</span>
           </p>
           <TimeSince startTime={recipe.createdAt} className="title-s" />
-          <RecipeBookmarkSelect recipeId={recipe.id} className="ml-auto min-w-60" />
         </div>
         <h3 className="headline-m text-primary font-semibold line-clamp-2">{recipe.title}</h3>
         <p className="body-l mt-4 line-clamp-3 mb-2 text-pretty">{recipe.description}</p>

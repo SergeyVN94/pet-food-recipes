@@ -64,7 +64,7 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
             <span className="body-l">{recipe.user?.userName}</span>
           </p>
           <TimeSince startTime={recipe.createdAt} />
-          <RecipeControls recipe={recipe} className="ml-4" />
+          <RecipeControls recipe={recipe} className="ml-auto" />
           <RecipeBookmarkSelect recipeId={recipe.id} className="ml-5 min-w-60" />
         </div>
         <h1 className="headline-l text-primary text-balance mt-2">{recipe.title}</h1>

@@ -84,10 +84,10 @@ const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
   return (
     (user?.role === 'ADMIN' || user?.id === recipe.user.id) && (
       <div className={cn('flex justify-end gap-2', className)}>
-        <ButtonIcon variant="filled" disabled={isPending} onClick={handleAditButtonClick}>
+        <ButtonIcon variant="filled" disabled={isPending} onClick={handleAditButtonClick} title="Редактировать">
           <IconModeEdit />
         </ButtonIcon>
-        <ButtonIcon variant="filled" disabled={isPending} onClick={handleDeleteButtonClick}>
+        <ButtonIcon variant="filled" disabled={isPending} onClick={handleDeleteButtonClick} title="Удалить">
           <IconDelete className="text-error" />
         </ButtonIcon>
       </div>
