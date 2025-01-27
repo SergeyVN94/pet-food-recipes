@@ -24,8 +24,8 @@ class BookmarkService {
     return apiInstance.delete<BookmarkDto>(`${BASE_API_URL}/${bookmarkId}`, config);
   }
 
-  static getRecipesInBookmarks(userId: UserDto['id'], config: AxiosRequestConfig = {}) {
-    return apiInstance.get<BookmarkRecipeDto[]>(`${BASE_API_URL}/recipes/user/${userId}`, config);
+  static getRecipesInBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
+    return apiInstance.get<BookmarkRecipeDto[]>(userId ? `${BASE_API_URL}/recipes/user/${userId}` : `${BASE_API_URL}/recipes`, config);
   }
 
   static addRecipeToBookmark(recipeId: string, bookmarkId: string, config: AxiosRequestConfig = {}) {
