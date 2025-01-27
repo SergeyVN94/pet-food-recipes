@@ -36,10 +36,10 @@ const RecipeCard = ({ recipe, ingredientsMap, isVisiblePriority = false }: Recip
       />
       <div className="flex flex-col w-full self-stretch">
         <div className="flex items-center flex-nowrap mb-2 gap-4">
-          <p className="flex items-center gap-1">
+          <Link href={`/user/${recipe.user?.id}`} className="flex items-center gap-1 hover:underline cursor-pointer">
             {recipe.user && <Avatar user={recipe.user} size={32} />}
             <span className="title-m">{recipe.user?.userName}</span>
-          </p>
+          </Link>
           <TimeSince startTime={recipe.createdAt} className="title-s" />
         </div>
         <h3 className="headline-m text-primary font-semibold line-clamp-2">{recipe.title}</h3>

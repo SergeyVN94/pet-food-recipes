@@ -45,13 +45,23 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: '/profile',
-        destination: '/profile/recipes',
+        source: '/user',
+        destination: '/404',
         permanent: true,
       },
       {
-        source: '/profile/settings',
-        destination: '/profile/settings/info',
+        source: '/user/:id',
+        destination: '/user/:id/recipes',
+        permanent: true,
+      },
+      {
+        source: '/user/:id/settings',
+        destination: '/user/:id/settings/info',
+        permanent: true,
+      },
+      {
+        source: '/admin',
+        destination: '/admin/users',
         permanent: true,
       },
     ];

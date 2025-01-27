@@ -23,28 +23,28 @@ const UserControls = observer(({ user }: UserControlsProps) => {
       label: 'Профиль',
       icon: <IconPersonOutline className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push(`/profile`);
+        navigate.push(`/user/${user.id}`);
       },
     },
     {
       label: 'Закладки',
       icon: <IconBookmarkBorder className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push(`/profile/bookmarks`);
+        navigate.push(`/user/${user.id}/bookmarks`);
       },
     },
     {
       label: 'Уведомления',
       icon: <IconNotificationBorder className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push(`/profile/notifications`);
+        navigate.push(`/user/${user.id}/notifications`);
       },
     },
     {
       label: 'Настройки',
       icon: <IconSettings className="size-6 text-primary" />,
       onSelect: () => {
-        navigate.push(`/profile/settings`);
+        navigate.push(`/user/${user.id}/settings`);
       },
     },
     {

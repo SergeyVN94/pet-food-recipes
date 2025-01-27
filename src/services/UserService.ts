@@ -7,8 +7,8 @@ import { apiInstance } from './lib';
 const BASE_API_URL = '/api/v1/user';
 
 class UserService {
-  static getUser(config?: AxiosRequestConfig) {
-    return apiInstance.get<UserDto>(`${BASE_API_URL}`, config);
+  static getUser(id: UserDto['id'] = '', config?: AxiosRequestConfig) {
+    return apiInstance.get<UserDto>(`${BASE_API_URL}/${id}`, config);
   }
 }
 

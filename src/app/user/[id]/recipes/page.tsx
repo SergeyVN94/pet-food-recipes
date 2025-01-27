@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { useParams } from 'next/navigation';
+
 import { IconAdd } from '@/assets/icons';
 import { RecipeCard } from '@/components';
 import { ButtonLink } from '@/components/ui';
@@ -18,7 +20,8 @@ const EmptyRecipesListPlaceholder = () => (
 );
 
 const UserRecipesPage = () => {
-  const { data: user } = useUser();
+  const { id } = useParams<{ id: string }>();
+  const { data: user } = useUser(id);
   const filter = React.useMemo<RecipeFilter>(
     () => ({
       userId: user?.id,

@@ -2,11 +2,11 @@
 
 import React, { Suspense } from 'react';
 
+import { useParams } from 'next/navigation';
 import { parseAsStringEnum, useQueryState } from 'nuqs';
 
 import { RecipeCard } from '@/components';
-import { useBookmarksRecipes, useIngredients, useRecipeById } from '@/hooks';
-import useBookmarks from '@/hooks/useBookmarks';
+import { useBookmarks, useBookmarksRecipes, useIngredients, useRecipeById } from '@/hooks';
 import { IngredientDto, RecipeDto } from '@/types';
 import { BookmarkDto } from '@/types/bookmarks';
 import { arrayToDictionary } from '@/utils';
@@ -24,10 +24,11 @@ const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeDto['
 };
 
 const BookmarksPage = () => {
-  const { data: bookmarks, isFetching: isBookmarksFetching } = useBookmarks();
+  const { id } = useParams<{ id: string }>();
+  const { data: bookmarks, isFetching: isBookmarksFetching } = useBookmarks(id);
   const parser = React.useMemo(() => parseAsStringEnum((bookmarks ?? []).map(item => item.slug)), [bookmarks]);
   const [selectedBookmark, setSelectedBookmark] = useQueryState('bookmark', parser);
-  const { data: bookmarksRecipes, isFetching: isBookmarksRecipesFetching } = useBookmarksRecipes();
+  const { data: bookmarksRecipes, isFetching: isBookmarksRecipesFetching } = useBookmarksRecipes(id);
   const { data: ingredients, isFetching: isIngredientsFetching } = useIngredients();
 
   const ingredientsMap = React.useMemo(

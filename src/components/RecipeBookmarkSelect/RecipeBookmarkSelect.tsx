@@ -4,8 +4,7 @@ import React from 'react';
 
 import { observer } from 'mobx-react-lite';
 
-import { useBookmarksRecipes, useRemoveRecipeFromBookmark, useStore, userAddRecipeToBookmark } from '@/hooks';
-import useBookmarks from '@/hooks/useBookmarks';
+import { useBookmarks, useBookmarksRecipes, useRemoveRecipeFromBookmark, useStore, userAddRecipeToBookmark } from '@/hooks';
 import { RecipeDto } from '@/types';
 import { showToast } from '@/utils';
 

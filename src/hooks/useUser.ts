@@ -4,7 +4,7 @@ import axios from 'axios';
 import { UserService } from '@/services';
 import { UserDto } from '@/types';
 
-import useStore from './useStore';
+type QueryKey = ['user', UserDto['id']?];
 
 const retryFn = (failureCount: number, error: unknown) => {
   if (axios.isAxiosError(error) && (error.response?.status === 401 || error.response?.status === 404)) {
@@ -14,20 +14,16 @@ const retryFn = (failureCount: number, error: unknown) => {
   return failureCount < 3;
 };
 
-const queryFn: QueryFunction<UserDto, ['user']> = async ({ signal }) => (await UserService.getUser({ signal })).data;
+const queryFn: QueryFunction<UserDto, QueryKey> = async ({ signal, queryKey }) => (await UserService.getUser(queryKey[1], { signal })).data;
 
-const useUser = (config: Omit<UseQueryOptions<UserDto, unknown, UserDto, ['user']>, 'queryKey' | 'queryFn'> = {}) => {
-  const authStore = useStore().authStore;
-
-  return useQuery({
+const useUser = (userId?: UserDto['id'], config: Omit<UseQueryOptions<UserDto, unknown, UserDto, QueryKey>, 'queryKey' | 'queryFn'> = {}) =>
+  useQuery({
     queryFn,
-    queryKey: ['user'],
+    queryKey: ['user', userId],
     retry: retryFn,
     refetchOnWindowFocus: false,
-    enabled: authStore.isAuthenticated,
     staleTime: Infinity,
     ...config,
   });
-};
 
 export default useUser;

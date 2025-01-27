@@ -4,7 +4,7 @@ import React from 'react';
 
 import dayjs from 'dayjs';
 import Link from 'next/link';
-import { notFound, usePathname } from 'next/navigation';
+import { notFound, useParams, usePathname } from 'next/navigation';
 
 import { Avatar } from '@/components/ui';
 import { userRolesNamesMap } from '@/constants';
@@ -40,7 +40,19 @@ const MenuItem = ({ label, link }: { label: string; link: string }) => {
 };
 
 const ProfileHead = () => {
-  const { data: user, isFetching, error } = useUser();
+  const { id } = useParams<{ id: string }>();
+  const { data: selfUser, isFetching: isSelfUserFetching } = useUser();
+  const {
+    data: user,
+    isFetching: isUserFetching,
+    error: userError,
+  } = useUser(id, {
+    enabled: (!isSelfUserFetching && !selfUser) || (selfUser && selfUser.id !== id),
+  });
+
+  const isFetching = isSelfUserFetching || isUserFetching;
+  const isSelfUser = selfUser?.id === id;
+
   const registrationDate = React.useMemo(() => {
     if (!user?.createdAt) {
       return '';
@@ -53,10 +65,10 @@ const ProfileHead = () => {
   }, [user]);
 
   React.useLayoutEffect(() => {
-    if (error) {
+    if (userError) {
       notFound();
     }
-  }, [error]);
+  }, [userError]);
 
   return isFetching || !user ? (
     <ProfileHeadSkeleton />
@@ -66,14 +78,14 @@ const ProfileHead = () => {
       <div>
         <p className="title-l">{user.userName}</p>
         <ProfileItem label="Роль" value={userRolesNamesMap[user.role]} />
-        <ProfileItem label="Почта" value={user.email} />
+        {isSelfUser && <ProfileItem label="Почта" value={user.email} />}
         <ProfileItem label="Дата регистрации" value={registrationDate} />
       </div>
       <nav className="flex flex-nowrap items-center">
-        <MenuItem label="Мои рецепты" link="/profile/recipes" />
-        <MenuItem label="Закладки" link="/profile/bookmarks" />
-        <MenuItem label="Уведомления" link="/profile/notifications" />
-        <MenuItem label="Настройки" link="/profile/settings" />
+        <MenuItem label={isSelfUser ? 'Мои рецепты' : 'Рецепты'} link={`/user/${id}/recipes`} />
+        <MenuItem label="Закладки" link={`/user/${id}/bookmarks`} />
+        {isSelfUser && <MenuItem label="Уведомления" link={`/user/${id}/notifications`} />}
+        {isSelfUser && <MenuItem label="Настройки" link={`/user/${id}/settings`} />}
       </nav>
     </div>
   );

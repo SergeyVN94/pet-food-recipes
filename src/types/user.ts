@@ -6,9 +6,9 @@ export enum UserRoles {
 export type UserDto = {
   id: string;
   userName: string;
-  email: string;
   role: UserRoles;
   avatar: string | null;
   createdAt: string;
   updateAt: string;
+  email?: string;
 };

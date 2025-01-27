@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 
 import { IconSchedule } from '@/assets/icons';
 import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
 import { RecipeBookmarkSelect, TimeSince } from '@/components';
-import { Table, TableColumn } from '@/components/ui';
+import { Avatar, Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
 import { RecipeService } from '@/services';
 import { arrayToDictionary, getTimeSince } from '@/utils';
@@ -59,10 +60,10 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
     <PageLayout>
       <div>
         <div className="flex flex-nowrap items-center gap-3">
-          <p className="body-l">
-            <span>Автор: </span>
-            <span className="body-l">{recipe.user?.userName}</span>
-          </p>
+          <Link href={`/user/${recipe.user?.id}`} className="flex items-center gap-1 hover:underline cursor-pointer">
+            {recipe.user && <Avatar user={recipe.user} size={32} />}
+            <span className="title-m">{recipe.user?.userName}</span>
+          </Link>
           <TimeSince startTime={recipe.createdAt} />
           <RecipeControls recipe={recipe} className="ml-auto" />
           <RecipeBookmarkSelect recipeId={recipe.id} className="ml-5 min-w-60" />

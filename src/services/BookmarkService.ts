@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
+import { UserDto } from '@/types';
 import { BookmarkCreateDto, BookmarkDto, BookmarkRecipeDto } from '@/types/bookmarks';
 
 import { apiInstance } from './lib';
@@ -7,8 +8,8 @@ import { apiInstance } from './lib';
 const BASE_API_URL = '/api/v1/bookmarks';
 
 class BookmarkService {
-  static getBookmarks(config: AxiosRequestConfig = {}) {
-    return apiInstance.get<BookmarkDto[]>(`${BASE_API_URL}`, config);
+  static getBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
+    return apiInstance.get<BookmarkDto[]>(userId ? `${BASE_API_URL}/user/${userId}` : `${BASE_API_URL}`, config);
   }
 
   static createBookmark(dto: BookmarkCreateDto, config: AxiosRequestConfig = {}) {
@@ -23,8 +24,8 @@ class BookmarkService {
     return apiInstance.delete<BookmarkDto>(`${BASE_API_URL}/${bookmarkId}`, config);
   }
 
-  static getRecipesInBookmarks(config: AxiosRequestConfig = {}) {
-    return apiInstance.get<BookmarkRecipeDto[]>(`${BASE_API_URL}/recipes`, config);
+  static getRecipesInBookmarks(userId: UserDto['id'], config: AxiosRequestConfig = {}) {
+    return apiInstance.get<BookmarkRecipeDto[]>(`${BASE_API_URL}/recipes/user/${userId}`, config);
   }
 
   static addRecipeToBookmark(recipeId: string, bookmarkId: string, config: AxiosRequestConfig = {}) {

@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: 'Профиль пользователя',
   category: 'profile',
   keywords: 'профиль, пользователь',
-  robots: 'index, follow',
 };
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => (
