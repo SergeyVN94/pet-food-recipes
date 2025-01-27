@@ -26,10 +26,10 @@ const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeDto['
 const BookmarksPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: bookmarks, isFetching: isBookmarksFetching } = useBookmarks(id);
-  const parser = React.useMemo(() => parseAsStringEnum((bookmarks ?? []).map(item => item.slug)), [bookmarks]);
-  const [selectedBookmark, setSelectedBookmark] = useQueryState('bookmark', parser);
   const { data: bookmarksRecipes, isFetching: isBookmarksRecipesFetching } = useBookmarksRecipes(id);
   const { data: ingredients, isFetching: isIngredientsFetching } = useIngredients();
+  const parser = React.useMemo(() => parseAsStringEnum((bookmarks ?? []).map(item => item.slug)), [bookmarks]);
+  const [selectedBookmark, setSelectedBookmark] = useQueryState('bookmark', parser);
 
   const ingredientsMap = React.useMemo(
     () => ingredients?.reduce((acc, ingredient) => acc.set(ingredient.id, ingredient), new Map()) ?? new Map(),

@@ -65,8 +65,10 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
             <span className="title-m">{recipe.user?.userName}</span>
           </Link>
           <TimeSince startTime={recipe.createdAt} />
-          <RecipeControls recipe={recipe} className="ml-auto" />
-          <RecipeBookmarkSelect recipeId={recipe.id} className="ml-5 min-w-60" />
+          <div className="flex flex-nowrap items-center ml-auto gap-5">
+            <RecipeControls recipe={recipe} />
+            <RecipeBookmarkSelect recipeId={recipe.id} className="min-w-60" />
+          </div>
         </div>
         <h1 className="headline-l text-primary text-balance mt-2">{recipe.title}</h1>
       </div>

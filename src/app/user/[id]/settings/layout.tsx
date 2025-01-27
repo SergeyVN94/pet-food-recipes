@@ -17,9 +17,8 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
   const { id } = useParams<{ id: string }>();
   const navigation = useRouter();
   const pathname = usePathname();
-  const { data: selfUser, error: selfUserError } = useUser();
+  const { data: selfUser, error: selfUserError, isFetching: isSelfUserFetching } = useUser();
 
-  const isSelfUser = selfUser?.id === id;
   const lastPath = pathname.split('/').at(-1);
 
   React.useLayoutEffect(() => {
@@ -30,12 +29,12 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
   }, [selfUserError, selfUserError]);
 
   React.useLayoutEffect(() => {
-    if (!isSelfUser) {
+    if (selfUser && selfUser.id !== id && !isSelfUserFetching) {
       notFound();
     }
-  }, [isSelfUser]);
+  }, [selfUser, id, isSelfUserFetching]);
 
-  return isSelfUser ? (
+  return selfUser && !isSelfUserFetching ? (
     <section className="flex flex-nowrap gap-4">
       <Menu items={menuItems} onClick={menuId => navigation.push(`/user/${id}/settings/${menuId}`)} selectedId={lastPath!} />
       {children}
