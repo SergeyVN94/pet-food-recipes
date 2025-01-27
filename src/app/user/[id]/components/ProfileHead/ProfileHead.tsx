@@ -78,7 +78,7 @@ const ProfileHead = () => {
       <div>
         <p className="title-l">{user.userName}</p>
         <ProfileItem label="Роль" value={userRolesNamesMap[user.role]} />
-        {isSelfUser && <ProfileItem label="Почта" value={user.email} />}
+        {user.email && <ProfileItem label="Почта" value={user.email} />}
         <ProfileItem label="Дата регистрации" value={registrationDate} />
       </div>
       <nav className="flex flex-nowrap items-center">
