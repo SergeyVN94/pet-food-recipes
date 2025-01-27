@@ -49,7 +49,6 @@ const BookmarkItem = ({ bookmark }: BookmarkItemProps) => {
       setIsEditMode(false);
       queryClient.invalidateQueries({
         queryKey: ['bookmarks', 'get-bookmarks'],
-        exact: true,
       });
     }
   }, [data]);
