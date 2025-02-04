@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { vestResolver } from '@hookform/resolvers/vest';
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -10,9 +11,11 @@ import { create, enforce, test } from 'vest';
 
 import { IconEyeClosed, IconEyeOpen } from '@/assets/icons';
 import { Button, InputUncontrolled } from '@/components/ui';
-import { useLogin, useStore } from '@/hooks';
+import { useLogin, useSendConfirmationEmail, useStore } from '@/hooks';
+import { showToast } from '@/utils';
 
 import { LoginFormFields } from '../Auth.types';
+import { SendEmailButton } from './components';
 
 const validationSuite = create((data: Partial<LoginFormFields> = {}) => {
   test('email', 'Заполните поле', () => {
@@ -36,61 +39,76 @@ const LoginPage = () => {
   const store = useStore();
   const navigate = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
+  const isSending = useSendConfirmationEmail().isPending;
 
   const methods = useForm<LoginFormFields>({
     resolver: vestResolver<LoginFormFields, unknown>(validationSuite),
   });
+  const {
+    isPending: isLogging,
+    mutateAsync: login,
+    error,
+  } = useLogin({
+    onError: error => {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.data?.message === 'LOGIN_OR_PASSWORD_INCORRECT') {
+          methods.setError('email', {
+            type: 'validate',
+            message: 'Некорректный пользователь или пароль',
+          });
+        }
+      }
+    },
+    onSuccess: loginData => {
+      if (loginData) {
+        store.authStore.login(loginData.accessToken, loginData.refreshToken);
+        navigate.push('/');
+      }
+    },
+  });
 
-  const { isPending, mutateAsync: login, data: loginData, error } = useLogin();
+  const isLoading = isLogging || isSending;
 
   const handleShowPassword = () => {
     setShowPassword(prev => !prev);
   };
 
   const handleSubmit = (formFields: LoginFormFields) => {
-    if (isPending) {
+    if (isLoading) {
       return;
     }
 
     login(formFields);
   };
 
-  React.useEffect(() => {
-    if (error?.response?.data?.message === 'User or password incorrect') {
-      methods.setError('email', {
-        type: 'validate',
-        message: 'Некорректный пользователь или пароль',
-      });
-    }
-  }, [error, methods]);
-
-  React.useEffect(() => {
-    if (loginData) {
-      store.authStore.login(loginData.accessToken, loginData.refreshToken);
-      navigate.push('/');
-    }
-  }, [loginData, navigate, store.authStore]);
-
   return (
     <>
       <h1 className="headline-l mb-5">Авторизация</h1>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-col gap-4 w-full">
-          <InputUncontrolled name="email" type="email" label="Электронная почта" disabled={isPending} autoComplete="email" />
+          <InputUncontrolled name="email" type="email" label="Электронная почта" disabled={isLoading} autoComplete="email" />
           <InputUncontrolled
             name="password"
             label="Пароль"
             type={showPassword ? 'text' : 'password'}
             iconRight={showPassword ? <IconEyeOpen className="size-6" /> : <IconEyeClosed className="size-6" />}
             onRightButtonClick={handleShowPassword}
-            disabled={isPending}
+            disabled={isLoading}
             autoComplete="password"
           />
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isLoading}>
             Войти
           </Button>
         </form>
       </FormProvider>
+      {error && axios.isAxiosError(error) && error.response?.data?.message === 'EMAIL_NOT_VERIFIED' && (
+        <div className="flex flex-col mt-4 gap-2">
+          <p className="label-l text-error text-pretty">
+            Вы не подтвердили почту. Если вы не получили письмо, нажмите на кнопку "Отправить повторно".
+          </p>
+          <SendEmailButton email={methods.getValues().email} />
+        </div>
+      )}
       <p className="body-l mt-4">
         Нет аккаунта?{' '}
         <Link href="/auth/registration" className="link">

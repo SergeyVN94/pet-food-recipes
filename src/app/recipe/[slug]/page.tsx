@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 
-import { IconSchedule } from '@/assets/icons';
 import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
 import { RecipeBookmarkSelect, TimeSince } from '@/components';
 import { Avatar, Table, TableColumn } from '@/components/ui';

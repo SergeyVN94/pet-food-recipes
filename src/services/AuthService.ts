@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
-import { TokenResponseDto } from '@/types';
+import { TokenResponseDto, UserDto, UserRegistryDto } from '@/types';
 
 import { apiInstance } from './lib';
 
@@ -16,6 +16,20 @@ class AuthService {
       },
       config,
     );
+  }
+
+  static createUser(dto: UserRegistryDto, config?: AxiosRequestConfig) {
+    return apiInstance.post<UserDto>(`${BASE_API_URL}/signup`, dto, config);
+  }
+
+  static sendConfirmationEmail(email: string, config?: AxiosRequestConfig) {
+    return apiInstance.post(`${BASE_API_URL}/confirmation-email`, { email }, config);
+  }
+
+  static validateConfirmationToken(token: string, config?: AxiosRequestConfig) {
+    return apiInstance.get<{
+      message: 'EMAIL_VERIFIED';
+    }>(`${BASE_API_URL}/confirmation-email/${token}`, config);
   }
 }
 

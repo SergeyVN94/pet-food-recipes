@@ -38,16 +38,20 @@ export const labelVariants = cva('text-on-surface-var !body-l absolute transitio
   },
 });
 
-export const inputVariants = cva('peer w-full outline-none bg-transparent body-l text-on-surface pr-4', {
-  variants: {
-    variant: {
-      filled: 'data-[with-label=false]:mt-3 mt-5',
-      outline: 'mt-3 group-hover:text-on-surface',
+export const inputVariants = cva(
+  // ! autofill:shadow-[inset_0_0_0px_1000px_rgb(230,224,233)] - fix autofill background color
+  'peer w-full outline-none bg-transparent body-l text-on-surface pr-4 autofill:shadow-[inset_0_0_0px_1000px_rgb(230,224,233)]',
+  {
+    variants: {
+      variant: {
+        filled: 'data-[with-label=false]:mt-3 mt-5',
+        outline: 'mt-3 group-hover:text-on-surface',
+      },
+    },
+    defaultVariants: {
+      variant: 'filled',
     },
   },
-  defaultVariants: {
-    variant: 'filled',
-  },
-});
+);
 
 export type InputVariantProps = VariantProps<typeof wrapVariants>;

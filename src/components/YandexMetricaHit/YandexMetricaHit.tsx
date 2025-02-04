@@ -8,12 +8,10 @@ import { yandexMetrica } from '@/utils';
 
 const YandexMetricaHit = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   React.useEffect(() => {
-    const url = `${pathname}?${searchParams}`;
-    yandexMetrica('hit', url);
-  }, [pathname, searchParams]);
+    yandexMetrica('hit', pathname);
+  }, [pathname]);
 
   return <></>;
 };
