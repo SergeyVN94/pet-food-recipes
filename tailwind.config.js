@@ -172,6 +172,7 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-animate'),
+    require('autoprefixer'),
     /** @type {import('tailwindcss/types/config').PluginCreator} */
     ({ addComponents }) => {
       addComponents({
