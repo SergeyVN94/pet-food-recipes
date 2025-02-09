@@ -1,10 +1,10 @@
 import Script from 'next/script';
 
-type YandexMetricaProps = {
+type YandexMetrikaProps = {
   metrikaId: string | number;
 };
 
-const YandexMetrica = ({ metrikaId }: YandexMetricaProps) => (
+const YandexMetrika = ({ metrikaId }: YandexMetrikaProps) => (
   <>
     <Script id="metrika-counter" strategy="afterInteractive">
       {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -27,4 +27,4 @@ const YandexMetrica = ({ metrikaId }: YandexMetricaProps) => (
   </>
 );
 
-export default YandexMetrica;
+export default YandexMetrika;

@@ -5,7 +5,7 @@ import Head from 'next/head';
 import 'normalize.css';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
-import { AskCookie, YandexMetrica, YandexMetricaHit } from '@/components';
+import { YandexMetrika, YandexMetrikaHit } from '@/components';
 import { StoreProvider, TanStackProvider, ToastProvider } from '@/providers';
 import '@/styles/globals.css';
 
@@ -28,9 +28,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
     </Head>
     <body className={`${roboto.variable} h-full`}>
-      {process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID && <YandexMetrica metrikaId={process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID} />}
-      <Suspense fallback={<></>}>{process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID && <YandexMetricaHit />}</Suspense>
-      <AskCookie />
+      {process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID && <YandexMetrika metrikaId={process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID} />}
+      <Suspense fallback={<></>}>{process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID && <YandexMetrikaHit />}</Suspense>
       <TanStackProvider>
         <StoreProvider>
           <NuqsAdapter>

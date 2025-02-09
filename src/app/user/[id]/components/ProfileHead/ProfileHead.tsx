@@ -21,9 +21,6 @@ const ProfileItem = ({ label, value }: { label: string; value: string }) => (
 
 const MenuItem = ({ label, link }: { label: string; link: string }) => {
   const pathName = usePathname();
-
-  console.log(link, pathName);
-
   const selectedClasses = pathName.startsWith(link) ? 'border-on-surface' : 'border-transparent';
 
   return (

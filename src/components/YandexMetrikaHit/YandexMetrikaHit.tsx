@@ -6,7 +6,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 import { yandexMetrica } from '@/utils';
 
-const YandexMetricaHit = () => {
+const YandexMetrikaHit = () => {
   const pathname = usePathname();
 
   React.useEffect(() => {
@@ -16,4 +16,4 @@ const YandexMetricaHit = () => {
   return <></>;
 };
 
-export default YandexMetricaHit;
+export default YandexMetrikaHit;

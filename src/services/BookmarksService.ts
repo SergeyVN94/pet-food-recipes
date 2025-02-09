@@ -7,7 +7,7 @@ import { apiInstance } from './lib';
 
 const BASE_API_URL = '/api/v1/bookmarks';
 
-class BookmarkService {
+class BookmarksService {
   static getBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
     return apiInstance.get<BookmarkDto[]>(userId ? `${BASE_API_URL}/user/${userId}` : `${BASE_API_URL}`, config);
   }
@@ -37,4 +37,4 @@ class BookmarkService {
   }
 }
 
-export default BookmarkService;
+export default BookmarksService;

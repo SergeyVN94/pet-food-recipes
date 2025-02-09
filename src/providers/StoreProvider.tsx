@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { RootStore } from '@/store';
 
-let store: RootStore;
+export let store: RootStore;
 
 export const storeContext = React.createContext<RootStore | undefined>(undefined);
 

@@ -1,12 +1,12 @@
 import { QueryFunction, UseQueryOptions, useQuery } from '@tanstack/react-query';
 
-import { RecipeService } from '@/services';
+import { RecipesService } from '@/services';
 import { RecipeDto, RecipeFilter } from '@/types';
 
 const queryFn: QueryFunction<RecipeDto[], ['recipes', 'get', RecipeFilter]> = async ({ queryKey, signal }) => {
   const [, , filter] = queryKey;
 
-  const response = await RecipeService.postRecipesSearch(filter, { signal });
+  const response = await RecipesService.postRecipesSearch(filter, { signal });
 
   return response.data;
 };

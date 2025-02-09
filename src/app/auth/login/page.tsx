@@ -1,7 +1,7 @@
-import LoginPage from './LoginPage';
+'use client';
 
-export const metadata = {
-  title: 'Авторизация',
-};
+import dynamic from 'next/dynamic';
+
+const LoginPage = dynamic(() => import('./LoginPage'), { ssr: false });
 
 export default LoginPage;

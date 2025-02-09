@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { IngredientService } from '@/services';
+import { IngredientsService } from '@/services';
 
-export const getIngredients = React.cache(async () => (await IngredientService.getIngredients()).data);
+export const getIngredients = React.cache(async () => (await IngredientsService.getIngredients()).data);
 
-export const getAmountTypes = React.cache(async () => (await IngredientService.getAmountTypes()).data);
+export const getAmountTypes = React.cache(async () => (await IngredientsService.getAmountTypes()).data);

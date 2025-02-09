@@ -4,12 +4,12 @@ import { UserDto } from '@/types';
 
 import { apiInstance } from './lib';
 
-const BASE_API_URL = '/api/v1/user';
+const BASE_API_URL = '/api/v1/users';
 
-class UserService {
+class UsersService {
   static getUser(id: UserDto['id'] = '', config?: AxiosRequestConfig) {
-    return apiInstance.get<UserDto>(`${BASE_API_URL}/${id}`, config);
+    return apiInstance.get<UserDto>(`${BASE_API_URL}/user/${id}`, config);
   }
 }
 
-export default UserService;
+export default UsersService;

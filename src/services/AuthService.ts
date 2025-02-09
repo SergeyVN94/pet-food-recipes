@@ -26,6 +26,10 @@ class AuthService {
     return apiInstance.post(`${BASE_API_URL}/confirmation-email`, { email }, config);
   }
 
+  static checkAccessToken(config?: AxiosRequestConfig) {
+    return apiInstance.get<{ message: 'OK' }>(`${BASE_API_URL}/check-token`, config);
+  }
+
   static validateConfirmationToken(token: string, config?: AxiosRequestConfig) {
     return apiInstance.get<{
       message: 'EMAIL_VERIFIED';

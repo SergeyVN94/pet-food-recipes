@@ -1,7 +1,7 @@
 import { QueryFunction, UseQueryOptions, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { UserService } from '@/services';
+import { UsersService } from '@/services';
 import { UserDto } from '@/types';
 
 type QueryKey = ['user', UserDto['id']?];
@@ -11,10 +11,11 @@ const retryFn = (failureCount: number, error: unknown) => {
     return false;
   }
 
-  return failureCount < 3;
+  return failureCount < 2;
 };
 
-const queryFn: QueryFunction<UserDto, QueryKey> = async ({ signal, queryKey }) => (await UserService.getUser(queryKey[1], { signal })).data;
+const queryFn: QueryFunction<UserDto, QueryKey> = async ({ signal, queryKey }) =>
+  (await UsersService.getUser(queryKey[1], { signal })).data;
 
 const useUser = (userId?: UserDto['id'], config: Omit<UseQueryOptions<UserDto, unknown, UserDto, QueryKey>, 'queryKey' | 'queryFn'> = {}) =>
   useQuery({

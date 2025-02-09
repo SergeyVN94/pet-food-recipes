@@ -1,7 +1,7 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { BookmarkService } from '@/services';
+import { BookmarksService } from '@/services';
 import { BookmarkRecipeDto } from '@/types/bookmarks';
 
 type MutationVariables = {
@@ -10,7 +10,7 @@ type MutationVariables = {
 };
 
 const mutationFn = async ({ bookmarkId, recipeId }: MutationVariables) =>
-  (await BookmarkService.addRecipeToBookmark(recipeId, bookmarkId)).data;
+  (await BookmarksService.addRecipeToBookmark(recipeId, bookmarkId)).data;
 
 const useAddRecipeToBookmark = (config: UseMutationOptions<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables> = {}) =>
   useMutation<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables>({

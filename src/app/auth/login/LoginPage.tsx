@@ -4,15 +4,15 @@ import React from 'react';
 
 import { vestResolver } from '@hookform/resolvers/vest';
 import axios from 'axios';
+import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import { create, enforce, test } from 'vest';
 
 import { IconEyeClosed, IconEyeOpen } from '@/assets/icons';
 import { Button, InputUncontrolled } from '@/components/ui';
 import { useLogin, useSendConfirmationEmail, useStore } from '@/hooks';
-import { showToast } from '@/utils';
 
 import { LoginFormFields } from '../Auth.types';
 import { SendEmailButton } from './components';
@@ -38,6 +38,7 @@ const validationSuite = create((data: Partial<LoginFormFields> = {}) => {
 const LoginPage = () => {
   const store = useStore();
   const navigate = useRouter();
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = React.useState(false);
   const isSending = useSendConfirmationEmail().isPending;
 
@@ -62,7 +63,9 @@ const LoginPage = () => {
     onSuccess: loginData => {
       if (loginData) {
         store.authStore.login(loginData.accessToken, loginData.refreshToken);
-        navigate.push('/');
+
+        const redirect = searchParams.get('redirect');
+        navigate.push(redirect || '/');
       }
     },
   });
@@ -83,6 +86,9 @@ const LoginPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Авторизация</title>
+      </Head>
       <h1 className="headline-l mb-5">Авторизация</h1>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-col gap-4 w-full">

@@ -11,4 +11,5 @@ export type UserDto = {
   createdAt: string;
   updateAt: string;
   email?: string;
+  isEmailVerified?: boolean;
 };

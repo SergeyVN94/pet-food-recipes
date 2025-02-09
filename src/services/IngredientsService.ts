@@ -6,7 +6,7 @@ import { apiInstance } from './lib';
 
 const BASE_API_URL = '/api/v1/ingredients';
 
-class IngredientService {
+class IngredientsService {
   static getIngredients(config: AxiosRequestConfig = {}) {
     return apiInstance.get<IngredientDto[]>(`${BASE_API_URL}`, config);
   }
@@ -16,4 +16,4 @@ class IngredientService {
   }
 }
 
-export default IngredientService;
+export default IngredientsService;

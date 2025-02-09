@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 
 import { RecipeForm } from '@/components';
 import { PageLayout } from '@/layouts';
-import { RecipeService } from '@/services';
+import { RecipesService } from '@/services';
 
 type RecipePageProps = Promise<{
   slug: string;
@@ -11,7 +11,7 @@ type RecipePageProps = Promise<{
 
 export const generateMetadata = async ({ params }: { params: RecipePageProps }): Promise<Metadata> => {
   const { slug } = await params;
-  const response = await RecipeService.getRecipeBySlug(slug);
+  const response = await RecipesService.getRecipeBySlug(slug);
 
   if (response.status !== 200) {
     redirect('/404');
@@ -24,9 +24,9 @@ export const generateMetadata = async ({ params }: { params: RecipePageProps }):
   };
 };
 
-const RecipePage = async ({ params }: { params: RecipePageProps }) => {
+const RecipeEditPage = async ({ params }: { params: RecipePageProps }) => {
   const { slug } = await params;
-  const recipeResponse = await RecipeService.getRecipeBySlug(slug);
+  const recipeResponse = await RecipesService.getRecipeBySlug(slug);
 
   if (recipeResponse.status !== 200) {
     notFound();
@@ -40,4 +40,4 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
   );
 };
 
-export default RecipePage;
+export default RecipeEditPage;

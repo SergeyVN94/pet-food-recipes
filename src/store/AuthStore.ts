@@ -1,5 +1,6 @@
+'use client';
+
 import { QueryClient } from '@tanstack/react-query';
-import { deleteCookie, getCookie, setCookie } from 'cookies-next/client';
 import { makeAutoObservable } from 'mobx';
 
 import { RootStore } from '.';
@@ -15,8 +16,11 @@ class AuthStore {
   ) {
     makeAutoObservable(this);
 
-    this._authToken = getCookie('authToken') ?? '';
-    this._refreshToken = getCookie('refreshToken') ?? '';
+    if (typeof window !== 'undefined') {
+      this._authToken = localStorage.getItem('authToken') ?? '';
+      this._refreshToken = localStorage.getItem('refreshToken') ?? '';
+    }
+
     this._isAuthenticated = !!this._authToken;
   }
 
@@ -37,8 +41,10 @@ class AuthStore {
     this._refreshToken = refreshToken;
     this._isAuthenticated = true;
 
-    setCookie('authToken', authToken);
-    setCookie('refreshToken', refreshToken);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('authToken', authToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    }
   }
 
   public logout() {
@@ -46,8 +52,10 @@ class AuthStore {
     this._refreshToken = '';
     this._isAuthenticated = false;
 
-    deleteCookie('authToken');
-    deleteCookie('refreshToken');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('refreshToken');
+    }
 
     this.queryClient.resetQueries({
       queryKey: ['user'],

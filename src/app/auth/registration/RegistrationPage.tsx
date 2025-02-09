@@ -78,7 +78,7 @@ const RegistrationPage = () => {
     },
     onSuccess: () => {
       sendConfirmationEmail(methods.getValues().email);
-      showToast('success', 'Пользователь успешно зарегистрирован');
+      showToast('success', 'Пользователь успешно зарегистрирован, на почту отправлено письмо для подтверждения регистрации');
       navigate.push('/auth/login');
     },
   });
