@@ -1,9 +1,9 @@
 import { QueryFunction, UseQueryOptions, useQuery } from '@tanstack/react-query';
 
 import { RecipesService } from '@/services';
-import { RecipeDto, RecipeFilter } from '@/types';
+import { RecipeEntity, RecipeFilter } from '@/types';
 
-const queryFn: QueryFunction<RecipeDto[], ['recipes', 'get', RecipeFilter]> = async ({ queryKey, signal }) => {
+const queryFn: QueryFunction<RecipeEntity[], ['recipes', 'get', RecipeFilter]> = async ({ queryKey, signal }) => {
   const [, , filter] = queryKey;
 
   const response = await RecipesService.postRecipesSearch(filter, { signal });
@@ -13,7 +13,7 @@ const queryFn: QueryFunction<RecipeDto[], ['recipes', 'get', RecipeFilter]> = as
 
 const useRecipes = (
   filter: RecipeFilter,
-  config: Omit<UseQueryOptions<RecipeDto[], unknown, RecipeDto[], ['recipes', 'get', RecipeFilter]>, 'queryKey' | 'queryFn'> = {},
+  config: Omit<UseQueryOptions<RecipeEntity[], unknown, RecipeEntity[], ['recipes', 'get', RecipeFilter]>, 'queryKey' | 'queryFn'> = {},
 ) =>
   useQuery({
     queryFn,

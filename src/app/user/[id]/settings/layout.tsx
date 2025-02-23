@@ -36,7 +36,12 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
 
   return selfUser && !isSelfUserFetching ? (
     <section className="flex flex-nowrap gap-4">
-      <Menu items={menuItems} onClick={menuId => navigation.push(`/user/${id}/settings/${menuId}`)} selectedId={lastPath!} />
+      <Menu
+        items={menuItems}
+        onClick={menuId => navigation.push(`/user/${id}/settings/${menuId}`)}
+        selectedId={lastPath!}
+        className="min-w-60 max-w-60"
+      />
       {children}
     </section>
   ) : null;

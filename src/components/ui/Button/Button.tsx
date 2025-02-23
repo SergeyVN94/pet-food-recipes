@@ -9,14 +9,14 @@ const buttonVariants = cva(
     variants: {
       variant: {
         filled:
-          'py-2.5 px-6 bg-primary text-on-primary hover:bg-opacity-[0.92] hover:shadow-md focus:opacity-[0.88] active::opacity-[0.88] disabled:bg-on-surface disabled:bg-opacity-[0.12] disabled:shadow-none disabled:text-on-surface',
+          'py-2.5 px-6 bg-primary text-on-primary hover:bg-opacity-[0.92] hover:shadow-md focus-visible:opacity-[0.88] active::opacity-[0.88] disabled:bg-on-surface disabled:bg-opacity-[0.12] disabled:shadow-none disabled:text-on-surface',
         outline:
-          'py-2.5 px-6 bg-transparent text-primary outline -outline-offset-2 outline-outline hover:bg-primary/[0.08] focus:bg-primary/[0.12] focus:outline-primary active::outline-outline active:bg-opacity-[0.12] disabled:text-on-surface disabled:bg-transparent',
-        text: 'bg-transparent py-2.5 px-3 outline-none text-primary hover:bg-primary/[0.08] focus:bg-primary/[0.12] active:bg-primary/[0.12] disabled:text-on-surface disabled:bg-transparent',
+          'py-2.5 px-6 bg-transparent text-primary outline -outline-offset-2 outline-outline hover:bg-primary/[0.08] focus-visible:bg-primary/[0.12] focus-visible:outline-primary active::outline-outline active:bg-opacity-[0.12] disabled:text-on-surface disabled:bg-transparent',
+        text: 'bg-transparent py-2.5 px-3 outline-none text-primary hover:bg-primary/[0.08] focus-visible:bg-primary/[0.12] active:bg-primary/[0.12] disabled:text-on-surface disabled:bg-transparent',
         elevated:
-          'py-2.5 px-6 text-primary bg-surf-cont-low shadow-elevation-1 hover:bg-primary/[0.08] focus:bg-primary/[0.12] active:bg-primary/[0.12] disabled:bg-on-surface/[0.12] disabled:text-on-surface disabled:shadow-none',
+          'py-2.5 px-6 text-primary bg-surf-cont-low shadow-elevation-1 hover:bg-primary/[0.08] focus-visible:bg-primary/[0.12] active:bg-primary/[0.12] disabled:bg-on-surface/[0.12] disabled:text-on-surface disabled:shadow-none',
         tonal:
-          'py-2.5 px-6 bg-secondary-container text-on-secondary-container hover:secondary-container/[0.08] hover:shadow-elevation-1 focus:secondary-container/[0.12] active:secondary-container/[0.12] disabled:bg-on-surface/[0.12] disabled:text-on-surface disabled:shadow-none',
+          'py-2.5 px-6 bg-secondary-container text-on-secondary-container hover:secondary-container/[0.08] hover:shadow-elevation-1 focus-visible:secondary-container/[0.12] active:secondary-container/[0.12] disabled:bg-on-surface/[0.12] disabled:text-on-surface disabled:shadow-none',
       },
       withIcon: {
         true: '',

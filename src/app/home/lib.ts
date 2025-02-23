@@ -15,6 +15,10 @@ export const searchParamsToFilter = (params: Record<string, string | string[]>):
     filters.isDeleted = true;
   }
 
+  if (params.isPublished === 'false') {
+    filters.isPublished = false;
+  }
+
   const includesIngredients = parserIngredients.parse(params['inc[]']?.toString() ?? '') ?? [];
   const excludesIngredients = parserIngredients.parse(params['inc[]']?.toString() ?? '') ?? [];
 

@@ -79,3 +79,4 @@ export { default as IconSchedule } from './schedule.svg';
 export { default as IconNotificationBorder } from './notifications_border.svg';
 export { default as IconLogout } from './logout.svg';
 export { default as IconSave } from './save.svg';
+export { default as IconAdminPanelSettings } from './admin_panel_settings.svg';

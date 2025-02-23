@@ -6,21 +6,59 @@ import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-import { IconDelete, IconModeEdit } from '@/assets/icons';
+import { IconDelete, IconFileDownload, IconModeEdit } from '@/assets/icons';
 import { Button, ButtonIcon } from '@/components/ui';
 import { useDeleteRecipe, useUser } from '@/hooks';
-import { RecipeDto } from '@/types';
+import usePublishRecipe from '@/hooks/usePublishRecipe';
+import { RecipeEntity, UserRoles } from '@/types';
 import { cn, showToast } from '@/utils';
 
 type RecipeControlsProps = {
-  recipe: RecipeDto;
+  recipe: RecipeEntity;
   className?: string;
 };
 
 const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
   const { data: user } = useUser();
   const router = useRouter();
-  const { mutateAsync, isPending, error, data } = useDeleteRecipe();
+  const { mutateAsync, isPending } = useDeleteRecipe({
+    onError: error => {
+      if (error) {
+        let errorMessage = 'Произошла ошибка при удалении рецепта';
+
+        if (axios.isAxiosError(error) && error.response?.data?.message === 'INSUFFICIENT_PERMISSIONS') {
+          errorMessage = 'Недостаточно прав для удаления рецепта';
+        }
+
+        showToast('error', errorMessage);
+      }
+    },
+    onSuccess: data => {
+      if (data) {
+        queryClient.invalidateQueries({
+          queryKey: ['bookmarks-recipes'],
+          exact: true,
+        });
+
+        showToast('success', `Рецепт «${data.title}» успешно удален`);
+        router.push('/');
+      }
+    },
+  });
+  const { mutateAsync: publish, isPending: isPublishing } = usePublishRecipe({
+    onSuccess: data => {
+      if (data) {
+        showToast('success', `Рецепт «${data.title}» успешно опубликован`);
+        router.refresh();
+      }
+    },
+    onError: error => {
+      if (error) {
+        showToast('error', 'Произошла ошибка при публикации рецепта');
+        console.error(error);
+      }
+    },
+  });
   const queryClient = useQueryClient();
 
   const handleDeleteButtonClick = () => {
@@ -40,11 +78,11 @@ const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
                 handleConfirmClick();
                 closeToast();
               }}
-              className="min-w-24"
+              className="min-w-20"
             >
               Да
             </Button>
-            <Button variant="outline" onClick={closeToast} className="min-w-24">
+            <Button variant="outline" onClick={closeToast} className="min-w-20">
               Нет
             </Button>
           </div>
@@ -54,42 +92,38 @@ const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
     );
   };
 
+  const handlePublishButtonClick = () => {
+    publish(recipe.slug);
+  };
+
   const handleAditButtonClick = () => {
     router.push(`/recipe/${recipe.slug}/edit`);
   };
 
-  React.useEffect(() => {
-    if (error) {
-      let errorMessage = 'Произошла ошибка при удалении рецепта';
+  const buttonPublish = !recipe.isPublished && (user?.role === UserRoles.ADMIN || user?.role === UserRoles.MODERATOR) && (
+    <ButtonIcon variant="filled" disabled={isPublishing} onClick={handlePublishButtonClick} title="Опубликовать">
+      <IconFileDownload className="text-green-600 rotate-180" />
+    </ButtonIcon>
+  );
 
-      if (axios.isAxiosError(error) && error.response?.data?.message === 'INSUFFICIENT_PERMISSIONS') {
-        errorMessage = 'Недостаточно прав для удаления рецепта';
-      }
+  const buttonEdit = (user?.role === UserRoles.ADMIN || user?.id === recipe.user.id) && (
+    <ButtonIcon variant="filled" disabled={isPending} onClick={handleAditButtonClick} title="Редактировать">
+      <IconModeEdit />
+    </ButtonIcon>
+  );
 
-      showToast('error', errorMessage);
-    }
-  }, [error]);
-
-  React.useEffect(() => {
-    if (data) {
-      showToast('success', `Рецепт «${data.title}» успешно удален`);
-      queryClient.invalidateQueries({
-        queryKey: ['bookmarks-recipes'],
-        exact: true,
-      });
-      router.push('/');
-    }
-  }, [data]);
+  const buttonDelete = (user?.role === UserRoles.ADMIN || user?.id === recipe.user.id) && (
+    <ButtonIcon variant="filled" disabled={isPending} onClick={handleDeleteButtonClick} title="Удалить">
+      <IconDelete className="text-error" />
+    </ButtonIcon>
+  );
 
   return (
-    (user?.role === 'ADMIN' || user?.id === recipe.user.id) && (
+    (buttonEdit || buttonPublish || buttonDelete) && (
       <div className={cn('flex justify-end gap-2', className)}>
-        <ButtonIcon variant="filled" disabled={isPending} onClick={handleAditButtonClick} title="Редактировать">
-          <IconModeEdit />
-        </ButtonIcon>
-        <ButtonIcon variant="filled" disabled={isPending} onClick={handleDeleteButtonClick} title="Удалить">
-          <IconDelete className="text-error" />
-        </ButtonIcon>
+        {buttonPublish}
+        {buttonEdit}
+        {buttonDelete}
       </div>
     )
   );

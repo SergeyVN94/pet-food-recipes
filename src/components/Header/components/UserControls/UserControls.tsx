@@ -5,7 +5,14 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/navigation';
 
-import { IconBookmarkBorder, IconLogout, IconNotificationBorder, IconPersonOutline, IconSettings } from '@/assets/icons';
+import {
+  IconAdminPanelSettings,
+  IconBookmarkBorder,
+  IconLogout,
+  IconNotificationBorder,
+  IconPersonOutline,
+  IconSettings,
+} from '@/assets/icons';
 import { Avatar, Menu } from '@/components/ui';
 import { useStore } from '@/hooks';
 import { UserDto } from '@/types';
@@ -17,6 +24,8 @@ type UserControlsProps = {
 const UserControls = observer(({ user }: UserControlsProps) => {
   const navigate = useRouter();
   const store = useStore();
+  const isAdmin = user?.role === 'ADMIN';
+  const isModerator = user?.role === 'MODERATOR';
 
   const menuItems = [
     {
@@ -56,6 +65,16 @@ const UserControls = observer(({ user }: UserControlsProps) => {
       },
     },
   ];
+
+  if (isAdmin || isModerator) {
+    menuItems.splice(-1, 0, {
+      label: 'Панель администратора',
+      icon: <IconAdminPanelSettings className="size-6 text-primary" />,
+      onSelect: () => {
+        navigate.push('/admin');
+      },
+    });
+  }
 
   return (
     <Menu

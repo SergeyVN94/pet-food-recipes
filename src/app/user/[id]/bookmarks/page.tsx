@@ -7,19 +7,19 @@ import { parseAsStringEnum, useQueryState } from 'nuqs';
 
 import { RecipeCard } from '@/components';
 import { useBookmarks, useBookmarksRecipes, useIngredients, useRecipeById } from '@/hooks';
-import { IngredientDto, RecipeDto } from '@/types';
+import { IngredientDto, RecipeEntity } from '@/types';
 import { BookmarkDto } from '@/types/bookmarks';
 import { arrayToDictionary } from '@/utils';
 
 import { Menu } from '../components';
 
-const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeDto['id']; ingredientsMap: Map<number, IngredientDto> }) => {
+const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeEntity['id']; ingredientsMap: Map<number, IngredientDto> }) => {
   const { data: recipe, isFetching } = useRecipeById(recipeId);
 
   return isFetching ? (
     <div className="skeleton h-32" />
   ) : (
-    recipe && <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} key={recipe.id} />
+    recipe && <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} key={recipe.id} isShowBookmark={false} isShowPublishedStatus />
   );
 };
 
@@ -36,17 +36,17 @@ const BookmarksPage = () => {
     [ingredients],
   );
 
-  const bookmarksRecipesMap = React.useMemo<Record<BookmarkDto['slug'], RecipeDto['id'][]>>(() => {
+  const bookmarksRecipesMap = React.useMemo<Record<BookmarkDto['slug'], RecipeEntity['id'][]>>(() => {
     const bookmarksMapById = arrayToDictionary(bookmarks ?? [], 'id');
 
     const initialAcc =
-      bookmarks?.reduce<Record<BookmarkDto['slug'], RecipeDto['id'][]>>((acc, bookmark) => {
+      bookmarks?.reduce<Record<BookmarkDto['slug'], RecipeEntity['id'][]>>((acc, bookmark) => {
         acc[bookmark.slug] = [];
 
         return acc;
       }, {}) ?? {};
 
-    return (bookmarksRecipes ?? []).reduce<Record<BookmarkDto['slug'], RecipeDto['id'][]>>((acc, bookmarkRecipe) => {
+    return (bookmarksRecipes ?? []).reduce<Record<BookmarkDto['slug'], RecipeEntity['id'][]>>((acc, bookmarkRecipe) => {
       const slug = bookmarksMapById[bookmarkRecipe.bookmarkId]?.slug;
 
       if (!slug) {

@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation';
 import { FieldErrors } from 'react-hook-form';
 
 import { useCreateRecipe, useUpdateRecipe } from '@/hooks';
-import { RecipeCreateDto, RecipeDto } from '@/types';
+import { RecipeCreateDto, RecipeEntity } from '@/types';
 import { showToast } from '@/utils';
 
 import RecipeForm from './RecipeForm';
 import { FormFields } from './RecipeForm.types';
 
 type RecipeFormWrapperProps = {
-  initialRecipe?: RecipeDto;
+  initialRecipe?: RecipeEntity;
   className?: string;
 };
 

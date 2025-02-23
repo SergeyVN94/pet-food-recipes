@@ -42,7 +42,7 @@ const IngredientsRow = ({
 
     const ingredient = recipeIngredientMap.get(Number(ingredientId))!;
 
-    return amountTypeItems.filter(amountType => ingredient.amountTypes.includes(Number(amountType.id)));
+    return amountTypeItems.filter(amountType => ingredient?.amountTypes.includes(Number(amountType.id)));
   }, [amountTypeItems, ingredientId, recipeIngredientMap]);
 
   return (

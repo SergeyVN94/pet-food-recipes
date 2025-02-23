@@ -9,9 +9,7 @@ type MutationVariables = {
   password: string;
 };
 
-const mutationFn = async ({ email, password }: MutationVariables) => {
-  return (await AuthService.login(email, password)).data;
-};
+const mutationFn = async ({ email, password }: MutationVariables) => (await AuthService.login(email, password)).data;
 
 const useLogin = (config: UseMutationOptions<TokenResponseDto, AxiosError<{ message: string }>, MutationVariables> = {}) =>
   useMutation<TokenResponseDto, AxiosError<{ message: string }>, MutationVariables>({

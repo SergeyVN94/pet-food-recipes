@@ -1,5 +1,6 @@
 export * from './Chip';
 export * from './Menu';
+export * from './Tabs';
 export * from './Input';
 export * from './Table';
 export * from './Button';

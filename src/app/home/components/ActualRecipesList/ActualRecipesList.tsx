@@ -5,13 +5,13 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { useIngredients, useRecipeFilter, useRecipes } from '@/hooks';
-import { IngredientDto, RecipeDto } from '@/types';
+import { IngredientDto, RecipeEntity } from '@/types';
 
 import { RecipeCard } from '../../../../components/RecipeCard';
 import ActualRecipesListSkeleton from './ActualRecipesListSkeleton';
 
 type ActualRecipesListProps = {
-  initialRecipes?: RecipeDto[];
+  initialRecipes?: RecipeEntity[];
   initialIngredients?: IngredientDto[];
 };
 

@@ -8,7 +8,7 @@ import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
 import { Button, InputUncontrolled, TextareaControlled } from '@/components/ui';
 import { useAmountTypes, useIngredients } from '@/hooks';
-import { RecipeCreateDto, RecipeDto, RecipeIngredientCreateDto } from '@/types';
+import { RecipeCreateDto, RecipeEntity, RecipeIngredientCreateDto } from '@/types';
 import { arrayToDictionary, showToast } from '@/utils';
 
 import { FormFields } from './RecipeForm.types';
@@ -18,7 +18,7 @@ import { Ingredients, Steps } from './local-components';
 type RecipeFormProps = {
   onSubmit: (formFields: RecipeCreateDto) => void;
   isLoading?: boolean;
-  initialRecipe?: RecipeDto;
+  initialRecipe?: RecipeEntity;
   className?: string;
   errors?: FieldErrors<FormFields>;
 };

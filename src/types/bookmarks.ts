@@ -1,4 +1,4 @@
-import { RecipeDto } from './recipe';
+import { RecipeEntity } from './recipe';
 
 export type BookmarkDto = {
   id: string;
@@ -8,9 +8,9 @@ export type BookmarkDto = {
   updateAt: string;
 };
 
-export type BookmarkRecipeDto = {
+export type BookmarkRecipeEntity = {
   id: string;
-  recipeId: RecipeDto['id'];
+  recipeId: RecipeEntity['id'];
   bookmarkId: BookmarkDto['id'];
   createdAt: string;
 };

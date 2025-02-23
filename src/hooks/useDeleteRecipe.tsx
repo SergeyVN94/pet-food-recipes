@@ -1,11 +1,11 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 
 import { RecipesService } from '@/services';
-import { RecipeDto } from '@/types';
+import { RecipeEntity } from '@/types';
 
-const mutationFn = async (slug: RecipeDto['slug']) => (await RecipesService.deleteRecipe(slug)).data;
+const mutationFn = async (slug: RecipeEntity['slug']) => (await RecipesService.deleteRecipe(slug)).data;
 
-const useDeleteRecipe = (config: UseMutationOptions<RecipeDto, unknown, RecipeDto['slug'], unknown> = {}) =>
+const useDeleteRecipe = (config: UseMutationOptions<RecipeEntity, unknown, RecipeEntity['slug'], unknown> = {}) =>
   useMutation({
     mutationFn,
     mutationKey: ['recipe', 'delete'],

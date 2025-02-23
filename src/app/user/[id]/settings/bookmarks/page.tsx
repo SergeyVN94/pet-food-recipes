@@ -20,8 +20,34 @@ type BookmarkItemProps = {
 
 const BookmarkItem = ({ bookmark }: BookmarkItemProps) => {
   const [isEditMode, setIsEditMode] = React.useState(false);
-  const { mutateAsync: updateBookmark, isPending: isUpdateBookmarkLoading, data, error } = useUpdateBookmark();
   const queryClient = useQueryClient();
+  const { mutateAsync: updateBookmark, isPending: isUpdateBookmarkLoading } = useUpdateBookmark({
+    onSuccess: data => {
+      if (data) {
+        showToast('success', 'Закладка успешно обновлена');
+        setIsEditMode(false);
+        queryClient.invalidateQueries({
+          queryKey: ['bookmarks', 'get-bookmarks'],
+          exact: false,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['bookmarks-recipes'],
+          exact: false,
+        });
+      }
+    },
+    onError: error => {
+      if (error) {
+        let message = 'Что-то пошло не так';
+
+        if (axios.isAxiosError(error) && error.response?.data?.message === 'BOOKMARK_WITH_THIS_TITLE_ALREADY_EXISTS') {
+          message = 'Закладка с таким названием уже существует';
+        }
+
+        showToast('error', message);
+      }
+    },
+  });
 
   const handleSubmit = (newTitle: string) => {
     if (isUpdateBookmarkLoading) {
@@ -30,28 +56,6 @@ const BookmarkItem = ({ bookmark }: BookmarkItemProps) => {
 
     updateBookmark({ bookmarkId: bookmark.id, title: newTitle });
   };
-
-  React.useEffect(() => {
-    if (error) {
-      let message = 'Что-то пошло не так';
-
-      if (axios.isAxiosError(error) && error.response?.data?.message === 'BOOKMARK_WITH_THIS_TITLE_ALREADY_EXISTS') {
-        message = 'Закладка с таким названием уже существует';
-      }
-
-      showToast('error', message);
-    }
-  }, [error]);
-
-  React.useEffect(() => {
-    if (data) {
-      showToast('success', 'Закладка успешно обновлена');
-      setIsEditMode(false);
-      queryClient.invalidateQueries({
-        queryKey: ['bookmarks', 'get-bookmarks'],
-      });
-    }
-  }, [data]);
 
   return (
     <li className="flex flex-nowrap items-center gap-2 w-full elevation-3 bg-surface-dim px-4">

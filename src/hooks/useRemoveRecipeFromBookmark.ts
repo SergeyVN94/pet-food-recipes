@@ -2,11 +2,11 @@ import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { BookmarksService } from '@/services';
-import { RecipeDto } from '@/types';
-import { BookmarkRecipeDto } from '@/types/bookmarks';
+import { RecipeEntity } from '@/types';
+import { BookmarkRecipeEntity } from '@/types/bookmarks';
 
 type MutationVariables = {
-  recipeId: RecipeDto['id'];
+  recipeId: RecipeEntity['id'];
 };
 
 const mutationFn = async ({ recipeId }: MutationVariables) => {
@@ -14,9 +14,9 @@ const mutationFn = async ({ recipeId }: MutationVariables) => {
 };
 
 const useRemoveRecipeFromBookmark = (
-  config: UseMutationOptions<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables> = {},
+  config: UseMutationOptions<BookmarkRecipeEntity, AxiosError<{ message: string }>, MutationVariables> = {},
 ) =>
-  useMutation<BookmarkRecipeDto, AxiosError<{ message: string }>, MutationVariables>({
+  useMutation<BookmarkRecipeEntity, AxiosError<{ message: string }>, MutationVariables>({
     mutationFn,
     mutationKey: ['bookmarks-recipes', 'remove-recipe'],
     ...config,

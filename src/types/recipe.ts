@@ -32,7 +32,7 @@ export type RecipeStepDto = {
   content: string;
 };
 
-export type RecipeDto = {
+export type RecipeEntity = {
   id: string;
   title: string;
   slug: string;
@@ -41,6 +41,7 @@ export type RecipeDto = {
   steps: RecipeStepDto[];
   ingredients: RecipeIngredientDto[];
   user: UserDto;
+  isPublished: boolean;
   createdAt: string;
   updateAt: string;
 };
@@ -65,6 +66,7 @@ export type RecipeUpdateDto = Partial<RecipeCreateDto>;
 export type RecipeFilter = {
   userId?: string;
   isDeleted?: boolean;
+  isPublished?: boolean;
   q?: string;
   ingredients?: {
     includes?: IngredientDto['id'][];

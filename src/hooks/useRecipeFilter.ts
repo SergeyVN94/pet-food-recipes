@@ -7,12 +7,14 @@ import { RecipeFilter } from '@/types';
 import useQueryIngredients from './useQueryIngredients';
 
 const booleanParser = parseAsBoolean.withDefault(false);
+const booleanParserDefaultTrue = parseAsBoolean.withDefault(true);
 
 const useRecipeFilter = () => {
   const [search] = useQueryState('q');
   const [includesIngredients] = useQueryIngredients('includes');
   const [excludesIngredients] = useQueryIngredients('excludes');
   const [isDeleted] = useQueryState('isDeleted', booleanParser);
+  const [isPublished] = useQueryState('isPublished', booleanParserDefaultTrue);
 
   const filter = React.useMemo<RecipeFilter>(() => {
     const filter: RecipeFilter = {};
@@ -23,6 +25,10 @@ const useRecipeFilter = () => {
 
     if (isDeleted) {
       filter.isDeleted = true;
+    }
+
+    if (!isPublished) {
+      filter.isPublished = false;
     }
 
     if ((includesIngredients && includesIngredients.length > 0) || (excludesIngredients && excludesIngredients.length > 0)) {

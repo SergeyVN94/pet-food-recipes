@@ -3,13 +3,12 @@
 import React from 'react';
 
 import dayjs from 'dayjs';
-import Link from 'next/link';
-import { notFound, useParams, usePathname } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 
 import { Avatar } from '@/components/ui';
 import { userRolesNamesMap } from '@/constants';
 import { useUser } from '@/hooks';
-import { cn, getTimeSince } from '@/utils';
+import { getTimeSince } from '@/utils';
 
 const ProfileHeadSkeleton = () => <div className="skeleton w-full h-[12.5rem] cursor-progress" />;
 
@@ -19,36 +18,10 @@ const ProfileItem = ({ label, value }: { label: string; value: string }) => (
   </p>
 );
 
-const MenuItem = ({ label, link }: { label: string; link: string }) => {
-  const pathName = usePathname();
-  const selectedClasses = pathName.startsWith(link) ? 'border-on-surface' : 'border-transparent';
-
-  return (
-    <Link
-      href={link}
-      className={cn(
-        'body-l text-on-surface py-2 px-3 bg-surf-cont hover:bg-surf-cont-highest transition-colors cursor-pointer border-b',
-        selectedClasses,
-      )}
-    >
-      {label}
-    </Link>
-  );
-};
-
 const ProfileHead = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: selfUser, isFetching: isSelfUserFetching } = useUser();
-  const {
-    data: user,
-    isFetching: isUserFetching,
-    error: userError,
-  } = useUser(id, {
-    enabled: (!isSelfUserFetching && !selfUser) || (selfUser && selfUser.id !== id),
-  });
-
-  const isFetching = isSelfUserFetching || isUserFetching;
-  const isSelfUser = selfUser?.id === id;
+  const { data: selfUser } = useUser();
+  const { data: user, error: userError } = useUser(id);
 
   const registrationDate = React.useMemo(() => {
     if (!user?.createdAt) {
@@ -67,7 +40,7 @@ const ProfileHead = () => {
     }
   }, [userError]);
 
-  return isFetching || !user ? (
+  return !selfUser || !user ? (
     <ProfileHeadSkeleton />
   ) : (
     <div className="flex flex-col gap-4 elevation-3 p-4">
@@ -78,12 +51,6 @@ const ProfileHead = () => {
         {user.email && <ProfileItem label="Почта" value={user.email} />}
         <ProfileItem label="Дата регистрации" value={registrationDate} />
       </div>
-      <nav className="flex flex-nowrap items-center">
-        <MenuItem label={isSelfUser ? 'Мои рецепты' : 'Рецепты'} link={`/user/${id}/recipes`} />
-        <MenuItem label="Закладки" link={`/user/${id}/bookmarks`} />
-        {isSelfUser && <MenuItem label="Уведомления" link={`/user/${id}/notifications`} />}
-        {isSelfUser && <MenuItem label="Настройки" link={`/user/${id}/settings`} />}
-      </nav>
     </div>
   );
 };

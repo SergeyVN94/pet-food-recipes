@@ -3,6 +3,7 @@ export { default as useLogin } from './useLogin';
 export { default as useStore } from './useStore';
 export { default as useRecipes } from './useRecipes';
 export { default as useBookmarks } from './useBookmarks';
+export { default as useUserRoles } from './useUserRoles';
 export { default as useCreateUser } from './useCreateUser';
 export { default as useRecipeById } from './useRecipeById';
 export { default as useIngredients } from './useIngredients';

@@ -3,16 +3,16 @@ import { AxiosError } from 'axios';
 
 import { BookmarksService } from '@/services';
 import { UserDto } from '@/types';
-import { BookmarkRecipeDto } from '@/types/bookmarks';
+import { BookmarkRecipeEntity } from '@/types/bookmarks';
 
 type QueryKey = ['bookmarks-recipes', UserDto['id']?];
 
-const queryFn: QueryFunction<BookmarkRecipeDto[], QueryKey> = async ({ signal, queryKey }) =>
+const queryFn: QueryFunction<BookmarkRecipeEntity[], QueryKey> = async ({ signal, queryKey }) =>
   (await BookmarksService.getRecipesInBookmarks(queryKey[1], { signal })).data;
 
 const useBookmarksRecipes = (
   userId?: string,
-  config: Omit<UseQueryOptions<BookmarkRecipeDto[], AxiosError, BookmarkRecipeDto[], QueryKey>, 'queryKey' | 'queryFn'> = {},
+  config: Omit<UseQueryOptions<BookmarkRecipeEntity[], AxiosError, BookmarkRecipeEntity[], QueryKey>, 'queryKey' | 'queryFn'> = {},
 ) =>
   useQuery({
     queryFn,

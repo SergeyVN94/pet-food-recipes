@@ -21,6 +21,7 @@ const EmptyRecipesListPlaceholder = () => (
 
 const UserRecipesPage = () => {
   const { id } = useParams<{ id: string }>();
+  const { data: selfUser } = useUser();
   const { data: user } = useUser(id);
   const filter = React.useMemo<RecipeFilter>(
     () => ({
@@ -38,21 +39,22 @@ const UserRecipesPage = () => {
     [ingredients],
   );
 
-  const recipesList =
-    recipes &&
-    recipes.length > 0 &&
-    recipes.map(recipe => (
-      <li key={recipe.id} className="w-full">
-        <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} />
-      </li>
-    ));
+  const recipesList = (recipes ?? [])?.map(recipe => (
+    <li key={recipe.id} className="w-full">
+      <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} />
+    </li>
+  ));
 
   return (
     <ul className="flex flex-col items-start w-full gap-3">
       {isRecipesFetching || isIngredientsFetching ? (
         <li className="skeleton h-[18.4375rem] rounded-xl" />
       ) : (
-        recipesList || <EmptyRecipesListPlaceholder />
+        <>
+          {recipesList}
+          {recipesList.length === 0 && selfUser?.id === user?.id && <EmptyRecipesListPlaceholder />}
+          {recipesList.length === 0 && (!selfUser || selfUser?.id !== user?.id) && <p className="text-lg">Здесь нет рецептов</p>}
+        </>
       )}
     </ul>
   );

@@ -11,6 +11,8 @@ import { searchParamsToFilter } from './home/lib';
 type HomePageProps = {
   searchParams: Promise<{
     q?: string;
+    isDeleted?: string;
+    isPublished?: string;
     ingredients?: string[];
   }>;
 };

@@ -5,13 +5,13 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { useBookmarks, useBookmarksRecipes, useRemoveRecipeFromBookmark, useStore, userAddRecipeToBookmark } from '@/hooks';
-import { RecipeDto } from '@/types';
+import { RecipeEntity } from '@/types';
 import { showToast } from '@/utils';
 
 import { Select, SelectItem } from '../ui';
 
 type RecipeBookmarkSelectProps = {
-  recipeId: RecipeDto['id'];
+  recipeId: RecipeEntity['id'];
   className?: string;
 };
 

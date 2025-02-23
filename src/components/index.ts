@@ -7,4 +7,5 @@ export * from './RecipeCard';
 export * from './RecipeForm';
 export * from './YandexMetrika';
 export * from './YandexMetrikaHit';
+export * from './RecipeCardBookmark';
 export * from './RecipeBookmarkSelect';

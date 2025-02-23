@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 import { UserDto } from '@/types';
-import { BookmarkCreateDto, BookmarkDto, BookmarkRecipeDto } from '@/types/bookmarks';
+import { BookmarkCreateDto, BookmarkDto, BookmarkRecipeEntity } from '@/types/bookmarks';
 
 import { apiInstance } from './lib';
 
@@ -25,11 +25,11 @@ class BookmarksService {
   }
 
   static getRecipesInBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
-    return apiInstance.get<BookmarkRecipeDto[]>(userId ? `${BASE_API_URL}/recipes/user/${userId}` : `${BASE_API_URL}/recipes`, config);
+    return apiInstance.get<BookmarkRecipeEntity[]>(userId ? `${BASE_API_URL}/recipes/user/${userId}` : `${BASE_API_URL}/recipes`, config);
   }
 
   static addRecipeToBookmark(recipeId: string, bookmarkId: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.get<BookmarkRecipeDto>(`${BASE_API_URL}/${bookmarkId}/recipes/${recipeId}`, config);
+    return apiInstance.patch<BookmarkRecipeEntity>(`${BASE_API_URL}/${bookmarkId}/recipes/${recipeId}`, config);
   }
 
   static removeRecipeFromBookmark(recipeId: string, config: AxiosRequestConfig = {}) {

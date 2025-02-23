@@ -2,23 +2,25 @@
 
 import React from 'react';
 
-import { parseAsArrayOf, parseAsBoolean, parseAsInteger, useQueryState } from 'nuqs';
+import { parseAsBoolean, useQueryState } from 'nuqs';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button, CheckboxUncontrolled } from '@/components/ui';
-import { useAmountTypes, useIngredients, useQueryIngredients, useUser } from '@/hooks';
-import { AmountTypeDto, IngredientDto, UserRoles } from '@/types';
+import { useAmountTypes, useIngredients, useQueryIngredients, useUser, useUserRoles } from '@/hooks';
+import { AmountTypeDto, IngredientDto } from '@/types';
 
 import { FormFields } from './Filters.types';
 import IngredientsFilter from './local-components/IngredientsFilter';
 
 const defaultValues: FormFields = {
   isDeleted: false,
+  isPublished: true,
   excludesIngredients: {},
   includesIngredients: {},
 };
 
 const booleanParser = parseAsBoolean.withDefault(false);
+const booleanParserDefaultTrue = parseAsBoolean.withDefault(true);
 
 type FiltersProps = {
   initialIngredients: IngredientDto[];
@@ -29,7 +31,10 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
   const [includesIngredients, setIncludesIngredients] = useQueryIngredients('includes');
   const [excludesIngredients, setExcludesIngredients] = useQueryIngredients('excludes');
   const [isDeleted, setIsDeleted] = useQueryState('isDeleted', booleanParser);
+  const [isPublished, setIsPublished] = useQueryState('isPublished', booleanParserDefaultTrue);
 
+  const { data: user } = useUser();
+  const roles = useUserRoles();
   const { data: ingredients } = useIngredients({
     initialData: initialIngredients,
     staleTime: Infinity,
@@ -42,19 +47,19 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
   const values = React.useMemo(
     () => ({
       isDeleted,
+      isPublished,
       includesIngredients: includesIngredients?.reduce((acc, val) => ({ ...acc, [val]: true }), {}) ?? {},
       excludesIngredients: excludesIngredients?.reduce((acc, val) => ({ ...acc, [val]: true }), {}) ?? {},
     }),
     [includesIngredients, excludesIngredients, isDeleted],
   );
-  const { data: user } = useUser();
 
   const methods = useForm<FormFields>({
     values,
     defaultValues,
   });
 
-  const handleSubmit = ({ includesIngredients, excludesIngredients, isDeleted = false }: FormFields) => {
+  const handleSubmit = ({ includesIngredients, excludesIngredients, isDeleted = false, isPublished = true }: FormFields) => {
     const includes = Object.entries(includesIngredients).reduce<number[]>((acc, [key, val]) => {
       if (val) {
         acc.push(Number(key));
@@ -71,6 +76,7 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
     }, []);
 
     setIsDeleted(isDeleted);
+    setIsPublished(isPublished);
     setIncludesIngredients(includes);
     setExcludesIngredients(excludes);
   };
@@ -88,7 +94,10 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
       >
         <h3 className="headline-m">Фильтры</h3>
         <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
-          {user?.role === UserRoles.ADMIN && <CheckboxUncontrolled name="isDeleted" label="Удаленные рецепты" className="mb-2" />}
+          {(roles.isAdmin || roles.isModerator) && <CheckboxUncontrolled name="isDeleted" label="Удаленные рецепты" className="mb-2" />}
+          {(roles.isAdmin || roles.isModerator) && (
+            <CheckboxUncontrolled name="isPublished" label="Опубликованные рецепты" className="mb-2" />
+          )}
           <IngredientsFilter ingredients={ingredients} />
         </div>
         <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-transparent">
