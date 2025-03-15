@@ -1,7 +1,7 @@
 import { QueryFunction, UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { RecipesService } from '@/services';
+import { recipesService } from '@/services';
 import { RecipeEntity } from '@/types';
 
 type QueryKey = ['recipes', 'get-by-id', RecipeEntity['id']];
@@ -9,7 +9,7 @@ type QueryKey = ['recipes', 'get-by-id', RecipeEntity['id']];
 const queryFn: QueryFunction<RecipeEntity, QueryKey> = async ({ signal, queryKey }) => {
   const [, , id] = queryKey;
 
-  return (await RecipesService.getRecipeById(id, { signal })).data;
+  return (await recipesService.getRecipeById(id, { signal })).data;
 };
 
 const useRecipeById = (

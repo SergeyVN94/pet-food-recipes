@@ -1,39 +1,43 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 import { UserDto } from '@/types';
 import { BookmarkCreateDto, BookmarkDto, BookmarkRecipeEntity } from '@/types/bookmarks';
 
-import { apiInstance } from './lib';
-
-const BASE_API_URL = '/api/v1/bookmarks';
-
 class BookmarksService {
-  static getBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
-    return apiInstance.get<BookmarkDto[]>(userId ? `${BASE_API_URL}/user/${userId}` : `${BASE_API_URL}`, config);
+  constructor(
+    private readonly apiInstance: AxiosInstance,
+    private readonly baseApiUrl: string,
+  ) {}
+
+  getBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
+    return this.apiInstance.get<BookmarkDto[]>(userId ? `${this.baseApiUrl}/user/${userId}` : `${this.baseApiUrl}`, config);
   }
 
-  static createBookmark(dto: BookmarkCreateDto, config: AxiosRequestConfig = {}) {
-    return apiInstance.post<BookmarkDto>(`${BASE_API_URL}`, dto, config);
+  createBookmark(dto: BookmarkCreateDto, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.post<BookmarkDto>(`${this.baseApiUrl}`, dto, config);
   }
 
-  static updateBookmark(bookmarkId: string, dto: BookmarkCreateDto, config: AxiosRequestConfig = {}) {
-    return apiInstance.patch<BookmarkDto>(`${BASE_API_URL}/${bookmarkId}`, dto, config);
+  updateBookmark(bookmarkId: string, dto: BookmarkCreateDto, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.patch<BookmarkDto>(`${this.baseApiUrl}/${bookmarkId}`, dto, config);
   }
 
-  static deleteBookmark(bookmarkId: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.delete<BookmarkDto>(`${BASE_API_URL}/${bookmarkId}`, config);
+  deleteBookmark(bookmarkId: string, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.delete<BookmarkDto>(`${this.baseApiUrl}/${bookmarkId}`, config);
   }
 
-  static getRecipesInBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
-    return apiInstance.get<BookmarkRecipeEntity[]>(userId ? `${BASE_API_URL}/recipes/user/${userId}` : `${BASE_API_URL}/recipes`, config);
+  getRecipesInBookmarks(userId?: UserDto['id'], config: AxiosRequestConfig = {}) {
+    return this.apiInstance.get<BookmarkRecipeEntity[]>(
+      userId ? `${this.baseApiUrl}/recipes/user/${userId}` : `${this.baseApiUrl}/recipes`,
+      config,
+    );
   }
 
-  static addRecipeToBookmark(recipeId: string, bookmarkId: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.patch<BookmarkRecipeEntity>(`${BASE_API_URL}/${bookmarkId}/recipes/${recipeId}`, config);
+  addRecipeToBookmark(recipeId: string, bookmarkId: string, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.patch<BookmarkRecipeEntity>(`${this.baseApiUrl}/${bookmarkId}/recipes/${recipeId}`, config);
   }
 
-  static removeRecipeFromBookmark(recipeId: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.delete(`${BASE_API_URL}/recipes/${recipeId}`, config);
+  removeRecipeFromBookmark(recipeId: string, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.delete(`${this.baseApiUrl}/recipes/${recipeId}`, config);
   }
 }
 

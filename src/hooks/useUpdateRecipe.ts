@@ -1,6 +1,6 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 
-import { RecipesService } from '@/services';
+import { recipesService } from '@/services';
 import { RecipeEntity, RecipeUpdateDto } from '@/types';
 
 type MutationProps = {
@@ -8,7 +8,7 @@ type MutationProps = {
   slug: RecipeEntity['slug'];
 };
 
-const mutationFn = async ({ dto, slug }: MutationProps) => (await RecipesService.patchRecipe(slug, dto)).data;
+const mutationFn = async ({ dto, slug }: MutationProps) => (await recipesService.patchRecipe(slug, dto)).data;
 
 const useUpdateRecipe = (config: UseMutationOptions<RecipeEntity, unknown, MutationProps, unknown> = {}) =>
   useMutation({

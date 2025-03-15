@@ -1,7 +1,7 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { AuthService } from '@/services';
+import { authService } from '@/services';
 import { TokenResponseDto } from '@/types/auth';
 
 type MutationVariables = {
@@ -9,7 +9,7 @@ type MutationVariables = {
   password: string;
 };
 
-const mutationFn = async ({ email, password }: MutationVariables) => (await AuthService.login(email, password)).data;
+const mutationFn = async ({ email, password }: MutationVariables) => (await authService.login(email, password)).data;
 
 const useLogin = (config: UseMutationOptions<TokenResponseDto, AxiosError<{ message: string }>, MutationVariables> = {}) =>
   useMutation<TokenResponseDto, AxiosError<{ message: string }>, MutationVariables>({

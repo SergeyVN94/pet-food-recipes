@@ -1,42 +1,43 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 import { RecipeCreateDto, RecipeEntity, RecipeFilter, RecipeUpdateDto } from '@/types';
 
-import { apiInstance } from './lib';
-
-const BASE_API_URL = '/api/v1/recipes';
-
 class RecipesService {
-  static getRecipeBySlug(slug: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.get<RecipeEntity>(`${BASE_API_URL}/slug/${slug}`, config);
+  constructor(
+    private readonly apiInstance: AxiosInstance,
+    private readonly baseApiUrl: string,
+  ) {}
+
+  getRecipeBySlug(slug: string, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.get<RecipeEntity>(`${this.baseApiUrl}/slug/${slug}`, config);
   }
 
-  static getRecipeById(id: string, config: AxiosRequestConfig = {}) {
-    return apiInstance.get<RecipeEntity>(`${BASE_API_URL}/${id}`, config);
+  getRecipeById(id: string, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.get<RecipeEntity>(`${this.baseApiUrl}/${id}`, config);
   }
 
-  static postRecipesSearch(filter: RecipeFilter = {}, config: AxiosRequestConfig = {}) {
-    return apiInstance.post<RecipeEntity[]>(`${BASE_API_URL}/search`, filter, config);
+  postRecipesSearch(filter: RecipeFilter = {}, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.post<RecipeEntity[]>(`${this.baseApiUrl}/search`, filter, config);
   }
 
-  static postRecipe(dto: RecipeCreateDto, config: AxiosRequestConfig = {}) {
-    return apiInstance.post<RecipeEntity>(`${BASE_API_URL}`, dto, config);
+  postRecipe(dto: RecipeCreateDto, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.post<RecipeEntity>(`${this.baseApiUrl}`, dto, config);
   }
 
-  static patchRecipe(slug: RecipeEntity['slug'], dto: RecipeUpdateDto, config: AxiosRequestConfig = {}) {
-    return apiInstance.patch<RecipeEntity>(`${BASE_API_URL}/${slug}`, dto, config);
+  patchRecipe(slug: RecipeEntity['slug'], dto: RecipeUpdateDto, config: AxiosRequestConfig = {}) {
+    return this.apiInstance.patch<RecipeEntity>(`${this.baseApiUrl}/${slug}`, dto, config);
   }
 
-  static deleteRecipe(slug: RecipeEntity['slug'], config: AxiosRequestConfig = {}) {
-    return apiInstance.delete<RecipeEntity>(`${BASE_API_URL}/${slug}`, config);
+  deleteRecipe(slug: RecipeEntity['slug'], config: AxiosRequestConfig = {}) {
+    return this.apiInstance.delete<RecipeEntity>(`${this.baseApiUrl}/${slug}`, config);
   }
 
-  static publishRecipe(slug: RecipeEntity['slug'], config: AxiosRequestConfig = {}) {
-    return apiInstance.patch<RecipeEntity>(`${BASE_API_URL}/${slug}/publish`, undefined, config);
+  publishRecipe(slug: RecipeEntity['slug'], config: AxiosRequestConfig = {}) {
+    return this.apiInstance.patch<RecipeEntity>(`${this.baseApiUrl}/${slug}/publish`, undefined, config);
   }
 
-  static unpublishRecipe(slug: RecipeEntity['slug'], config: AxiosRequestConfig = {}) {
-    return apiInstance.patch<RecipeEntity>(`${BASE_API_URL}/${slug}/unpublish`, undefined, config);
+  unpublishRecipe(slug: RecipeEntity['slug'], config: AxiosRequestConfig = {}) {
+    return this.apiInstance.patch<RecipeEntity>(`${this.baseApiUrl}/${slug}/unpublish`, undefined, config);
   }
 }
 

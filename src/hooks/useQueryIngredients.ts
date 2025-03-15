@@ -1,3 +1,5 @@
+'use client';
+
 import { parseAsArrayOf, parseAsInteger, useQueryState } from 'nuqs';
 
 const parserIngredients = parseAsArrayOf(parseAsInteger, ';');

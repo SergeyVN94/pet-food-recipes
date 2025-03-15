@@ -1,7 +1,7 @@
 import { QueryFunction, UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { AuthService } from '@/services';
+import { authService } from '@/services';
 
 type QueryKey = ['account', 'confirmation-token', string | null | undefined];
 type ResponseDto = {
@@ -9,7 +9,7 @@ type ResponseDto = {
 };
 
 const queryFn: QueryFunction<ResponseDto, QueryKey> = async ({ queryKey }) =>
-  (await AuthService.validateConfirmationToken(queryKey[2]!)).data;
+  (await authService.validateConfirmationToken(queryKey[2]!)).data;
 
 const useValidateConfirmationToken = (
   token?: string | null,

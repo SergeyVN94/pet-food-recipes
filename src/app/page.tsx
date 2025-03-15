@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
 import { SearchBar } from '@/components';
 import { PageLayout } from '@/layouts';
-import { RecipesService } from '@/services';
+import { recipesService } from '@/services';
 
 import { ActualRecipesList, ActualRecipesListSkeleton, Filters } from './home/components';
 import { searchParamsToFilter } from './home/lib';
@@ -21,7 +21,7 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
   const localSearchParams = await searchParams;
   const filter = searchParamsToFilter(localSearchParams);
   const [recipes, ingredients, amountTypes] = await Promise.all([
-    RecipesService.postRecipesSearch(filter),
+    recipesService.postRecipesSearch(filter),
     getIngredients(),
     getAmountTypes(),
   ]);

@@ -1,14 +1,19 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import { UserDto } from '@/types';
-
-import { apiInstance } from './lib';
-
-const BASE_API_URL = '/api/v1/users';
+import { SearchDto, SearchResponseWithPagination, UserDto } from '@/types';
 
 class UsersService {
-  static getUser(id: UserDto['id'] = '', config?: AxiosRequestConfig) {
-    return apiInstance.get<UserDto>(`${BASE_API_URL}/user/${id}`, config);
+  constructor(
+    private readonly apiInstance: AxiosInstance,
+    private readonly baseApiUrl: string,
+  ) {}
+
+  getUser(id: UserDto['id'] = '', config?: AxiosRequestConfig) {
+    return this.apiInstance.get<UserDto>(`${this.baseApiUrl}/user/${id}`, config);
+  }
+
+  findUsers(filters?: SearchDto, config?: AxiosRequestConfig) {
+    return this.apiInstance.post<SearchResponseWithPagination<UserDto>>(`${this.baseApiUrl}/search`, filters, config);
   }
 }
 

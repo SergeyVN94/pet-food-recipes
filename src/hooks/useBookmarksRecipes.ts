@@ -1,14 +1,14 @@
 import { QueryFunction, UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { BookmarksService } from '@/services';
+import { bookmarksService } from '@/services';
 import { UserDto } from '@/types';
 import { BookmarkRecipeEntity } from '@/types/bookmarks';
 
 type QueryKey = ['bookmarks-recipes', UserDto['id']?];
 
 const queryFn: QueryFunction<BookmarkRecipeEntity[], QueryKey> = async ({ signal, queryKey }) =>
-  (await BookmarksService.getRecipesInBookmarks(queryKey[1], { signal })).data;
+  (await bookmarksService.getRecipesInBookmarks(queryKey[1], { signal })).data;
 
 const useBookmarksRecipes = (
   userId?: string,

@@ -3,7 +3,6 @@
 import React from 'react';
 
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { notFound, usePathname, useRouter } from 'next/navigation';
 
 import { Tabs } from '@/components/ui';

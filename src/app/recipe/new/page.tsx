@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { AuthCheck, RecipeForm } from '@/components';
+import { AuthCheck, BanRedirect, RecipeForm } from '@/components';
 import { PageLayout } from '@/layouts';
 
 export const metadata: Metadata = {
@@ -11,7 +11,9 @@ const NewRecipePage = () => (
   <PageLayout>
     <h1 className="headline-m">Добавить рецепт</h1>
     <AuthCheck>
-      <RecipeForm className="mt-8" />
+      <BanRedirect>
+        <RecipeForm className="mt-8" />
+      </BanRedirect>
     </AuthCheck>
   </PageLayout>
 );

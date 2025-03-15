@@ -7,7 +7,7 @@ import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
 import { RecipeBookmarkSelect, TimeSince } from '@/components';
 import { Avatar, Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
-import { RecipesService } from '@/services';
+import { recipesService } from '@/services';
 import { arrayToDictionary, getTimeSince } from '@/utils';
 
 import { RecipeControls } from './components';
@@ -20,7 +20,7 @@ type RecipePageProps = Promise<{
 
 export const generateMetadata = async ({ params }: { params: RecipePageProps }): Promise<Metadata> => {
   const { slug } = await params;
-  const response = await RecipesService.getRecipeBySlug(slug);
+  const response = await recipesService.getRecipeBySlug(slug);
 
   if (response.status !== 200) {
     redirect('/404');
@@ -36,7 +36,7 @@ export const generateMetadata = async ({ params }: { params: RecipePageProps }):
 const RecipePage = async ({ params }: { params: RecipePageProps }) => {
   const { slug } = await params;
   const [recipeResponse, ingredients, amountTypes] = await Promise.all([
-    RecipesService.getRecipeBySlug(slug),
+    recipesService.getRecipeBySlug(slug),
     getIngredients(),
     getAmountTypes(),
   ]);

@@ -1,6 +1,6 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 
-import { IngredientsService } from '@/services';
+import { ingredientsService } from '@/services';
 import { IngredientDto } from '@/types';
 
 const useIngredients = (
@@ -9,7 +9,7 @@ const useIngredients = (
   useQuery({
     queryKey: ['recipe-ingredients', 'get'],
     queryFn: async ({ signal }) => {
-      const response = await IngredientsService.getIngredients({ signal });
+      const response = await ingredientsService.getIngredients({ signal });
 
       return response.data;
     },

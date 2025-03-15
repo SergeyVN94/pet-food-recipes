@@ -30,3 +30,5 @@ export const showToast = (type: ToastType, content: ToastContent, options: Parti
       return toast(content, optionsToApply);
   }
 };
+
+export const hideToast = (id: Id) => toast.dismiss(id);
