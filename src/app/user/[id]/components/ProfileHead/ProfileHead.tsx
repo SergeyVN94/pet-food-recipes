@@ -5,12 +5,11 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { notFound, useParams } from 'next/navigation';
 
+import { BanUserButton } from '@/components';
 import { Avatar } from '@/components/ui';
 import { userRolesNamesMap } from '@/constants';
 import { useUser } from '@/hooks';
 import { cn, getTimeSince } from '@/utils';
-
-import { BanUserButton } from '../BanUserButton';
 
 const ProfileHeadSkeleton = () => <div className="skeleton w-full h-[12.5rem] cursor-progress" />;
 

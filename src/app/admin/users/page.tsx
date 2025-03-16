@@ -4,7 +4,7 @@ import React from 'react';
 
 import { useQueryState } from 'nuqs';
 
-import { SearchBar } from '@/components';
+import { SearchBar, UserCard } from '@/components';
 import { useUsers } from '@/hooks';
 import { SearchDto } from '@/types';
 
@@ -26,7 +26,13 @@ const UsersPage = () => {
   return (
     <div>
       <SearchBar placeholder="Поиск пользователей" searchParamName="q" />
-      <ul className="mt-4">{usersResponse?.items?.map(user => <li key={user.id}>{user.email}</li>)}</ul>
+      <ul className="mt-8 flex flex-col gap-3">
+        {usersResponse?.items?.map(user => (
+          <li key={user.id}>
+            <UserCard userId={user.id} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -144,12 +144,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 );
 Textarea.displayName = 'Textarea';
 
-type TextareaControlledProps = Omit<TextareaProps, 'onChange' | 'value' | 'onBlur' | 'onFocus' | 'name'> & {
+type TextareaUncontrolledProps = Omit<TextareaProps, 'onChange' | 'value' | 'onBlur' | 'onFocus' | 'name'> & {
   name: string;
   isClearable?: boolean;
 };
 
-export const TextareaControlled = ({ isClearable = true, ...other }: TextareaControlledProps) => {
+export const TextareaUncontrolled = ({ isClearable = true, ...other }: TextareaUncontrolledProps) => {
   const methods = useFormContext();
 
   const handleClear = () => {

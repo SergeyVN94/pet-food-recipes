@@ -1,4 +1,5 @@
 export * from './Header';
+export * from './UserCard';
 export * from './AuthCheck';
 export * from './SearchBar';
 export * from './AskCookie';
@@ -6,6 +7,7 @@ export * from './TimeSince';
 export * from './RecipeCard';
 export * from './RecipeForm';
 export * from './BanRedirect';
+export * from './BanUserButton';
 export * from './YandexMetrika';
 export * from './YandexMetrikaHit';
 export * from './RecipeCardBookmark';

@@ -28,6 +28,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     <div>
       <PageLayout>
         <div>
+          <h1 className="title-l text-center">Панель администратора</h1>
           <Tabs
             tabs={[
               {
@@ -41,6 +42,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             ]}
             activeTabId={pathname.endsWith('/') ? pathname.slice(0, -1) : pathname}
             onTabClick={id => navigate.push(id)}
+            className="mt-2"
           />
         </div>
         <div className="mt-6">{children}</div>

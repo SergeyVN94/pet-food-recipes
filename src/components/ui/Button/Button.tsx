@@ -41,7 +41,7 @@ const buttonVariants = cva(
   },
 );
 
-type ButtonProps = ({
+export type ButtonProps = ({
   iconLeft?: ReactNode;
 } & Omit<VariantProps<typeof buttonVariants>, 'withIcon'>) &
   ButtonHTMLAttributes<HTMLButtonElement>;
@@ -63,7 +63,7 @@ const Button = ({ className, variant, children, iconLeft, ...props }: ButtonProp
 );
 Button.displayName = 'Button';
 
-type ButtonLinkProps = ({
+export type ButtonLinkProps = ({
   iconLeft?: ReactNode;
 } & Omit<VariantProps<typeof buttonVariants>, 'withIcon'>) &
   ComponentProps<typeof Link>;

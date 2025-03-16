@@ -27,5 +27,5 @@ export type BanDto = {
 
 export type BanCreateDto = {
   reason: string;
-  endDate: string;
+  endDate?: string;
 };
