@@ -6,7 +6,7 @@ import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button, Modal, SelectItem, SelectUncontrolled, TextareaUncontrolled } from '@/components/ui';
-import { useBan, useUser } from '@/hooks';
+import { useBan, useUser, useUserRoles } from '@/hooks';
 import { BanCreateDto, UserDto, UserRoles } from '@/types';
 import { showToast } from '@/utils';
 
@@ -33,6 +33,7 @@ const BanUserButton = ({ userId, className }: BanUserButtonProps) => {
   const { data: selfUser } = useUser();
   const { data: user } = useUser(userId);
   const [isOpen, setIsOpen] = React.useState(false);
+  const userRoles = useUserRoles();
   const { mutateAsync: ban, isPending } = useBan({
     onSuccess: () => {
       showToast('success', 'Пользователь забанен');
@@ -52,7 +53,7 @@ const BanUserButton = ({ userId, className }: BanUserButtonProps) => {
   });
   const methods = useForm<BanCreateDto>();
 
-  const hasAccess = selfUser?.role === UserRoles.ADMIN || selfUser?.role === UserRoles.MODERATOR;
+  const hasAccess = userRoles.isAdmin || userRoles.isModerator;
   const isCurrentUser = user?.id === selfUser?.id;
   const isUserBanned = user?.ban;
   const isShow = hasAccess && !isCurrentUser && !isUserBanned;
@@ -75,6 +76,7 @@ const BanUserButton = ({ userId, className }: BanUserButtonProps) => {
 
   return (
     user &&
+    !user?.ban &&
     selfUser &&
     isShow && (
       <Modal.Root

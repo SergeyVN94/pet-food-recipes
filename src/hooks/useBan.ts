@@ -19,10 +19,10 @@ const useBan = (
   return useMutation<BanDto, AxiosError<{ message: string }>, MutationVariables>({
     mutationFn,
     mutationKey: ['ban', 'create'],
-    onSuccess: data => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user', data.user.id],
-        exact: true,
+        queryKey: ['users'],
+        exact: false,
       });
     },
     ...config,

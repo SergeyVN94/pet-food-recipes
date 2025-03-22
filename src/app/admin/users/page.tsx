@@ -25,11 +25,11 @@ const UsersPage = () => {
 
   return (
     <div>
-      <SearchBar placeholder="Поиск пользователей" searchParamName="q" />
+      <SearchBar placeholder="Поиск пользователей" searchParamName="q" delay={350} />
       <ul className="mt-8 flex flex-col gap-3">
         {usersResponse?.items?.map(user => (
           <li key={user.id}>
-            <UserCard userId={user.id} />
+            <UserCard user={user} />
           </li>
         ))}
       </ul>

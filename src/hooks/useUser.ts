@@ -4,7 +4,7 @@ import axios from 'axios';
 import { usersService } from '@/services';
 import { UserDto } from '@/types';
 
-type QueryKey = ['user', UserDto['id']?];
+type QueryKey = ['users', UserDto['id']?];
 
 const retryFn = (failureCount: number, error: unknown) => {
   if (axios.isAxiosError(error) && (error.response?.status === 401 || error.response?.status === 404)) {
@@ -20,7 +20,7 @@ const queryFn: QueryFunction<UserDto, QueryKey> = async ({ signal, queryKey }) =
 const useUser = (userId?: UserDto['id'], config: Omit<UseQueryOptions<UserDto, unknown, UserDto, QueryKey>, 'queryKey' | 'queryFn'> = {}) =>
   useQuery({
     queryFn,
-    queryKey: ['user', userId],
+    queryKey: ['users', userId],
     retry: retryFn,
     refetchOnWindowFocus: false,
     staleTime: Infinity,

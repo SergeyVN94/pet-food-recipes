@@ -11,4 +11,5 @@ export * from './BanUserButton';
 export * from './YandexMetrika';
 export * from './YandexMetrikaHit';
 export * from './RecipeCardBookmark';
+export * from './BanUserDeleteButton';
 export * from './RecipeBookmarkSelect';
