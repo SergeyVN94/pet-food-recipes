@@ -18,7 +18,7 @@ const BanUserDeleteButton = ({ userId, className }: BanUserDeleteButtonProps) =>
   const { data: selfUser } = useUser();
   const userRoles = useUserRoles();
   const { mutateAsync: deleteBan, isPending } = useDeleteBan({
-    onSuccess: () => {
+    onMutate: () => {
       showToast('success', 'Пользователь разбанен');
     },
     onError: error => {

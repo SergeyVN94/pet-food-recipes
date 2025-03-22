@@ -34,10 +34,12 @@ const BanUserButton = ({ userId, className }: BanUserButtonProps) => {
   const { data: user } = useUser(userId);
   const [isOpen, setIsOpen] = React.useState(false);
   const userRoles = useUserRoles();
-  const { mutateAsync: ban, isPending } = useBan({
+  const methods = useForm<BanCreateDto>();
+  const { mutate: ban, isPending } = useBan({
     onSuccess: () => {
       showToast('success', 'Пользователь забанен');
       setIsOpen(false);
+      methods.reset();
     },
     onError: error => {
       if (error) {
@@ -51,7 +53,6 @@ const BanUserButton = ({ userId, className }: BanUserButtonProps) => {
       }
     },
   });
-  const methods = useForm<BanCreateDto>();
 
   const hasAccess = userRoles.isAdmin || userRoles.isModerator;
   const isCurrentUser = user?.id === selfUser?.id;

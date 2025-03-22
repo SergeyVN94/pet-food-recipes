@@ -18,13 +18,11 @@ const useDeleteBan = (
   return useMutation<BanDto, AxiosError<{ message: string }>, MutationVariables>({
     mutationFn,
     mutationKey: ['ban', 'delete'],
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['users'],
-        exact: false,
-      });
-    },
     ...config,
+    onSuccess: (...args) => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      config.onSuccess?.(...args);
+    },
   });
 };
 
