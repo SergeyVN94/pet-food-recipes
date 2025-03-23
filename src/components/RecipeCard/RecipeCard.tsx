@@ -29,48 +29,44 @@ const RecipeCard = ({
   const imageUrl = firstImagePath ? `${process.env.NEXT_PUBLIC_STATIC_SERVER_URL}${firstImagePath}` : '/recipe-card-placeholder.png';
 
   return (
-    <div className="card-outlined w-full border-b border-neutral-90 group-last:border-none relative flex items-start gap-6 pointer hover:shadow-md transition-all rounded-md">
-      <Image
-        alt="Фото рецепта"
-        src={imageUrl}
-        className="object-contain block size-64"
-        width={256}
-        height={256}
-        loading={isVisiblePriority ? 'eager' : 'lazy'}
-        placeholder="empty"
-        priority={isVisiblePriority}
-      />
-      <div className="flex flex-col w-full self-stretch">
-        <div className="flex items-center flex-nowrap mb-2 gap-4">
-          <Link href={`/user/${recipe.user?.id}`} className="flex items-center gap-1 hover:underline cursor-pointer relative z-20">
-            {recipe.user && <Avatar user={recipe.user} size={32} />}
-            <span className="title-m">{recipe.user?.userName}</span>
-          </Link>
-          <TimeSince startTime={recipe.createdAt} className="title-s" />
-          <div className="flex flex-nowrap items-center gap-1">
-            {isShowBookmark && <RecipeCardBookmark recipeId={recipe.id} />}
-            {isShowPublishedStatus && !recipe.isPublished && (
-              <p className="bg-error-container text-error px-2 py-1 rounded label-l">На модерации</p>
-            )}
-          </div>
-        </div>
+    <div className="card-outlined border-b border-neutral-90 group-last:border-none relative pointer hover:shadow-md transition-all rounded-md flex flex-col md:items-start md:pl-72 md:min-h-80">
+      <div className="flex items-center flex-nowrap mb-2 gap-4">
+        <Link href={`/user/${recipe.user?.id}`} className="flex items-center gap-1 hover:underline cursor-pointer relative z-20">
+          {recipe.user && <Avatar user={recipe.user} size={32} />}
+          <span className="title-m">{recipe.user?.userName}</span>
+        </Link>
+        <TimeSince startTime={recipe.createdAt} className="title-s" />
+      </div>
+      <div className="flex flex-nowrap items-center gap-1">
         <Link
-          className="headline-m text-primary font-semibold line-clamp-2 before:content-[''] before:block before:absolute before:left-0 before:top-0 before:size-full"
+          className="headline-m text-primary font-semibold line-clamp-2 before:content-[''] before:block before:absolute before:left-0 before:top-0 before:size-full mb-2"
           href={`/recipe/${recipe.slug}`}
         >
           {recipe.title}
         </Link>
-        <p className="body-l mt-4 line-clamp-3 mb-2 text-pretty">{recipe.description}</p>
-        <div className="flex flex-wrap items-center gap-2 mt-auto">
-          {recipe.ingredients.map(ingredient => (
-            <Chip label={ingredientsMap.get(ingredient.ingredientId)?.name ?? ''} key={ingredient.ingredientId} variant="outline" />
-          ))}
-        </div>
-        <p className="flex flex-nowrap items-center gap-2 title-s mt-4">
-          <span>
-            Шагов: <span className="text-primary">{recipe.steps.length}</span>
-          </span>
-        </p>
+        {isShowPublishedStatus && !recipe.isPublished && (
+          <p className="bg-error-container text-error px-2 py-1 rounded label-l">На модерации</p>
+        )}
+      </div>
+      <div className="relative w-full h-64 md:absolute md:top-4 md:left-4 md:w-64">
+        <Image
+          alt="Фото рецепта"
+          src={imageUrl}
+          className="object-cover block absolute left-0 top-0 size-full"
+          width={512}
+          height={512}
+          loading={isVisiblePriority ? 'eager' : 'lazy'}
+          placeholder="empty"
+          priority={isVisiblePriority}
+        />
+        {isShowBookmark && <RecipeCardBookmark recipeId={recipe.id} className="absolute top-2 right-2" />}
+      </div>
+
+      <p className="body-l mt-4 line-clamp-3 mb-2 text-pretty">{recipe.description}</p>
+      <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-auto">
+        {recipe.ingredients.map(ingredient => (
+          <Chip label={ingredientsMap.get(ingredient.ingredientId)?.name ?? ''} key={ingredient.ingredientId} variant="outline" />
+        ))}
       </div>
     </div>
   );
