@@ -6,7 +6,7 @@ import { vestResolver } from '@hookform/resolvers/vest';
 import { useRouter } from 'next/navigation';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
-import { Button, InputUncontrolled, TextareaControlled } from '@/components/ui';
+import { Button, InputUncontrolled, TextareaUncontrolled } from '@/components/ui';
 import { useAmountTypes, useIngredients } from '@/hooks';
 import { RecipeCreateDto, RecipeEntity, RecipeIngredientCreateDto } from '@/types';
 import { arrayToDictionary, showToast } from '@/utils';
@@ -94,7 +94,7 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
         <InputUncontrolled name="title" label="Название" required maxLength={150} />
-        <TextareaControlled name="description" label="Описание" className="mt-4" required maxLength={500} />
+        <TextareaUncontrolled name="description" label="Описание" className="mt-4" required maxLength={500} />
         {/* <FileInputUncontrolled
           name="images"
           label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"

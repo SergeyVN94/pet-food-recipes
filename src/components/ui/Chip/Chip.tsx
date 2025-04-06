@@ -19,28 +19,34 @@ export const variants = cva('inline-flex flex-nowrap items-center rounded-lg py-
       true: 'pr-1.5',
       false: '',
     },
+    color: {
+      primary: 'bg-secondary-container text-on-secondary-container',
+      error: 'bg-error-container text-on-error-container',
+    },
   },
   defaultVariants: {
     variant: 'outline',
+    color: 'primary',
   },
 });
 
 export type ChipProps = {
   label: string;
+  tooltip?: string;
   iconLeft?: SVGIcon;
   disabled?: boolean;
   className?: string;
   onClose?: () => void;
 } & VariantProps<typeof variants>;
 
-const Chip = ({ label, variant, className, iconLeft, onClose }: ChipProps) => {
-  return (
-    <div className={variants({ variant, className, withLeftIcon: !!iconLeft, withRightIcon: !!onClose })}>
+const Chip = ({ label, variant, className, iconLeft, onClose, tooltip, color }: ChipProps) => {
+  const content = (
+    <div className={variants({ variant, className, withLeftIcon: !!iconLeft, withRightIcon: !!onClose, color })}>
       {iconLeft &&
         React.cloneElement(iconLeft, {
           className: 'size-[18px] text-primary',
         })}
-      <p className="label-l">{label}</p>
+      <p className="label-l whitespace-nowrap truncate text-inherit">{label}</p>
       {onClose && (
         <button className="outline-none border-none bg-transparent block cursor-pointer" tabIndex={-1} onClick={onClose}>
           <IconClose className="size-[18px]" />
@@ -48,6 +54,9 @@ const Chip = ({ label, variant, className, iconLeft, onClose }: ChipProps) => {
       )}
     </div>
   );
+
+  // TODO: добавить tooltip
+  return tooltip ? content : content;
 };
 
 export default Chip;

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Chip } from '@/components/ui';
 import { Avatar } from '@/components/ui/Avatar';
 import { IngredientDto, RecipeEntity } from '@/types';
+import { cn } from '@/utils';
 
 import { RecipeCardBookmark } from '../RecipeCardBookmark';
 import { TimeSince } from '../TimeSince';
@@ -16,6 +17,7 @@ type RecipeCardProps = {
   isVisiblePriority?: boolean;
   isShowBookmark?: boolean;
   isShowPublishedStatus?: boolean;
+  className?: string;
 };
 
 const RecipeCard = ({
@@ -24,12 +26,18 @@ const RecipeCard = ({
   isVisiblePriority = false,
   isShowBookmark = true,
   isShowPublishedStatus = true,
+  className,
 }: RecipeCardProps) => {
   const firstImagePath = recipe.images?.[0];
   const imageUrl = firstImagePath ? `${process.env.NEXT_PUBLIC_STATIC_SERVER_URL}${firstImagePath}` : '/recipe-card-placeholder.png';
 
   return (
-    <div className="card-outlined border-b border-neutral-90 group-last:border-none relative pointer hover:shadow-md transition-all rounded-md flex flex-col md:items-start md:pl-72 md:min-h-80">
+    <div
+      className={cn(
+        'card-outlined border-b border-neutral-90 group-last:border-none relative pointer hover:shadow-md transition-all rounded-md flex flex-col md:items-start md:pl-72 md:min-h-80',
+        className,
+      )}
+    >
       <div className="flex items-center flex-nowrap mb-2 gap-4">
         <Link href={`/user/${recipe.user?.id}`} className="flex items-center gap-1 hover:underline cursor-pointer relative z-20">
           {recipe.user && <Avatar user={recipe.user} size={32} />}
@@ -37,15 +45,15 @@ const RecipeCard = ({
         </Link>
         <TimeSince startTime={recipe.createdAt} className="title-s" />
       </div>
-      <div className="flex flex-nowrap items-center gap-1">
+      <div className="flex flex-nowrap items-center gap-2">
         <Link
-          className="headline-m text-primary font-semibold line-clamp-2 before:content-[''] before:block before:absolute before:left-0 before:top-0 before:size-full mb-2"
+          className="block headline-m text-primary font-semibold line-clamp-2 before:content-[''] before:block before:absolute before:left-0 before:top-0 before:size-full"
           href={`/recipe/${recipe.slug}`}
         >
           {recipe.title}
         </Link>
         {isShowPublishedStatus && !recipe.isPublished && (
-          <p className="bg-error-container text-error px-2 py-1 rounded label-l">На модерации</p>
+          <Chip label="На модерации" variant="filled" color="error" tooltip="Рецепт проверяется модератором" />
         )}
       </div>
       <div className="relative w-full h-64 md:absolute md:top-4 md:left-4 md:w-64">

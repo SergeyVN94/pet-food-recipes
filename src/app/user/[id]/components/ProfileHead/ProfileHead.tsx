@@ -5,7 +5,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { notFound, useParams } from 'next/navigation';
 
-import { BanUserButton } from '@/components';
+import { BanUserButton, BanUserDeleteButton } from '@/components';
 import { Avatar } from '@/components/ui';
 import { userRolesNamesMap } from '@/constants';
 import { useUser } from '@/hooks';
@@ -23,7 +23,6 @@ const ProfileItem = ({ label, value, className, labelClassName }: ProfileItemPro
 
 const ProfileHead = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: selfUser } = useUser();
   const { data: user, error: userError } = useUser(id);
 
   const registrationDate = React.useMemo(() => {
@@ -43,7 +42,7 @@ const ProfileHead = () => {
     }
   }, [userError]);
 
-  return !selfUser || !user ? (
+  return !user ? (
     <ProfileHeadSkeleton />
   ) : (
     <div className="flex flex-col gap-4 elevation-3 p-4">
@@ -59,6 +58,7 @@ const ProfileHead = () => {
         {user.ban?.reason && <ProfileItem label="Причина бана" value={user.ban.reason} labelClassName="text-error" />}
         <div className="flex items-center gap-2 mt-2">
           <BanUserButton userId={user.id} />
+          <BanUserDeleteButton userId={user.id} />
         </div>
       </div>
     </div>

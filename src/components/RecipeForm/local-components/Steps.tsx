@@ -1,7 +1,7 @@
 import { UseFormReturn, useFieldArray } from 'react-hook-form';
 
 import { IconAdd, IconArrowDropDown, IconArrowDropUp, IconDelete } from '@/assets/icons';
-import { Button, TextareaControlled } from '@/components/ui';
+import { Button, TextareaUncontrolled } from '@/components/ui';
 import { ButtonIcon } from '@/components/ui/ButtonIcon';
 
 import { FormFields } from '../RecipeForm.types';
@@ -42,7 +42,7 @@ const Steps = ({ methods }: StepsProps) => {
       <div className="mt-4">
         {fields.map((field, index) => (
           <div key={field.id} className="mt-3 first:mt-0 flex flex-nowrap items-start">
-            <TextareaControlled
+            <TextareaUncontrolled
               className="flex-1"
               name={`steps.${index}.content`}
               label={`Этап ${index + 1}`}

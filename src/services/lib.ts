@@ -40,7 +40,7 @@ apiInstance.interceptors.response.use(
       }
 
       try {
-        const response = await axios.get<TokenResponseDto>(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/api/v1/auth/refresh`, {
+        const response = await axios.post<TokenResponseDto>(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/api/v1/auth/refresh`, undefined, {
           headers: {
             Authorization: `Bearer ${refreshToken}`,
           },

@@ -19,8 +19,8 @@ class AuthService {
     );
   }
 
-  createUser(dto: UserRegistryDto, config?: AxiosRequestConfig) {
-    return this.apiInstance.post<UserDto>(`${this.baseApiUrl}/signup`, dto, config);
+  register(dto: UserRegistryDto, config?: AxiosRequestConfig) {
+    return this.apiInstance.post<UserDto>(`${this.baseApiUrl}/register`, dto, config);
   }
 
   sendConfirmationEmail(email: string, config?: AxiosRequestConfig) {
@@ -28,13 +28,13 @@ class AuthService {
   }
 
   checkAccessToken(config?: AxiosRequestConfig) {
-    return this.apiInstance.get<{ message: 'OK' }>(`${this.baseApiUrl}/check-token`, config);
+    return this.apiInstance.post<{ message: 'OK' }>(`${this.baseApiUrl}/check-token`, undefined, config);
   }
 
   validateConfirmationToken(token: string, config?: AxiosRequestConfig) {
-    return this.apiInstance.get<{
+    return this.apiInstance.post<{
       message: 'EMAIL_VERIFIED';
-    }>(`${this.baseApiUrl}/confirmation-email/${token}`, config);
+    }>(`${this.baseApiUrl}/confirmation-email/${token}`, undefined, config);
   }
 }
 

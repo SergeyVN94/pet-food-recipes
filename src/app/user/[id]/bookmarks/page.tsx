@@ -19,7 +19,16 @@ const RecipeCardWrapper = ({ recipeId, ingredientsMap }: { recipeId: RecipeEntit
   return isFetching ? (
     <div className="skeleton h-32" />
   ) : (
-    recipe && <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} key={recipe.id} isShowBookmark={false} isShowPublishedStatus />
+    recipe && (
+      <RecipeCard
+        recipe={recipe}
+        ingredientsMap={ingredientsMap}
+        key={recipe.id}
+        isShowBookmark={false}
+        isShowPublishedStatus
+        className="w-full"
+      />
+    )
   );
 };
 
