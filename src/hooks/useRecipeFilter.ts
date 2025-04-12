@@ -46,7 +46,7 @@ const useRecipeFilter = () => {
     }
 
     return filter;
-  }, [search, includesIngredients, excludesIngredients, isDeleted]);
+  }, [search, includesIngredients, excludesIngredients, isDeleted, isPublished]);
 
   return filter;
 };

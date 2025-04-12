@@ -26,7 +26,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
       console.error(selfUserError);
       notFound();
     }
-  }, [selfUserError, selfUserError]);
+  }, [selfUserError]);
 
   React.useLayoutEffect(() => {
     if (selfUser && selfUser.id !== id && !isSelfUserFetching) {

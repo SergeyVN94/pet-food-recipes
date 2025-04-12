@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Textarea, TextareaControlled } from '.';
+import { Textarea, TextareaUncontrolled } from '.';
 
 const meta: Meta<typeof Textarea> = {
   component: Textarea,
@@ -54,7 +54,7 @@ export const Uncontrolled: Story = {
     return (
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(console.log)}>
-          <TextareaControlled {...props} name="test" />
+          <TextareaUncontrolled {...props} name="test" />
         </form>
       </FormProvider>
     );

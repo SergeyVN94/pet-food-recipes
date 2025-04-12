@@ -51,7 +51,7 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
       includesIngredients: includesIngredients?.reduce((acc, val) => ({ ...acc, [val]: true }), {}) ?? {},
       excludesIngredients: excludesIngredients?.reduce((acc, val) => ({ ...acc, [val]: true }), {}) ?? {},
     }),
-    [includesIngredients, excludesIngredients, isDeleted],
+    [includesIngredients, excludesIngredients, isDeleted, isPublished],
   );
 
   const methods = useForm<FormFields>({

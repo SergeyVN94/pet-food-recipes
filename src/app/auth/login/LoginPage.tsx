@@ -110,7 +110,7 @@ const LoginPage = () => {
       {error && axios.isAxiosError(error) && error.response?.data?.message === 'EMAIL_NOT_VERIFIED' && (
         <div className="flex flex-col mt-4 gap-2">
           <p className="label-l text-error text-pretty">
-            Вы не подтвердили почту. Если вы не получили письмо, нажмите на кнопку "Отправить повторно".
+            Вы не подтвердили почту. Если вы не получили письмо, нажмите на кнопку &quot;Отправить повторно&quot;.
           </p>
           <SendEmailButton email={methods.getValues().email} />
         </div>

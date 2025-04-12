@@ -41,5 +41,6 @@ export const searchParamsToFormFields = ({
     includesIngredients,
     excludesIngredients,
     isDeleted: params.get('isDeleted') === 'true',
+    isPublished: params.get('isPublished') === 'true',
   };
 };

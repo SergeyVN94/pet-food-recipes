@@ -62,7 +62,7 @@ const ModalRoot = ({ children, trigger, className, size, ...other }: ModalRootPr
   </Dialog.Root>
 );
 
-export default {
+const Modal = {
   Root: ModalRoot,
   Title: ModalTitle,
   Text: ModalText,
@@ -70,3 +70,5 @@ export default {
   Action: ModalAction,
   ActionClose: ModalActionClose,
 };
+
+export default Modal;
