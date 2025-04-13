@@ -16,7 +16,7 @@ type Page500Props = {
 };
 
 const Page500 = ({ error, reset }: Page500Props) => {
-  const isForbidden = React.useMemo(() => error?.message?.includes('Request failed with status code 401'), [error]);
+  const isForbidden = error?.message?.includes('Request failed with status code 401');
 
   React.useEffect(() => {
     console.error(error);

@@ -16,12 +16,14 @@ import {
 import { Avatar, Menu } from '@/components/ui';
 import { useStore } from '@/hooks';
 import { UserDto } from '@/types';
+import { cn } from '@/utils';
 
 type UserControlsProps = {
   user: UserDto;
+  className?: string;
 };
 
-const UserControls = observer(({ user }: UserControlsProps) => {
+const UserControls = observer(({ user, className }: UserControlsProps) => {
   const navigate = useRouter();
   const store = useStore();
   const isAdmin = user?.role === 'ADMIN';
@@ -76,9 +78,16 @@ const UserControls = observer(({ user }: UserControlsProps) => {
     });
   }
 
+  const trigger = (
+    <div className={cn('flex items-center gap-1', className)}>
+      <Avatar user={user} className="cursor-pointer" />
+      <span className="title-m">{user.userName}</span>
+    </div>
+  );
+
   return (
     <Menu
-      trigger={<Avatar user={user} className="cursor-pointer" />}
+      trigger={trigger}
       contentProps={{
         side: 'bottom',
         align: 'end',

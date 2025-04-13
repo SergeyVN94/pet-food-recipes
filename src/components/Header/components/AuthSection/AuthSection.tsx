@@ -11,7 +11,7 @@ const AuthSection = () => {
   const { data: user } = useUser();
 
   return user ? (
-    <UserControls user={user} />
+    <UserControls user={user} className="mr-2" />
   ) : (
     <>
       <ButtonLink href="/auth/login" variant="outline">
