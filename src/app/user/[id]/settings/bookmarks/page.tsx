@@ -7,9 +7,9 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { IconClose, IconModeEdit } from '@/assets/icons';
-import { ButtonIcon } from '@/components/ui';
 import { useBookmarks, useCreateBookmark, useUpdateBookmark } from '@/hooks';
 import { BookmarkDto } from '@/types/bookmarks';
+import { ButtonIcon } from '@/ui';
 import { showToast } from '@/utils';
 
 import { BookmarkForm } from './components';

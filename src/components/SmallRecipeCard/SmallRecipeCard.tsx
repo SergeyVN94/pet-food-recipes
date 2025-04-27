@@ -4,9 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { RecipeEntity } from '@/types';
+import { Avatar } from '@/ui';
 
 import { TimeSince } from '../TimeSince';
-import { Avatar } from '../ui';
 
 type SmallRecipeCardProps = {
   recipe: RecipeEntity;

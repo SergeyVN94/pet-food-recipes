@@ -3,8 +3,8 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 
 import { IconAdd } from '@/assets/icons';
+import { ButtonLink } from '@/ui';
 
-import { ButtonLink } from '../ui';
 import { AuthSection } from './components';
 
 const Header = () => (

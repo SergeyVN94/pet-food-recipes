@@ -4,8 +4,8 @@ import React, { Suspense } from 'react';
 
 import { notFound, useParams, usePathname, useRouter } from 'next/navigation';
 
-import { Tabs } from '@/components/ui';
 import { useUser } from '@/hooks';
+import { Tabs } from '@/ui';
 
 type NavMenuProps = {
   className?: string;

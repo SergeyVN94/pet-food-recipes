@@ -1,8 +1,8 @@
 import { UseFormReturn, useFieldArray } from 'react-hook-form';
 
 import { IconAdd, IconArrowDropDown, IconArrowDropUp, IconDelete } from '@/assets/icons';
-import { Button, TextareaUncontrolled } from '@/components/ui';
-import { ButtonIcon } from '@/components/ui/ButtonIcon';
+import { Button, TextareaUncontrolled } from '@/ui';
+import { ButtonIcon } from '@/ui/ButtonIcon';
 
 import { FormFields } from '../RecipeForm.types';
 

@@ -5,7 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 
-import { Button } from '../ui';
+import { Button } from '@/ui';
 
 const AskCookie = () => {
   const isConfirmed = typeof window !== 'undefined' && localStorage.getItem('cookie-confirmation') === 'true';

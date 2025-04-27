@@ -7,10 +7,10 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 import { IconDelete, IconFileDownload, IconModeEdit } from '@/assets/icons';
-import { Button, ButtonIcon } from '@/components/ui';
 import { useDeleteRecipe, useUser } from '@/hooks';
 import usePublishRecipe from '@/hooks/usePublishRecipe';
 import { RecipeEntity, UserRoles } from '@/types';
+import { Button, ButtonIcon } from '@/ui';
 import { cn, showToast } from '@/utils';
 
 type RecipeControlsProps = {

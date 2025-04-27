@@ -3,8 +3,8 @@ import React from 'react';
 import { UseFormReturn, useFieldArray } from 'react-hook-form';
 
 import { IconAdd } from '@/assets/icons';
-import { Button, SelectItem } from '@/components/ui';
 import { AmountTypeDto, IngredientDto } from '@/types';
+import { Button, SelectItem } from '@/ui';
 
 import { FormFields } from '../RecipeForm.types';
 import IngredientsRow from './IngredientsRow';

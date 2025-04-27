@@ -5,10 +5,10 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { notFound, usePathname, useRouter } from 'next/navigation';
 
-import { Tabs } from '@/components/ui';
 import { useUser } from '@/hooks';
 import { PageLayout } from '@/layouts';
 import { UserRoles } from '@/types';
+import { Tabs } from '@/ui';
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { data: user, isFetching: isUserFetching } = useUser();

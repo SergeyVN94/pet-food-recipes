@@ -11,8 +11,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { create, enforce, test } from 'vest';
 
 import { IconEyeClosed, IconEyeOpen } from '@/assets/icons';
-import { Button, InputUncontrolled } from '@/components/ui';
 import { useLogin, useSendConfirmationEmail, useStore } from '@/hooks';
+import { Button, InputUncontrolled } from '@/ui';
 
 import { LoginFormFields } from '../Auth.types';
 import { SendEmailButton } from './components';

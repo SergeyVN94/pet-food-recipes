@@ -5,9 +5,9 @@ import { notFound, redirect } from 'next/navigation';
 
 import { getAmountTypes, getIngredients } from '@/cachedFetchMethods';
 import { RecipeBookmarkSelect, TimeSince } from '@/components';
-import { Avatar, Table, TableColumn } from '@/components/ui';
 import { PageLayout } from '@/layouts';
 import { recipesService } from '@/services';
+import { Avatar, Table, TableColumn } from '@/ui';
 import { arrayToDictionary, getTimeSince } from '@/utils';
 
 import { RecipeControls } from './components';

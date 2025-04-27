@@ -3,7 +3,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { IconAdd, IconSave } from '@/assets/icons';
-import { ButtonIcon, InputUncontrolled } from '@/components/ui';
+import { ButtonIcon, InputUncontrolled } from '@/ui';
 
 type BookmarkFormProps = {
   value?: string;

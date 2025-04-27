@@ -6,9 +6,8 @@ import dynamic from 'next/dynamic';
 
 import { useBookmarks, useBookmarksRecipes } from '@/hooks';
 import { RecipeEntity } from '@/types';
+import { Chip } from '@/ui';
 import { cn } from '@/utils';
-
-import { Chip } from '../ui';
 
 type RecipeCardBookmarkProps = {
   recipeId: RecipeEntity['id'];

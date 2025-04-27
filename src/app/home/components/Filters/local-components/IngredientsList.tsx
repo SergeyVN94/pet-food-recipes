@@ -6,8 +6,8 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 
 import { IconAdd } from '@/assets/icons';
 import { SearchBar } from '@/components';
-import { ButtonIcon } from '@/components/ui';
 import { IngredientDto } from '@/types';
+import { ButtonIcon } from '@/ui';
 
 import { FormFields } from '../Filters.types';
 import SelectedIngredients from './SelectedIngredients';

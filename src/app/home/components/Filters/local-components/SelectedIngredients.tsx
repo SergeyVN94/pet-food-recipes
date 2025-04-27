@@ -1,8 +1,8 @@
 'use client';
 
 import { IconDelete } from '@/assets/icons';
-import { ButtonIcon } from '@/components/ui';
 import { IngredientDto } from '@/types';
+import { ButtonIcon } from '@/ui';
 
 import { FormFields } from '../Filters.types';
 

@@ -6,9 +6,9 @@ import dayjs from 'dayjs';
 import { notFound, useParams } from 'next/navigation';
 
 import { BanUserButton, BanUserDeleteButton } from '@/components';
-import { Avatar } from '@/components/ui';
 import { userRolesNamesMap } from '@/constants';
 import { useUser } from '@/hooks';
+import { Avatar } from '@/ui';
 import { cn, getTimeSince } from '@/utils';
 
 const ProfileHeadSkeleton = () => <div className="skeleton w-full h-[12.5rem] cursor-progress" />;

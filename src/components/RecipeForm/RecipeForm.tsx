@@ -6,9 +6,9 @@ import { vestResolver } from '@hookform/resolvers/vest';
 import { useRouter } from 'next/navigation';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
-import { Button, InputUncontrolled, TextareaUncontrolled } from '@/components/ui';
 import { useAmountTypes, useIngredients } from '@/hooks';
 import { RecipeCreateDto, RecipeEntity, RecipeIngredientCreateDto } from '@/types';
+import { Button, InputUncontrolled, TextareaUncontrolled } from '@/ui';
 import { arrayToDictionary, showToast } from '@/utils';
 
 import { FormFields } from './RecipeForm.types';

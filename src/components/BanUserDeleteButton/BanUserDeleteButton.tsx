@@ -4,9 +4,8 @@ import React from 'react';
 
 import { useDeleteBan, useUser, useUserRoles } from '@/hooks';
 import { UserDto } from '@/types';
+import { Button } from '@/ui';
 import { showToast } from '@/utils';
-
-import { Button } from '../ui';
 
 type BanUserDeleteButtonProps = {
   userId: UserDto['id'];

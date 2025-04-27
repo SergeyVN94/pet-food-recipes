@@ -12,7 +12,7 @@ type TimeSinceProps = {
 };
 
 const TimeSince = ({ startTime, icon = <IconSchedule className="size-6" />, className }: TimeSinceProps) => {
-  const [formattedTime, setFormattedTime] = React.useState(() => getTimeSince(startTime));
+  const [formattedTime, setFormattedTime] = React.useState(() => getTimeSince(startTime) ?? 'только что');
 
   React.useEffect(() => {
     const interval = setInterval(() => {

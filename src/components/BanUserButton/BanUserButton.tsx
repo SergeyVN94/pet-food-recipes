@@ -5,9 +5,9 @@ import React from 'react';
 import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Button, Modal, SelectItem, SelectUncontrolled, TextareaUncontrolled } from '@/components/ui';
 import { useBan, useUser, useUserRoles } from '@/hooks';
 import { BanCreateDto, UserDto, UserRoles } from '@/types';
+import { Button, Modal, SelectItem, SelectUncontrolled, TextareaUncontrolled } from '@/ui';
 import { showToast } from '@/utils';
 
 const selectItems: SelectItem[] = [

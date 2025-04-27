@@ -1,5 +1,5 @@
 import { IconArrowBack } from '@/assets/icons';
-import { ButtonLink } from '@/components/ui';
+import { ButtonLink } from '@/ui';
 
 export const metadata = {
   title: '404 - Страница не найдена',

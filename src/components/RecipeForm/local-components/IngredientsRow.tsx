@@ -3,9 +3,9 @@ import React from 'react';
 import { FieldArrayWithId, useFormContext, useWatch } from 'react-hook-form';
 
 import { IconDelete } from '@/assets/icons';
-import { InputUncontrolled, SelectItem, SelectUncontrolled } from '@/components/ui';
-import { ButtonIcon } from '@/components/ui/ButtonIcon';
 import { IngredientDto } from '@/types';
+import { InputUncontrolled, SelectItem, SelectUncontrolled } from '@/ui';
+import { ButtonIcon } from '@/ui/ButtonIcon';
 
 import { FormFields } from '../RecipeForm.types';
 

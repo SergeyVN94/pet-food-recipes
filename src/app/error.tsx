@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { IconArrowBack } from '@/assets/icons';
-import { Button, ButtonLink } from '@/components/ui';
+import { Button, ButtonLink } from '@/ui';
 
 export const metadata = {
   title: '500 - Server Error',

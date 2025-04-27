@@ -7,8 +7,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useQueryState } from 'nuqs';
 
 import { IconSearch } from '@/assets/icons';
-
-import { Input } from '../ui';
+import { Input } from '@/ui';
 
 type SearchProps = {
   onChange?: (value: string) => void;

@@ -10,8 +10,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { create, enforce, test } from 'vest';
 
 import { IconEyeClosed, IconEyeOpen } from '@/assets/icons';
-import { Button, InputUncontrolled } from '@/components/ui';
 import { useCreateUser, useSendConfirmationEmail } from '@/hooks';
+import { Button, InputUncontrolled } from '@/ui';
 import { showToast } from '@/utils';
 
 import { RegisterFormFields } from '../Auth.types';

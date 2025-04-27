@@ -4,8 +4,8 @@ import React from 'react';
 
 import axios from 'axios';
 
-import { Button } from '@/components/ui';
 import { useSendConfirmationEmail } from '@/hooks';
+import { Button } from '@/ui';
 import { showToast } from '@/utils';
 
 const LOCK_TIME = 1000 * 60 * 60;

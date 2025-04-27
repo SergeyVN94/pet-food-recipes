@@ -6,9 +6,8 @@ import { observer } from 'mobx-react-lite';
 
 import { useBookmarks, useBookmarksRecipes, useRemoveRecipeFromBookmark, useStore, userAddRecipeToBookmark } from '@/hooks';
 import { RecipeEntity } from '@/types';
+import { Select, SelectItem } from '@/ui';
 import { showToast } from '@/utils';
-
-import { Select, SelectItem } from '../ui';
 
 type RecipeBookmarkSelectProps = {
   recipeId: RecipeEntity['id'];

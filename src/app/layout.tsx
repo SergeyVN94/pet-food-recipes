@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 
+import { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import Head from 'next/head';
 import 'normalize.css';
@@ -15,9 +16,13 @@ const roboto = Roboto({
   subsets: ['latin'],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Рецепты',
   description: 'Сайт с разными рецептами',
+  openGraph: {
+    title: 'Рецепты',
+    description: 'Сайт с разными рецептами',
+  },
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (

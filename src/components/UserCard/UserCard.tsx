@@ -9,9 +9,8 @@ import { BanUserButton, BanUserDeleteButton } from '@/components';
 import { userRolesNamesMap } from '@/constants';
 import { useUser, useUserRoles } from '@/hooks';
 import { UserDto } from '@/types';
+import { Avatar } from '@/ui';
 import { cn } from '@/utils';
-
-import { Avatar } from '../ui';
 
 type ProfileItemProps = { label: string; value: string; className?: string; labelClassName?: string };
 

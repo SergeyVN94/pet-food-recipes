@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { ButtonLink } from '@/components/ui';
 import { useUser } from '@/hooks';
+import { ButtonLink } from '@/ui';
 
 import { UserControls } from '../UserControls';
 

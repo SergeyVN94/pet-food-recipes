@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { IconAdd, IconArrowBack } from '@/assets/icons';
-import { Button } from '@/components/ui';
+import { Button } from '@/ui';
 
 type FiltersSectionProps = {
   title: string;

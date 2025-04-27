@@ -3,9 +3,9 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Chip } from '@/components/ui';
-import { Avatar } from '@/components/ui/Avatar';
 import { IngredientDto, RecipeEntity } from '@/types';
+import { Chip } from '@/ui';
+import { Avatar } from '@/ui/Avatar';
 import { cn } from '@/utils';
 
 import { RecipeCardBookmark } from '../RecipeCardBookmark';

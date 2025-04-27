@@ -5,9 +5,9 @@ import React from 'react';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Button, CheckboxUncontrolled } from '@/components/ui';
 import { useAmountTypes, useIngredients, useQueryIngredients, useUser, useUserRoles } from '@/hooks';
 import { AmountTypeDto, IngredientDto } from '@/types';
+import { Button, CheckboxUncontrolled } from '@/ui';
 
 import { FormFields } from './Filters.types';
 import IngredientsFilter from './local-components/IngredientsFilter';

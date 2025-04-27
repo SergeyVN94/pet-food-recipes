@@ -6,9 +6,9 @@ import { useParams } from 'next/navigation';
 
 import { IconAdd } from '@/assets/icons';
 import { RecipeCard } from '@/components';
-import { ButtonLink } from '@/components/ui';
 import { useIngredients, useRecipes, useUser } from '@/hooks';
 import { RecipeFilter } from '@/types';
+import { ButtonLink } from '@/ui';
 
 const EmptyRecipesListPlaceholder = () => (
   <li>

@@ -13,9 +13,9 @@ import {
   IconPersonOutline,
   IconSettings,
 } from '@/assets/icons';
-import { Avatar, Menu } from '@/components/ui';
 import { useStore } from '@/hooks';
 import { UserDto } from '@/types';
+import { Avatar, Menu } from '@/ui';
 import { cn } from '@/utils';
 
 type UserControlsProps = {
