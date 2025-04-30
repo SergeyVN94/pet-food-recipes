@@ -13,7 +13,10 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.ts?(x)'],
-      rules: { 'prettier/prettier': ['warn', prettierOptions] },
+      rules: {
+        'prettier/prettier': ['warn', prettierOptions],
+        'react-hooks/exhaustive-deps': ['off'],
+      },
     },
     {
       files: ['*.json'],
