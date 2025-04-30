@@ -34,7 +34,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [selfUser, id, isSelfUserFetching]);
 
-  return selfUser && !isSelfUserFetching ? (
+  return selfUser ? (
     <section className="flex flex-nowrap gap-4">
       <Menu
         items={menuItems}

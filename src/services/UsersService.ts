@@ -15,6 +15,17 @@ class UsersService {
   findUsers(filters?: SearchDto, config?: AxiosRequestConfig) {
     return this.apiInstance.post<SearchResponseWithPagination<UserDto>>(`${this.baseApiUrl}/search`, filters, config);
   }
+
+  updateAvatar(avatar: File, config?: AxiosRequestConfig) {
+    const body = new FormData();
+    body.set('avatar', avatar);
+
+    return this.apiInstance.put<string>(`${this.baseApiUrl}/avatar`, body, config);
+  }
+
+  deleteAvatar(userId?: UserDto['id'], config?: AxiosRequestConfig) {
+    return this.apiInstance.delete(`${this.baseApiUrl}/avatar/${userId ?? ''}`, config);
+  }
 }
 
 export default UsersService;

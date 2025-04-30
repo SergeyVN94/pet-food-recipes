@@ -45,8 +45,8 @@ const ProfileHead = () => {
   return !user ? (
     <ProfileHeadSkeleton />
   ) : (
-    <div className="flex flex-col gap-4 elevation-3 p-4">
-      <Avatar user={user} size={144} />
+    <div className="flex gap-4 elevation-3 p-4">
+      <Avatar user={user} size={256} priority />
       <div>
         <p className="title-l">{user.userName}</p>
         <ProfileItem label="Роль" value={userRolesNamesMap[user.role]} />

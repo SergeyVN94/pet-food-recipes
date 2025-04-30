@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npx next build",
     "start": "npx next start",
-    "start:dev": "npx next dev",
+    "dev": "npx next dev",
     "lint": "npx next lint",
     "storybook": "npx storybook dev -p 6006",
     "build-storybook": "npx storybook build",
