@@ -15,6 +15,7 @@ type AvatarProps = Omit<React.ComponentProps<typeof Image>, 'src' | 'alt'> & {
 
 const Avatar = ({ className, user, size = 40, ...other }: AvatarProps) => (
   <Image
+    unoptimized
     className={cn('rounded-xl block object-cover', className)}
     style={{ width: size, height: size, maxWidth: size, maxHeight: size }}
     width={size}
