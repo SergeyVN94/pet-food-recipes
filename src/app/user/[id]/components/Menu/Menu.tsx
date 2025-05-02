@@ -18,7 +18,7 @@ const Menu = ({ items, onClick, selectedId, className }: MenuProps) => (
         key={item.id}
       >
         <button
-          className="block py-2 px-4 max-w-full outline-none border-none body-l cursor-pointer text-left line-clamp-2 text-on-surface w-full truncate"
+          className="block py-2 px-4 max-w-full outline-hidden border-none body-l cursor-pointer text-left line-clamp-2 text-on-surface w-full truncate"
           onClick={() => onClick(item.id)}
         >
           {item.title}

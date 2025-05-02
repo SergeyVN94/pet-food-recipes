@@ -60,9 +60,9 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           type="checkbox"
           onChange={handleChange}
           ref={mergeRefs([localRef, ref])}
-          className="invisible absolute w-[1px] h-[1px] -top-2 outline-none opacity-0 peer"
+          className="invisible absolute w-[1px] h-[1px] -top-2 outline-hidden opacity-0 peer"
         />
-        <span className="p-2 rounded-full text-primary transition-all hover:bg-primary/[0.08] peer-focus:bg-primary/[0.08] peer-disabled:cursor-not-allowed peer-disabled:text-on-surface peer-disabled:opacity-[0.12] peer-disabled:hover:bg-transparent">
+        <span className="p-2 rounded-full text-primary transition-all hover:bg-primary/[0.08] peer-focus:bg-primary/[0.08] peer-disabled:cursor-not-allowed peer-disabled:text-on-surface peer-disabled:opacity-[0.12] hover:peer-disabled:bg-transparent">
           {value === true && <IconCheckBox className="w-6 h-6" />}
           {value === false && <IconCheckBoxOutlineBlank className="w-6 h-6" />}
           {value === null && <IconIndeterminateCheckboxFilled className="w-6 h-6" />}

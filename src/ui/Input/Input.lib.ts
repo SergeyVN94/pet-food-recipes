@@ -1,12 +1,12 @@
 import { type VariantProps, cva } from 'class-variance-authority';
 
-export const wrapVariants = cva('group outline-none flex flex-nowrap items-start transition-all', {
+export const wrapVariants = cva('group outline-hidden flex flex-nowrap items-start transition-all', {
   variants: {
     variant: {
       filled:
         'cursor-text py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface hover:bg-on-surface/10 focus-within:after:h-0.5 focus-within:after:bg-primary data-[icon-left="true"]:pl-1',
       outline:
-        'py-1 pl-4 outline outline-1 -outline-offset-1 outline-outline rounded min-h-[3.5rem] hover:outline-on-surface focus-within:outline-primary hover:focus-within:outline-primary focus-within:outline-[3px] focus-within:-outline-offset-[3px] data-[icon-left="true"]:pl-0',
+        'py-1 pl-4 outline outline-solid -outline-offset-1 outline-outline-variant rounded-sm min-h-[3.5rem] hover:outline-on-surface focus-within:outline-primary hover:focus-within:outline-primary focus-within:outline-[3px] focus-within:-outline-offset-[3px] data-[icon-left="true"]:pl-0',
     },
     withError: {
       true: '',
@@ -25,7 +25,7 @@ export const wrapVariants = cva('group outline-none flex flex-nowrap items-start
   },
 });
 
-export const labelVariants = cva('text-on-surface-var !body-l absolute transition-all peer-focus:text-primary', {
+export const labelVariants = cva('text-on-surface-var body-l! absolute transition-all peer-focus:text-primary', {
   variants: {
     variant: {
       filled:
@@ -40,7 +40,7 @@ export const labelVariants = cva('text-on-surface-var !body-l absolute transitio
 
 export const inputVariants = cva(
   // ! autofill:shadow-[inset_0_0_0px_1000px_rgb(230,224,233)] - fix autofill background color
-  'peer w-full outline-none bg-transparent body-l text-on-surface pr-4 autofill:shadow-[inset_0_0_0px_1000px_rgb(230,224,233)]',
+  'peer w-full outline-hidden bg-transparent body-l text-on-surface pr-4 autofill:shadow-[inset_0_0_0px_1000px_rgb(230,224,233)]',
   {
     variants: {
       variant: {

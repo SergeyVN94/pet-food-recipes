@@ -1,0 +1,184 @@
+@theme {
+  /* Палитра */
+  /* Basic colors */
+  --white: rgb(255, 255, 255);
+  --black: rgb(0, 0, 0);
+
+  /* Primary colors */
+  --primary-0: rgb(0, 0, 0);
+  --primary-10: rgb(34, 0, 93);
+  --primary-20: rgb(56, 30, 114);
+  --primary-30: rgb(79, 55, 138);
+  --primary-40: rgb(103, 80, 164);
+  --primary-50: rgb(128, 105, 191);
+  --primary-60: rgb(154, 131, 219);
+  --primary-70: rgb(182, 157, 247);
+  --primary-80: rgb(207, 188, 255);
+  --primary-90: rgb(233, 221, 255);
+  --primary-95: rgb(246, 238, 255);
+  --primary-99: rgb(255, 251, 255);
+  --primary-100: rgb(255, 255, 255);
+
+  /* Secondary colors */
+  --secondary-0: rgb(0, 0, 0);
+  --secondary-10: rgb(30, 25, 43);
+  --secondary-20: rgb(51, 45, 65);
+  --secondary-30: rgb(74, 68, 89);
+  --secondary-40: rgb(98, 91, 113);
+  --secondary-50: rgb(123, 115, 139);
+  --secondary-60: rgb(149, 141, 165);
+  --secondary-70: rgb(176, 167, 192);
+  --secondary-80: rgb(204, 194, 220);
+  --secondary-90: rgb(232, 222, 249);
+  --secondary-95: rgb(246, 238, 255);
+  --secondary-99: rgb(255, 251, 255);
+  --secondary-100: rgb(255, 255, 255);
+
+  /* Tertiary colors */
+  --tertiary-0: rgb(0, 0, 0);
+  --tertiary-10: rgb(49, 16, 29);
+  --tertiary-20: rgb(74, 37, 50);
+  --tertiary-30: rgb(99, 59, 72);
+  --tertiary-40: rgb(126, 82, 96);
+  --tertiary-50: rgb(153, 106, 120);
+  --tertiary-60: rgb(181, 131, 146);
+  --tertiary-70: rgb(210, 157, 172);
+  --tertiary-80: rgb(239, 184, 200);
+  --tertiary-90: rgb(255, 217, 227);
+  --tertiary-95: rgb(255, 236, 240);
+  --tertiary-99: rgb(255, 251, 255);
+  --tertiary-100: rgb(255, 255, 255);
+
+  /* Error colors */
+  --error-0: rgb(0, 0, 0);
+  --error-10: rgb(65, 0, 4);
+  --error-20: rgb(101, 9, 14);
+  --error-30: rgb(133, 34, 33);
+  --error-40: rgb(165, 58, 54);
+  --error-50: rgb(197, 82, 76);
+  --error-60: rgb(230, 106, 99);
+  --error-70: rgb(255, 137, 129);
+  --error-80: rgb(255, 179, 173);
+  --error-90: rgb(255, 218, 215);
+  --error-95: rgb(255, 237, 235);
+  --error-99: rgb(255, 251, 255);
+  --error-100: rgb(255, 255, 255);
+
+  /* Neutral colors */
+  --neutral-0: rgb(0, 0, 0);
+  --neutral-10: rgb(28, 27, 28);
+  --neutral-20: rgb(49, 48, 48);
+  --neutral-30: rgb(72, 70, 70);
+  --neutral-40: rgb(96, 94, 94);
+  --neutral-50: rgb(121, 118, 118);
+  --neutral-60: rgb(147, 144, 144);
+  --neutral-70: rgb(173, 170, 170);
+  --neutral-80: rgb(201, 198, 197);
+  --neutral-90: rgb(229, 225, 225);
+  --neutral-91: rgb(232, 228, 228);
+  --neutral-92: rgb(235, 231, 230);
+  --neutral-93: rgb(238, 234, 233);
+  --neutral-94: rgb(241, 237, 236);
+  --neutral-95: rgb(244, 240, 239);
+  --neutral-96: rgb(247, 243, 242);
+  --neutral-97: rgb(250, 246, 245);
+  --neutral-98: rgb(253, 249, 248);
+  --neutral-99: rgb(255, 251, 255);
+  --neutral-100: rgb(255, 255, 255);
+
+  /* Neutral variant colors */
+  --neutral-variant-0: rgb(0, 0, 0);
+  --neutral-variant-10: rgb(28, 27, 28);
+  --neutral-variant-20: rgb(49, 48, 49);
+  --neutral-variant-30: rgb(72, 70, 71);
+  --neutral-variant-40: rgb(96, 94, 95);
+  --neutral-variant-50: rgb(121, 118, 119);
+  --neutral-variant-60: rgb(147, 144, 145);
+  --neutral-variant-70: rgb(174, 170, 171);
+  --neutral-variant-80: rgb(201, 197, 198);
+  --neutral-variant-90: rgb(230, 225, 226);
+  --neutral-variant-91: rgb(233, 228, 229);
+  --neutral-variant-92: rgb(237, 232, 233);
+  --neutral-variant-93: rgb(240, 235, 236);
+  --neutral-variant-94: rgb(242, 238, 238);
+  --neutral-variant-95: rgb(244, 240, 240);
+  --neutral-variant-96: rgb(248, 244, 244);
+  --neutral-variant-97: rgb(251, 247, 247);
+  --neutral-variant-98: rgb(253, 249, 249);
+  --neutral-variant-99: rgb(255, 251, 255);
+  --neutral-variant-100: rgb(255, 255, 255);
+  /* **************************************** */
+
+  /* Основные цвета */
+  --color-primary: var(--primary-40);
+  --color-secondary: var(--secondary-40);
+  --color-tertiary: var(--tertiary-40);
+  --color-error: var(--error-40);
+
+  /* Цвета текста на основных цветах */
+  --color-on-primary: var(--primary-100);
+  --color-on-secondary: var(--secondary-100);
+  --color-on-tertiary: var(--tertiary-100);
+  --color-on-error: var(--error-100);
+
+  /* Контейнеры и текст на них */
+  --color-primary-container: var(--primary-90);
+  --color-secondary-container: var(--secondary-90);
+  --color-tertiary-container: var(--tertiary-90);
+  --color-error-container: var(--error-90);
+  --color-on-primary-container: var(--primary-10);
+  --color-on-secondary-container: var(--secondary-10);
+  --color-on-tertiary-container: var(--tertiary-10);
+  --color-on-error-container: var(--error-10);
+
+  /* Фиксированные цвета */
+  --color-primary-fixed: var(--primary-90);
+  --color-secondary-fixed: var(--secondary-90);
+  --color-tertiary-fixed: var(--tertiary-90);
+  --color-tertiary-fixed-dim: var(--tertiary-80);
+  --color-primary-fixed-dim: var(--primary-80);
+  --color-secondary-fixed-dim: var(--secondary-80);
+
+  /* Текст на фиксированных цветах */
+  --color-on-primary-fixed: var(--primary-10);
+  --color-on-secondary-fixed: var(--secondary-10);
+  --color-on-tertiary-fixed: var(--tertiary-10);
+  --color-on-primary-fixed-variant: var(--primary-30);
+  --color-on-secondary-fixed-variant: var(--secondary-30);
+  --color-on-tertiary-fixed-variant: var(--tertiary-30);
+
+  /* Поверхности */
+  --color-surface-dim: var(--neutral-90);
+  --color-surface: var(--neutral-98);
+  --color-surface-bright: var(--neutral-99);
+
+  /* Контейнеры поверхностей */
+  --color-surf-cont-lowest: var(--neutral-100);
+  --color-surf-cont-low: var(--neutral-96);
+  --color-surf-cont: var(--neutral-95);
+  --color-surf-cont-high: var(--neutral-92);
+  --color-surf-cont-highest: var(--neutral-90);
+
+  /* Текст на поверхностях */
+  --color-on-surface: var(--neutral-10);
+  --color-on-surface-var: var(--neutral-30);
+
+  /* Границы */
+  --color-outline: var(--neutral-variant-50);
+  --color-outline-variant: var(--neutral-variant-80);
+
+  /* Инверсные цвета */
+  --color-inverse-surface: var(--neutral-20);
+  --color-inverse-on-surface: var(--neutral-95);
+  --color-inverse-primary: var(--primary-80);
+
+  /* Тени и наложения */
+  --color-scrim: var(--neutral-0);
+  --color-shadow: var(--neutral-0);
+
+  --shadow-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --shadow-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --shadow-elevation-3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  --shadow-elevation-4: 0px 2px 3px 0px rgba(0, 0, 0, 0.3), 0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+  --shadow-elevation-5: 0px 4px 4px 0px rgba(0, 0, 0, 0.3), 0px 8px 12px 6px rgba(0, 0, 0, 0.15);
+}

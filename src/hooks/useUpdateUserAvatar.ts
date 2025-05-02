@@ -1,11 +1,11 @@
 import { UseMutationOptions, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { AxiosRequestConfig } from 'axios';
 
 import { usersService } from '@/services';
 
 type MutationProps = {
   avatar: File;
-  axiosConfig?: axios.AxiosRequestConfig;
+  axiosConfig?: AxiosRequestConfig;
 };
 
 const mutationFn = async ({ avatar, axiosConfig }: MutationProps) => (await usersService.updateAvatar(avatar, axiosConfig)).data;

@@ -105,12 +105,12 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
           disabled={isPending}
         /> */}
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
-          <div className="skeleton mt-4 h-48" />
+          <div className="mt-4 skeleton h-48" />
         ) : (
-          <Ingredients methods={methods} amountTypes={amountTypes ?? []} recipeIngredients={recipeIngredients ?? []} />
+          <Ingredients amountTypes={amountTypes ?? []} recipeIngredients={recipeIngredients ?? []} />
         )}
-        <Steps methods={methods} />
-        <div className="flex flex-nowrap gap-2 mt-8">
+        <Steps />
+        <div className="mt-8 flex flex-nowrap gap-2">
           <Button disabled={isLoading}>Сохранить</Button>
           {initialRecipe && (
             <Button type="button" variant="outline" onClick={handleCancel}>

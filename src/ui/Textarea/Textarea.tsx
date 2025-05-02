@@ -113,7 +113,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         <div className={wrapVariants({ variant })} onClick={handleRootClick}>
           <label className="flex-1">
             <textarea
-              className="peer w-full outline-none bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-y-auto"
+              className="peer w-full outline-hidden bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-y-auto"
               {...other}
               rows={other.rows ?? 3}
               data-max-rows={maxRows}

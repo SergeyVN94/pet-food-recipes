@@ -52,8 +52,6 @@ const UpdateAvatar = ({ className }: UpdateAvatarProps) => {
         avatar: files[0],
         axiosConfig: {
           onUploadProgress: ev => {
-            console.log(`${ev.loaded} / ${ev.total}`);
-
             setProgress(Math.round((ev.loaded * 100) / ev.total!));
           },
         },

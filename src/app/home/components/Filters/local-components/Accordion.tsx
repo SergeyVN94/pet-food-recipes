@@ -19,7 +19,7 @@ const Accordion = ({ children, label }: AccordionProps) => {
   return (
     <div className="py-3 flex flex-col">
       <button
-        className="outline-none bg-transparent border-none w-full cursor-pointer data-[open='true']:mb-3"
+        className="outline-hidden bg-transparent border-none w-full cursor-pointer data-[open='true']:mb-3"
         tabIndex={-1}
         onClick={handleButtonClick}
         data-open={isOpen}

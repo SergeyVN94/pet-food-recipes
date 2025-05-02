@@ -6,7 +6,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/utils';
 
 const menuItemsVariants = cva(
-  'cursor-pointer py-4 px-3 hover:bg-surf-cont-highest transition-colors outline-none flex flex-nowrap items-center gap-2',
+  'cursor-pointer py-4 px-3 hover:bg-surf-cont-highest transition-colors outline-hidden flex flex-nowrap items-center gap-2',
   {
     variants: {
       itemSize: {
@@ -39,9 +39,9 @@ type MenuProps = {
 const Menu = ({ items, trigger, rootProps = {}, contentProps = {}, itemSize }: MenuProps) => {
   return (
     <DropdownMenu.Root {...rootProps}>
-      {trigger && <DropdownMenu.Trigger className="outline-none">{trigger}</DropdownMenu.Trigger>}
+      {trigger && <DropdownMenu.Trigger className="outline-hidden">{trigger}</DropdownMenu.Trigger>}
       <DropdownMenu.Portal>
-        <DropdownMenu.Content {...contentProps} className={cn('py-2 bg-surf-cont elevation-2 rounded z-20', contentProps.className)}>
+        <DropdownMenu.Content {...contentProps} className={cn('py-2 bg-surf-cont elevation-2 rounded-sm z-20', contentProps.className)}>
           {items.map(item => (
             <DropdownMenu.Item
               key={item.label}

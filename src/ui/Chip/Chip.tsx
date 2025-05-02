@@ -48,7 +48,7 @@ const Chip = ({ label, variant, className, iconLeft, onClose, tooltip, color }: 
         })}
       <p className="label-l whitespace-nowrap truncate text-inherit">{label}</p>
       {onClose && (
-        <button className="outline-none border-none bg-transparent block cursor-pointer" tabIndex={-1} onClick={onClose}>
+        <button className="outline-hidden border-none bg-transparent block cursor-pointer" tabIndex={-1} onClick={onClose}>
           <IconClose className="size-[18px]" />
         </button>
       )}

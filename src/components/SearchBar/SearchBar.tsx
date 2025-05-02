@@ -2,8 +2,7 @@
 
 import React from 'react';
 
-import debounce from 'lodash/debounce';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import debounce from 'debounce';
 import { useQueryState } from 'nuqs';
 
 import { IconSearch } from '@/assets/icons';

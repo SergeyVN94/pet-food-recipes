@@ -45,11 +45,11 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(({ className, onC
 
     const input = localRef.current;
     input?.addEventListener('focus', handleFocus);
-    input?.addEventListener('blur', handleBlur);
+    input?.addEventListener('blur-sm', handleBlur);
 
     return () => {
       input?.removeEventListener('focus', handleFocus);
-      input?.removeEventListener('blur', handleBlur);
+      input?.removeEventListener('blur-sm', handleBlur);
     };
   }, []);
 

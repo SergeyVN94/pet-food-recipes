@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UseFormReturn, useFieldArray } from 'react-hook-form';
+import { UseFormReturn, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { IconAdd } from '@/assets/icons';
 import { AmountTypeDto, IngredientDto } from '@/types';
@@ -10,12 +10,13 @@ import { FormFields } from '../RecipeForm.types';
 import IngredientsRow from './IngredientsRow';
 
 type IngredientsProps = {
-  methods: UseFormReturn<FormFields, any, undefined>;
   amountTypes: AmountTypeDto[];
   recipeIngredients: IngredientDto[];
 };
 
-const Ingredients = ({ methods, amountTypes, recipeIngredients }: IngredientsProps) => {
+const Ingredients = ({ amountTypes, recipeIngredients }: IngredientsProps) => {
+  const methods = useFormContext<FormFields>();
+
   const amountTypeItems: SelectItem[] = React.useMemo(
     () =>
       amountTypes.map(amountType => ({
@@ -66,7 +67,7 @@ const Ingredients = ({ methods, amountTypes, recipeIngredients }: IngredientsPro
         Ингредиенты <span className="text-primary">{`${fields.length}/50`}</span>
       </h4>
       <div className="mt-4">
-        <table className="border-separate border-spacing-0 w-full">
+        <table className="w-full border-separate border-spacing-0">
           <tbody>
             {fields.map((field, index) => (
               <IngredientsRow

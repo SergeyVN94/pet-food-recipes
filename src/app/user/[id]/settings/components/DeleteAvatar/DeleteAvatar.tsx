@@ -25,8 +25,6 @@ const DeleteAvatar = ({ className, userId }: DeleteAvatarProps) => {
   const { data: user } = useUser(userId);
   const hasActionAccess = selfUser?.id === userId || isAdmin || isModerator;
 
-  console.log(selfUser?.id);
-
   const handleClick = () => {
     if (isPending) {
       return;

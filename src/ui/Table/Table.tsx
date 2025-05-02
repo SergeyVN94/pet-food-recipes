@@ -25,7 +25,7 @@ const Table = <T extends TableRow>({ columns, rows, showTableHead = true }: Tabl
         <thead>
           <tr>
             {columns.map(column => (
-              <td key={column.label} className="p-2 border border-primary/50">
+              <td key={column.label} className="border border-primary/50 p-2">
                 {column.label}
               </td>
             ))}
@@ -38,11 +38,11 @@ const Table = <T extends TableRow>({ columns, rows, showTableHead = true }: Tabl
             {columns.map((column, columnIndex) => {
               const cellData =
                 typeof column.keyOrComponent === 'function'
-                  ? column.keyOrComponent({ row, index: rowIndex, rows })
+                  ? React.createElement(column.keyOrComponent, { row, index: rowIndex, rows })
                   : row[column.keyOrComponent];
 
               return (
-                <td key={row.id + columnIndex} className="p-2 border border-primary/50">
+                <td key={row.id + columnIndex} className="border border-primary/50 p-2">
                   {cellData}
                 </td>
               );

@@ -1,4 +1,6 @@
-import { UseFormReturn, useFieldArray } from 'react-hook-form';
+import React from 'react';
+
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { IconAdd, IconArrowDropDown, IconArrowDropUp, IconDelete } from '@/assets/icons';
 import { Button, TextareaUncontrolled } from '@/ui';
@@ -6,11 +8,9 @@ import { ButtonIcon } from '@/ui/ButtonIcon';
 
 import { FormFields } from '../RecipeForm.types';
 
-type StepsProps = {
-  methods: UseFormReturn<FormFields, any, undefined>;
-};
+const Steps = () => {
+  const methods = useFormContext<FormFields>();
 
-const Steps = ({ methods }: StepsProps) => {
   const { append, remove, fields, move } = useFieldArray<FormFields>({
     name: 'steps',
     control: methods.control,
@@ -41,7 +41,7 @@ const Steps = ({ methods }: StepsProps) => {
       </h4>
       <div className="mt-4">
         {fields.map((field, index) => (
-          <div key={field.id} className="mt-3 first:mt-0 flex flex-nowrap items-start">
+          <div key={field.id} className="mt-3 flex flex-nowrap items-start first:mt-0">
             <TextareaUncontrolled
               className="flex-1"
               name={`steps.${index}.content`}

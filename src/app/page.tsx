@@ -27,9 +27,9 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
   ]);
 
   return (
-    <PageLayout className="grid grid-cols-[minmax(400px,1fr),minmax(200px,300px)] gap-4">
+    <PageLayout className="grid grid-cols-[minmax(400px,1fr)_minmax(200px,300px)] gap-4">
       <section>
-        <Suspense fallback={<div className="skeleton w-full h-[3.5rem]" />}>
+        <Suspense fallback={<div className="skeleton h-[3.5rem] w-full" />}>
           <SearchBar delay={350} placeholder="Введите запрос" isClearable />
         </Suspense>
         <Suspense fallback={<ActualRecipesListSkeleton />}>
@@ -37,12 +37,12 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
         </Suspense>
       </section>
       <aside className="flex flex-col gap-3">
-        <Suspense fallback={<div className="skeleton w-full h-full" />}>
+        <Suspense fallback={<div className="skeleton h-full w-full" />}>
           <Filters initialIngredients={ingredients} initialAmountTypes={amountTypes} />
         </Suspense>
-        <div className="card-outlined sticky top-4">
-          <h4 className="font-semibold mb-2">Контакты</h4>
-          <a type="email" href="mailto:pet-food-recipes@yandex.ru" className="text-primary font-semibold body-l">
+        <div className="sticky top-4 card-outlined">
+          <h4 className="mb-2 font-semibold">Контакты</h4>
+          <a type="email" href="mailto:pet-food-recipes@yandex.ru" className="body-l font-semibold text-primary">
             pet-food-recipes@yandex.ru
           </a>
         </div>

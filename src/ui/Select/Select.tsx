@@ -91,7 +91,7 @@ const Select = ({
     <SelectPrimitives.Root onValueChange={onChange} onOpenChange={setIsOpen} open={isOpen} name={name} value={value ?? undefined}>
       <SelectPrimitives.Trigger
         className={cn(
-          'outline-none w-full cursor-pointer py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface  hover:bg-on-surface/10 focus:after:h-0.5 focus:after:bg-primary min-w-[10rem]',
+          'outline-hidden w-full cursor-pointer py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface  hover:bg-on-surface/10 focus:after:h-0.5 focus:after:bg-primary min-w-[10rem]',
           className,
         )}
         aria-label={ariaLabel}
@@ -102,13 +102,13 @@ const Select = ({
         {label && (
           <span
             data-focus={isOpen || !!value?.length}
-            className='text-on-surface-var hover:text-primary !body-l whitespace-nowrap absolute top-4 left-4 group-hover:text-on-surface-var peer-focus:text-primary peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:body-s data-[focus="true"]:text-xs transition-all overflow-ellipsis'
+            className='text-on-surface-var hover:text-primary body-l whitespace-nowrap absolute top-4 left-4 group-hover:text-on-surface-var peer-focus:text-primary peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:label-s transition-all text-ellipsis'
           >
             {label}
           </span>
         )}
         <span className="flex items-center w-full">
-          <span className="body-l data-[label='true']:pt-3 whitespace-nowrap overflow-ellipsis block" data-label={Boolean(label)}>
+          <span className="body-l data-[label='true']:pt-3 whitespace-nowrap text-ellipsis block" data-label={Boolean(label)}>
             {selectedItemLabel}
           </span>
           <span className="ml-auto flex flex-nowrap items-center">
@@ -153,7 +153,7 @@ const Select = ({
                   >
                     <SelectPrimitives.Item
                       key={filteredItems[virtualItem.index].id}
-                      className="px-3 py-4 w-full text-left hover:bg-surf-cont-highest transition-all body-l max-w-xs text-ellipsis select-none cursor-pointer focus:bg-surf-cont-high outline-none"
+                      className="px-3 py-4 w-full text-left hover:bg-surf-cont-highest transition-all body-l max-w-xs text-ellipsis select-none cursor-pointer focus:bg-surf-cont-high outline-hidden"
                       value={filteredItems[virtualItem.index].id}
                     >
                       <SelectPrimitives.ItemText>{filteredItems[virtualItem.index].label}</SelectPrimitives.ItemText>

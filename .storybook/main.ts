@@ -1,7 +1,5 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-import merge from 'lodash-es/merge';
-
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -10,14 +8,14 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@storybook/addon-onboarding',
     '@storybook/addon-interactions',
-    {
-      name: '@storybook/addon-styling',
-      options: {
-        postCss: {
-          implementation: require.resolve('postcss'),
-        },
-      },
-    },
+    // {
+    //   name: '@storybook/addon-styling',
+    //   options: {
+    //     postCss: {
+    //       implementation: require.resolve('postcss'),
+    //     },
+    //   },
+    // },
     '@chromatic-com/storybook',
   ],
   framework: {
@@ -32,12 +30,16 @@ const config: StorybookConfig = {
         rule?.test?.test?.('.svg'),
       ) ?? ({} as any);
 
-    const finalConfig = merge(config, {
+    const finalConfig = {
+      ...config,
       resolve: {
-        plugins: [new TsconfigPathsPlugin()],
+        ...config.resolve,
+        plugins: [new TsconfigPathsPlugin(), ...(config.resolve?.plugins ?? [])],
       },
       module: {
+        ...config.module,
         rules: [
+          ...(config.module?.rules ?? []),
           {
             ...fileLoaderRule,
             test: /\.svg$/i,
@@ -50,7 +52,7 @@ const config: StorybookConfig = {
           },
         ],
       },
-    });
+    };
 
     fileLoaderRule.exclude = /\.svg$/i;
 

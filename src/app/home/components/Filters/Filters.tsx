@@ -5,7 +5,7 @@ import React from 'react';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useAmountTypes, useIngredients, useQueryIngredients, useUser, useUserRoles } from '@/hooks';
+import { useIngredients, useQueryIngredients, useUserRoles } from '@/hooks';
 import { AmountTypeDto, IngredientDto } from '@/types';
 import { Button, CheckboxUncontrolled } from '@/ui';
 
@@ -33,16 +33,10 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
   const [isDeleted, setIsDeleted] = useQueryState('isDeleted', booleanParser);
   const [isPublished, setIsPublished] = useQueryState('isPublished', booleanParserDefaultTrue);
 
-  const { data: user } = useUser();
   const roles = useUserRoles();
   const { data: ingredients } = useIngredients({
     initialData: initialIngredients,
     staleTime: Infinity,
-  });
-  const { data: amountTypes } = useAmountTypes({
-    initialData: initialAmountTypes,
-    staleTime: Infinity,
-    enabled: false,
   });
   const values = React.useMemo(
     () => ({

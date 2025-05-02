@@ -36,7 +36,7 @@ const SmallRecipeCard = ({ recipe, isVisiblePriority = false }: SmallRecipeCardP
             <span className="title-m">{recipe.user?.userName}</span>
           </Link>
           <TimeSince startTime={recipe.createdAt} className="title-s" />
-          {!recipe.isPublished && <p className="bg-error-container text-error px-2 py-1 rounded label-l ml-2">На модерации</p>}
+          {!recipe.isPublished && <p className="bg-error-container text-error px-2 py-1 rounded-sm label-l ml-2">На модерации</p>}
         </div>
         <Link
           className="headline-m text-primary font-semibold line-clamp-2 before:content-[''] before:block before:absolute before:left-0 before:top-0 before:size-full"

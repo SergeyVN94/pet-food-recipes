@@ -3,7 +3,6 @@ import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import Head from 'next/head';
-import 'normalize.css';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import { YandexMetrika, YandexMetrikaHit } from '@/components';
