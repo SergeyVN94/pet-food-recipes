@@ -51,20 +51,14 @@ const Steps = () => {
               maxLength={3000}
             />
             <div className="flex flex-col">
-              <ButtonIcon onClick={() => handleRemoveStepBtnClick(index)} disabled={fields.length === 1}>
-                <IconDelete className="group-hover/button-icon:text-error" />
-              </ButtonIcon>
-              <ButtonIcon onClick={() => handleMoveTopBtnClick(index)} disabled={fields.length === 1 || index === 0}>
-                <IconArrowDropUp />
-              </ButtonIcon>
-              <ButtonIcon onClick={() => handleMoveBottomBtnClick(index)} disabled={fields.length === 1 || index === fields.length - 1}>
-                <IconArrowDropDown />
-              </ButtonIcon>
+              <ButtonIcon onClick={() => handleRemoveStepBtnClick(index)} disabled={fields.length === 1} icon={IconDelete} />
+              <ButtonIcon onClick={() => handleMoveTopBtnClick(index)} disabled={fields.length === 1 || index === 0} icon={IconArrowDropUp} />
+              <ButtonIcon onClick={() => handleMoveBottomBtnClick(index)} disabled={fields.length === 1 || index === fields.length - 1} icon={IconArrowDropDown} />
             </div>
           </div>
         ))}
       </div>
-      <Button className="mt-4" type="button" iconLeft={<IconAdd width={24} height={24} />} onClick={handleAddStepBtnClick}>
+      <Button className="mt-4" type="button" iconLeft={IconAdd} onClick={handleAddStepBtnClick}>
         Добавить этап
       </Button>
     </fieldset>

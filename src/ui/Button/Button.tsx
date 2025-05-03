@@ -2,6 +2,8 @@ import { ButtonHTMLAttributes, ComponentProps, ReactNode } from 'react';
 
 import { type VariantProps, cva } from 'class-variance-authority';
 import Link from 'next/link';
+import React from 'react';
+import { SVGIcon } from '@/types';
 
 const buttonVariants = cva(
   'rounded-full outline-hidden text-center transition-all font-sans text-sm font-medium leading-5 tracking-tight disabled:cursor-not-allowed disabled:opacity-40 inline-block whitespace-nowrap',
@@ -42,7 +44,7 @@ const buttonVariants = cva(
 );
 
 export type ButtonProps = ({
-  iconLeft?: ReactNode;
+  iconLeft?: SVGIcon;
 } & Omit<VariantProps<typeof buttonVariants>, 'withIcon'>) &
   ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -56,7 +58,7 @@ const Button = ({ className, variant, children, iconLeft, ...props }: ButtonProp
     {...props}
   >
     <span className="flex flex-nowrap items-center justify-center gap-2">
-      {iconLeft}
+      {iconLeft && React.createElement(iconLeft, { className: 'w-[1.125rem] text-current' })}
       {children}
     </span>
   </button>

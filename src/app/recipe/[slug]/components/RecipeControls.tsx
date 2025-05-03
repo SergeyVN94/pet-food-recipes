@@ -101,21 +101,15 @@ const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
   };
 
   const buttonPublish = !recipe.isPublished && (user?.role === UserRoles.ADMIN || user?.role === UserRoles.MODERATOR) && (
-    <ButtonIcon variant="filled" disabled={isPublishing} onClick={handlePublishButtonClick} title="Опубликовать">
-      <IconFileDownload className="text-green-600 rotate-180" />
-    </ButtonIcon>
+    <ButtonIcon variant="filled" disabled={isPublishing} onClick={handlePublishButtonClick} title="Опубликовать" icon={IconFileDownload} />
   );
 
   const buttonEdit = (user?.role === UserRoles.ADMIN || user?.id === recipe.user.id) && (
-    <ButtonIcon variant="filled" disabled={isPending} onClick={handleAditButtonClick} title="Редактировать">
-      <IconModeEdit />
-    </ButtonIcon>
+    <ButtonIcon variant="filled" disabled={isPending} onClick={handleAditButtonClick} title="Редактировать" icon={IconModeEdit} />
   );
 
   const buttonDelete = (user?.role === UserRoles.ADMIN || user?.id === recipe.user.id) && (
-    <ButtonIcon variant="filled" disabled={isPending} onClick={handleDeleteButtonClick} title="Удалить">
-      <IconDelete className="text-error" />
-    </ButtonIcon>
+    <ButtonIcon variant="filled" disabled={isPending} onClick={handleDeleteButtonClick} title="Удалить" icon={IconDelete} />
   );
 
   return (

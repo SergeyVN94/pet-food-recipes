@@ -89,9 +89,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(({ className, onC
         </p>
       )}
       {onClear && selectedFiles > 0 && (
-        <ButtonIcon variant="standard" onClick={handleClear} type="button">
-          <IconCancel />
-        </ButtonIcon>
+        <ButtonIcon variant="standard" onClick={handleClear} type="button" icon={IconCancel} />
       )}
     </label>
   );

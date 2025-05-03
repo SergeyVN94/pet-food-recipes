@@ -22,9 +22,5 @@ export const FilledButtonIcon: Story = {
       options: ['standard', 'filled'],
     },
   },
-  render: props => (
-    <ButtonIcon {...props}>
-      <IconAdd />
-    </ButtonIcon>
-  ),
+  render: props => <ButtonIcon {...props} icon={IconAdd} />,
 };

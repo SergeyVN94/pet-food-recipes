@@ -43,7 +43,7 @@ const Chip = ({ label, variant, className, iconLeft, onClose, tooltip, color }: 
   const content = (
     <div className={variants({ variant, className, withLeftIcon: !!iconLeft, withRightIcon: !!onClose, color })}>
       {iconLeft &&
-        React.cloneElement(iconLeft, {
+        React.createElement(iconLeft, {
           className: 'size-[18px] text-primary',
         })}
       <p className="label-l whitespace-nowrap truncate text-inherit">{label}</p>

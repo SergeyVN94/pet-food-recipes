@@ -18,70 +18,36 @@ type TextareaProps = {
   maxRows?: number;
   maxLength?: number;
   required?: boolean;
+  isFocus?: boolean;
   onChange?: (ev: React.ChangeEvent<HTMLTextAreaElement>, value: string) => void;
   onClear?: () => void;
 } & Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> &
   Omit<TextareaVariantProps, 'focus'>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ variant, label, subText, maxRows, onChange, onClear, className = '', ...other }, ref) => {
+  ({ variant, label, subText, maxRows, onChange, onClear, className = '', value, isFocus, ...other }, ref) => {
     const localRef = React.useRef<HTMLTextAreaElement>(null);
-    const labelRef = React.useRef<HTMLSpanElement>(null);
-    const buttonClearRef = React.useRef<HTMLButtonElement>(null);
 
     const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = ev => {
       const nextValue = ev.target.value;
 
-      if (buttonClearRef.current) {
-        buttonClearRef.current.style.display = nextValue ? '' : 'none';
-      }
-
-      if (onChange) {
+      if (onChange && !other.readOnly) {
         onChange(ev, nextValue);
       }
     };
 
-    const handleRootClick = () => {
+    const handleRootClick: React.MouseEventHandler<HTMLDivElement> = ev => {
+      if (!(ev.target instanceof HTMLDivElement) || ev.target.getAttribute('data-type') !== 'root') {
+        return;
+      }
+
       localRef.current?.focus();
     };
 
-    const handleClear = () => {
-      if (localRef.current) {
-        labelRef.current!.setAttribute('data-focus', 'false');
-        localRef.current.style.height = '';
-      }
-
-      if (onClear) {
-        onClear();
-
-        if (localRef.current) {
-          updateTextareaHeight(localRef.current);
-        }
-      }
+    const handleClearButtonClick: React.MouseEventHandler<HTMLButtonElement> = ev => {
+      ev.stopPropagation();
+      onClear?.();
     };
-
-    React.useEffect(() => {
-      const handleChange = () => {
-        if (localRef.current) {
-          labelRef.current?.setAttribute('data-focus', (!!localRef.current.value).toString());
-        }
-      };
-
-      const inputEl = localRef.current;
-      inputEl?.addEventListener('change', handleChange);
-
-      return () => {
-        inputEl?.removeEventListener('change', handleChange);
-      };
-    }, []);
-
-    React.useEffect(() => {
-      labelRef.current?.setAttribute('data-focus', (!!(other.value || other.placeholder)).toString());
-
-      if (buttonClearRef.current) {
-        buttonClearRef.current.style.display = other.value ? '' : 'none';
-      }
-    }, [other.value, other.placeholder]);
 
     React.useEffect(() => {
       const handleChange = (ev: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -111,31 +77,40 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className={className}>
         <div className={wrapVariants({ variant })} onClick={handleRootClick}>
-          <label className="flex-1">
+          <label className="flex-1 relative py-1">
             <textarea
               className="peer w-full outline-hidden bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-y-auto"
               {...other}
+              data-label={Boolean(label)}
+              data-value={Boolean(value)}
               rows={other.rows ?? 3}
               data-max-rows={maxRows}
-              value={other.value ?? ''}
+              value={value}
               onChange={handleChange}
               ref={mergeRefs([ref, localRef])}
             />
             {label && (
-              <span className={labelVariants({ variant })} ref={labelRef}>
+              <span className={labelVariants({ variant })} data-focus={Boolean(value || other.placeholder || isFocus)}>
                 {label}
                 {other.maxLength && (
                   <span className="text-on-surface-var">
-                    &nbsp;({String(other.value ?? '').length}/{other.maxLength})
+                    &nbsp;({String(value ?? '').length}/{other.maxLength})
                   </span>
                 )}
                 {other.required && <span className="text-error">&nbsp;*</span>}
               </span>
             )}
           </label>
-          <ButtonIcon onClick={handleClear} type="button" ref={buttonClearRef}>
-            <IconCancel />
-          </ButtonIcon>
+          {onClear && (
+            <ButtonIcon
+              className="data-[value='false']:hidden"
+              onClick={handleClearButtonClick}
+              type="button"
+              layoutSize={48}
+              icon={IconCancel}
+              data-value={Boolean(value)}
+            />
+          )}
         </div>
         {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
       </div>

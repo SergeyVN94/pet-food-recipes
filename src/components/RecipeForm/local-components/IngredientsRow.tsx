@@ -61,9 +61,7 @@ const IngredientsRow = ({
             label="Единицы измерения"
             items={filteredAmountTypes}
           />
-          <ButtonIcon onClick={() => onRemoveIngredient(index)} type="button" disabled={isCanDelete}>
-            <IconDelete className="group-hover/button-icon:text-error" />
-          </ButtonIcon>
+          <ButtonIcon onClick={() => onRemoveIngredient(index)} type="button" disabled={isCanDelete} icon={IconDelete} />
         </div>
       </td>
     </tr>

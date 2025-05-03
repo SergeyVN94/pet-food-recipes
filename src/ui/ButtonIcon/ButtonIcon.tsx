@@ -18,7 +18,7 @@ const buttonVariants = cva('group/button-icon outline-hidden border-none bg-tran
   },
 });
 
-const variants = cva(
+const innerWrapperVariants = cva(
   'p-2 border-transparent rounded-full transition-all block group-disabled/button-icon:cursor-not-allowed group-disabled/button-icon:opacity-40',
   {
     variants: {
@@ -36,14 +36,14 @@ const variants = cva(
 );
 
 type ButtonIconProps<T extends React.ElementType> = {
-  children: SVGIcon;
+  icon: SVGIcon;
   asTag?: T;
-} & VariantProps<typeof variants> &
+} & VariantProps<typeof innerWrapperVariants> &
   VariantProps<typeof buttonVariants> &
   React.ComponentProps<T>;
 
 const ButtonIcon = <T extends React.ElementType = 'button'>({
-  children,
+  icon,
   className,
   variant,
   layoutSize,
@@ -51,10 +51,9 @@ const ButtonIcon = <T extends React.ElementType = 'button'>({
   ...other
 }: ButtonIconProps<T>) => (
   <Component className={buttonVariants({ layoutSize, className })} {...other}>
-    <span className={variants({ variant })}>
-      {React.cloneElement(children, {
-        width: 24,
-        height: 24,
+    <span className={innerWrapperVariants({ variant })}>
+      {React.createElement(icon, {
+        className: 'size-6 text-current'
       })}
     </span>
   </Component>

@@ -18,9 +18,7 @@ const SelectedIngredients = ({ selectedIngredients, ingredientsMap, onDelete }: 
       acc.push(
         <div key={ingredientId} className="flex items-center flex-1 justify-start">
           <p className="body-l mx-2">{ingredientsMap.get(Number(ingredientId))?.name}</p>
-          <ButtonIcon onClick={() => onDelete(Number(ingredientId))} className="ml-auto">
-            <IconDelete />
-          </ButtonIcon>
+          <ButtonIcon onClick={() => onDelete(Number(ingredientId))} className="ml-auto" icon={IconDelete} />
         </div>,
       );
     }

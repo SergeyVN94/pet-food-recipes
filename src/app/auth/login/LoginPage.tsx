@@ -97,7 +97,7 @@ const LoginPage = () => {
             name="password"
             label="Пароль"
             type={showPassword ? 'text' : 'password'}
-            iconRight={showPassword ? <IconEyeOpen className="size-6" /> : <IconEyeClosed className="size-6" />}
+            iconRight={showPassword ? IconEyeOpen : IconEyeClosed}
             onRightButtonClick={handleShowPassword}
             disabled={isLoading}
             autoComplete="password"

@@ -55,7 +55,7 @@ const SearchBar = ({ delay, className, placeholder, onChange, isClearable = fals
       onChange={handleChange}
       value={value}
       placeholder={placeholder}
-      iconLeft={<IconSearch />}
+      iconLeft={IconSearch}
       onClear={handleClear}
       autoComplete="off"
       variant="outline"

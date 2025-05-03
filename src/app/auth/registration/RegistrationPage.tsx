@@ -82,7 +82,7 @@ const RegistrationPage = () => {
       navigate.push('/auth/login');
     },
   });
-  const icon = showPassword ? <IconEyeOpen className="size-6" /> : <IconEyeClosed className="size-6" />;
+  const icon = showPassword ? IconEyeOpen : IconEyeClosed;
   const passwordFieldType = showPassword ? 'text' : 'password';
 
   const handleShowPassword = () => {

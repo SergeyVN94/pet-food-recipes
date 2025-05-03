@@ -90,7 +90,7 @@ const Ingredients = ({ amountTypes, recipeIngredients }: IngredientsProps) => {
             ))}
           </tbody>
         </table>
-        <Button className="mt-1" type="button" iconLeft={<IconAdd width={24} height={24} />} onClick={handleAddIngredientBtnClick}>
+        <Button className="mt-1" type="button" iconLeft={IconAdd} onClick={handleAddIngredientBtnClick}>
           Добавить ингредиент
         </Button>
       </div>

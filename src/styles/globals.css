@@ -27,63 +27,63 @@
 }
 
 @utility display-l {
-  @apply font-sans text-6xl leading-10 font-normal text-on-surface;
+  @apply font-sans text-6xl leading-[4rem] font-normal text-on-surface tracking-tight;
 }
 
 @utility display-m {
-  @apply font-sans text-5xl leading-10 font-normal text-on-surface;
+  @apply font-sans text-5xl leading-12 font-normal text-on-surface;
 }
 
 @utility display-s {
-  @apply font-sans text-4xl leading-10 font-normal text-on-surface;
+  @apply font-sans text-4xl leading-11 font-normal text-on-surface;
 }
 
 @utility headline-l {
-  @apply font-sans text-3xl leading-10 font-normal text-on-surface;
+  @apply font-sans text-[2rem] leading-10 font-normal text-on-surface;
 }
 
 @utility headline-m {
-  @apply font-sans text-2xl leading-9 font-normal text-on-surface;
+  @apply font-sans text-[1.75rem] leading-9 font-normal text-on-surface;
 }
 
 @utility headline-s {
-  @apply font-sans text-2xl leading-loose font-normal text-on-surface;
+  @apply font-sans text-2xl leading-8 font-normal text-on-surface;
 }
 
 @utility title-l {
-  @apply font-sans text-xl leading-7 font-normal text-on-surface;
+  @apply font-sans text-[1.375rem] leading-7 font-normal text-on-surface;
 }
 
 @utility title-m {
-  @apply font-sans text-base leading-normal font-normal tracking-tight text-on-surface;
+  @apply font-sans text-base leading-6 font-normal tracking-wide text-on-surface;
 }
 
 @utility title-s {
-  @apply font-sans text-sm leading-tight font-medium tracking-tight text-on-surface;
+  @apply font-sans text-sm leading-5 font-medium tracking-wide text-on-surface;
 }
 
 @utility label-l {
-  @apply font-sans text-sm leading-5 font-medium tracking-tight text-on-surface;
+  @apply font-sans text-sm leading-5 font-medium tracking-wide text-on-surface;
 }
 
 @utility label-m {
-  @apply font-sans text-xs leading-none font-medium tracking-wide text-on-surface;
+  @apply font-sans text-xs leading-4 font-medium tracking-wide text-on-surface;
 }
 
 @utility label-s {
-  @apply font-sans text-xs leading-none font-medium tracking-wide text-on-surface;
+  @apply font-sans text-[0.6875rem] leading-4 font-medium tracking-wide text-on-surface;
 }
 
 @utility body-l {
-  @apply font-sans text-base leading-normal font-normal tracking-wide text-on-surface;
+  @apply font-sans text-base leading-6 font-normal tracking-wide text-on-surface;
 }
 
 @utility body-m {
-  @apply font-sans text-sm leading-tight font-normal tracking-tight text-on-surface;
+  @apply font-sans text-sm leading-5 font-normal tracking-wide text-on-surface;
 }
 
 @utility body-s {
-  @apply font-sans text-xs leading-none font-normal text-on-surface;
+  @apply font-sans text-xs leading-4 font-normal tracking-wide text-on-surface;
 }
 
 @utility elevation-1 {

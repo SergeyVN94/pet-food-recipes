@@ -1,6 +1,6 @@
 /// <reference types="./environment.d.ts" />
 
-export type SVGIcon = React.ReactComponentElement<React.FC<React.SVGProps<SVGSVGElement>>>;
+export type SVGIcon = React.FC<React.SVGProps<SVGSVGElement>>;
 
 export * from './search';
 export * from './recipe';

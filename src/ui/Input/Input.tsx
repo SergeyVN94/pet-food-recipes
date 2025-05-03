@@ -6,6 +6,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 
 import { IconCancel } from '@/assets/icons';
+import { SVGIcon } from '@/types';
 
 import { ButtonIcon } from '../ButtonIcon';
 import { InputVariantProps, inputVariants, labelVariants, wrapVariants } from './Input.lib';
@@ -16,8 +17,8 @@ type InputProps = {
   subText?: string;
   className?: string;
   isFocus?: boolean;
-  iconLeft?: React.JSX.Element;
-  iconRight?: React.JSX.Element;
+  iconLeft?: SVGIcon;
+  iconRight?: SVGIcon;
   autocompleteItems?: InputAutocompleteItem[];
   errorMessage?: string;
   maxLength?: number;
@@ -46,13 +47,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onAutoCompleteSelect,
       onRightButtonClick,
       errorMessage,
+      maxLength,
+      value,
       ...other
     },
     ref,
   ) => {
     const localRef = React.useRef<HTMLInputElement>(null);
-    const labelRef = React.useRef<HTMLSpanElement>(null);
-    const buttonClearRef = React.useRef<HTMLButtonElement>(null);
 
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = ev => {
       const nextValue = ev.target.value;
@@ -70,18 +71,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       localRef.current?.focus();
     };
 
-    const handleClear: React.MouseEventHandler<HTMLButtonElement> = ev => {
+    const handleClearButtonClick: React.MouseEventHandler<HTMLButtonElement> = ev => {
       ev.stopPropagation();
-
-      if (localRef.current) {
-        labelRef.current?.setAttribute('data-focus', 'false');
-        localRef.current.style.height = '';
-      }
-
-      if (buttonClearRef.current) {
-        buttonClearRef.current.classList.add('hidden');
-      }
-
       onClear?.();
     };
 
@@ -90,69 +81,38 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onRightButtonClick?.();
     };
 
-    React.useEffect(() => {
-      const handleChange = () => {
-        if (localRef.current) {
-          labelRef.current?.setAttribute('data-focus', Boolean(localRef.current.value).toString());
-        }
-
-        if (buttonClearRef.current && localRef.current) {
-          if (localRef.current.value) {
-            buttonClearRef.current.classList.remove('hidden');
-          } else {
-            buttonClearRef.current.classList.add('hidden');
-          }
-        }
-      };
-
-      const inputEl = localRef.current;
-      inputEl?.addEventListener('input', handleChange);
-
-      return () => {
-        inputEl?.removeEventListener('input', handleChange);
-      };
-    }, []);
-
-    React.useEffect(() => {
-      if (buttonClearRef.current && other.value) {
-        buttonClearRef.current?.classList.remove('hidden');
-      }
-    }, [other.value]);
-
     return (
       <div className={className}>
         <div
-          className={wrapVariants({ variant, withError: !!errorMessage })}
+          className={wrapVariants({ variant, withError: Boolean(errorMessage) })}
           onClick={handleRootClick}
-          data-icon-left={!!iconLeft}
+          data-icon-left={Boolean(iconLeft)}
           data-type="root"
         >
           {iconLeft &&
-            React.cloneElement(iconLeft, {
-              width: 48,
-              height: 48,
-              className: 'p-3',
+            React.createElement(iconLeft, {
+              className: 'p-3 size-12',
             })}
-          <label className="flex-1">
+          <label className="flex-1 relative py-1">
             <input
               className={inputVariants({ variant })}
               {...other}
-              value={other.value ?? ''}
-              data-with-label={!!label}
+              value={value ?? ''}
+              data-label={Boolean(label)}
+              data-value={Boolean(value)}
               onChange={handleChange}
               ref={mergeRefs([ref, localRef])}
             />
             {label && (
               <span
                 className={labelVariants({ variant })}
-                ref={labelRef}
-                data-icon-left={!!iconLeft}
-                data-force-focus={!!(other.value ?? '') || other.placeholder || isFocus || other.type === 'number'}
+                data-icon-left={Boolean(iconLeft)}
+                data-focus={Boolean(value || other.placeholder || isFocus || other.type === 'number')}
               >
                 {label}
-                {other.maxLength && (
+                {maxLength && (
                   <span className="text-on-surface-var">
-                    &nbsp;({String(other.value ?? '').length}/{other.maxLength})
+                    &nbsp;({String(value ?? '').length}/{maxLength})
                   </span>
                 )}
                 {other.required && <span className="text-error">&nbsp;*</span>}
@@ -160,15 +120,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
           </label>
           {onClear && (
-            <ButtonIcon className="hidden" onClick={handleClear} type="button" ref={buttonClearRef} layoutSize={48}>
-              <IconCancel />
-            </ButtonIcon>
+            <ButtonIcon
+              className="data-[value='false']:hidden"
+              onClick={handleClearButtonClick}
+              type="button"
+              layoutSize={48}
+              icon={IconCancel}
+              data-value={Boolean(value)}
+            />
           )}
-          {iconRight && (
-            <ButtonIcon onClick={handleRightButtonClick} type="button">
-              {iconRight}
-            </ButtonIcon>
-          )}
+          {iconRight && <ButtonIcon onClick={handleRightButtonClick} type="button" icon={iconRight} />}
         </div>
         {subText && !errorMessage && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
         {errorMessage && <p className="pt-1 px-4 body-s text-error">{errorMessage}</p>}

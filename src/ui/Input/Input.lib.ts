@@ -4,9 +4,9 @@ export const wrapVariants = cva('group outline-hidden flex flex-nowrap items-sta
   variants: {
     variant: {
       filled:
-        'cursor-text py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface hover:bg-on-surface/10 focus-within:after:h-0.5 focus-within:after:bg-primary data-[icon-left="true"]:pl-1',
+        'cursor-text py-1 pl-4 relative bg-surf-cont-highest rounded-t after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface hover:bg-on-surface/10 focus-within:after:h-0.5 focus-within:after:bg-primary data-[icon-left=true]:pl-0',
       outline:
-        'py-1 pl-4 outline outline-solid -outline-offset-1 outline-outline-variant rounded-sm min-h-[3.5rem] hover:outline-on-surface focus-within:outline-primary hover:focus-within:outline-primary focus-within:outline-[3px] focus-within:-outline-offset-[3px] data-[icon-left="true"]:pl-0',
+        'py-1 pl-4 outline outline-solid -outline-offset-1 outline-outline-variant rounded-sm min-h-[3.5rem] hover:outline-on-surface focus-within:outline-primary hover:focus-within:outline-primary focus-within:outline-[3px] focus-within:-outline-offset-[3px] data-[icon-left=true]:pl-0',
     },
     withError: {
       true: '',
@@ -25,11 +25,11 @@ export const wrapVariants = cva('group outline-hidden flex flex-nowrap items-sta
   },
 });
 
-export const labelVariants = cva('text-on-surface-var body-l! absolute transition-all peer-focus:text-primary', {
+export const labelVariants = cva('text-on-surface-var body-l absolute transition-all peer-focus:text-primary', {
   variants: {
     variant: {
       filled:
-        'hover:text-primary top-4 left-4 group-hover:text-on-surface-var peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:body-s data-[focus="true"]:text-xs data-[force-focus="true"]:text-primary data-[force-focus="true"]:top-1 data-[force-focus="true"]:body-s data-[force-focus="true"]:text-xs data-[icon-left="true"]:left-[53px]',
+        'absolute top-3 left-0 inline-block body-l group-hover:text-on-surface-var peer-focus:top-1 peer-focus:body-s peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s data-[focus=true]:text-primary data-[focus=true]:top-1 data-[focus=true]:body-s data-[icon-left=true]:left-[53px]',
       outline: 'px-1 bg-surface left-3 -top-0.5 -translate-y-1/2 group-hover:text-on-surface',
     },
   },
@@ -44,7 +44,7 @@ export const inputVariants = cva(
   {
     variants: {
       variant: {
-        filled: 'data-[with-label=false]:mt-3 mt-5',
+        filled: 'py-2 data-[label=true]:pt-4 data-[label=true]:pb-0',
         outline: 'mt-3 group-hover:text-on-surface',
       },
     },

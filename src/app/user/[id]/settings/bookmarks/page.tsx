@@ -62,17 +62,13 @@ const BookmarkItem = ({ bookmark }: BookmarkItemProps) => {
       {isEditMode ? (
         <div className="flex flex-nowrap items-center gap-2 w-full">
           <BookmarkForm value={bookmark.title} onSubmit={handleSubmit} isLoading={isUpdateBookmarkLoading} />
-          <ButtonIcon onClick={() => setIsEditMode(false)} disabled={isUpdateBookmarkLoading}>
-            <IconClose className="size-6" />
-          </ButtonIcon>
+          <ButtonIcon onClick={() => setIsEditMode(false)} disabled={isUpdateBookmarkLoading} icon={IconClose} />
         </div>
       ) : (
         <div className="flex flex-nowrap items-center gap-2 w-full">
           <p className="title-m text-primary">{bookmark.title}</p>
           <p className="label-l ml-auto">Дата создания {dayjs(bookmark.createdAt).format('DD.MM.YYYY HH:mm')}</p>
-          <ButtonIcon onClick={() => setIsEditMode(true)} disabled={isUpdateBookmarkLoading}>
-            <IconModeEdit />
-          </ButtonIcon>
+          <ButtonIcon onClick={() => setIsEditMode(true)} disabled={isUpdateBookmarkLoading} icon={IconModeEdit} />
         </div>
       )}
     </li>

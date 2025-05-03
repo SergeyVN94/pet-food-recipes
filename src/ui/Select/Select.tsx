@@ -131,7 +131,7 @@ const Select = ({
                   placeholder="Search"
                   value={search}
                   onChange={handleSearchChange}
-                  iconLeft={<IconSearch className="size-6" />}
+                  iconLeft={IconSearch}
                 />
               </div>
             )}
@@ -153,7 +153,7 @@ const Select = ({
                   >
                     <SelectPrimitives.Item
                       key={filteredItems[virtualItem.index].id}
-                      className="px-3 py-4 w-full text-left hover:bg-surf-cont-highest transition-all body-l max-w-xs text-ellipsis select-none cursor-pointer focus:bg-surf-cont-high outline-hidden"
+                      className="px-3 py-4 w-full text-left hover:bg-surf-cont-highest transition-all body-l max-w-xs text-ellipsis select-none cursor-pointer focus:bg-surf-cont-high outline-hidden whitespace-nowrap"
                       value={filteredItems[virtualItem.index].id}
                     >
                       <SelectPrimitives.ItemText>{filteredItems[virtualItem.index].label}</SelectPrimitives.ItemText>

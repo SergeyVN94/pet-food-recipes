@@ -63,9 +63,7 @@ const IngredientsList = ({
                 transform: `translateY(${virtualItem.start}px)`,
               }}
             >
-              <ButtonIcon onClick={() => onAddIngredient(filteredIngredients[virtualItem.index].id)} type="button">
-                <IconAdd />
-              </ButtonIcon>
+              <ButtonIcon onClick={() => onAddIngredient(filteredIngredients[virtualItem.index].id)} type="button" icon={IconAdd} />
               <p tw="body-l ml-2">{filteredIngredients[virtualItem.index].name}</p>
             </li>
           ))}

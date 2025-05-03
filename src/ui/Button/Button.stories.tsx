@@ -41,7 +41,7 @@ export const FilledWithIcon: Story = {
     },
   },
   render: props => (
-    <Button type="button" {...props} iconLeft={<IconAdd width={18} height={18} />}>
+    <Button type="button" {...props} iconLeft={IconAdd}>
       Label
     </Button>
   ),

@@ -27,9 +27,7 @@ const BookmarkForm = ({ value, onSubmit, isLoading, isNew }: BookmarkFormProps) 
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-nowrap items-center gap-2 w-full">
         <InputUncontrolled name="bookmark" className="w-full" label={isNew ? 'Новая закладка' : 'Название закладки'} maxLength={50} />
-        <ButtonIcon type="submit" disabled={isLoading}>
-          {isNew ? <IconAdd className="size-6" /> : <IconSave className="size-6" />}
-        </ButtonIcon>
+        <ButtonIcon type="submit" disabled={isLoading} icon={isNew ? IconAdd :IconSave } />
       </form>
     </FormProvider>
   );
