@@ -63,6 +63,8 @@ export const arrayToDictionary = <T extends Record<string, any>, K extends keyof
   }, {} as Acc);
 };
 
+export const clampNumber = (value: number, min: number, max: number) => (value < min ? min : value > max ? max : value);
+
 declare global {
   interface Window {
     ym: any;

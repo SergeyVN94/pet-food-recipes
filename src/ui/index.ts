@@ -11,3 +11,4 @@ export * from './Checkbox';
 export * from './Textarea';
 export * from './FileInput';
 export * from './ButtonIcon';
+export * from './ProgressBar';
