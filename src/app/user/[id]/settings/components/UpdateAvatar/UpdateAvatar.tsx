@@ -4,8 +4,9 @@ import React from 'react';
 
 import axios from 'axios';
 
+import { IconFileUpload, IconImage } from '@/assets/icons';
 import { useUpdateUserAvatar } from '@/hooks';
-import { FileInput } from '@/ui';
+import { FileInput, ProgressBar } from '@/ui';
 import { showToast } from '@/utils';
 
 type UpdateAvatarProps = {
@@ -15,37 +16,31 @@ type UpdateAvatarProps = {
 const UpdateAvatar = ({ className }: UpdateAvatarProps) => {
   const [progress, setProgress] = React.useState<number | null>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const { mutate, isPending } = useUpdateUserAvatar({
+  const { mutate, isPending, variables } = useUpdateUserAvatar({
     onError: error => {
       if (axios.isAxiosError(error)) {
         if (error.response?.data?.message === 'FILE_SIZE_LIMIT') {
           showToast('error', 'Превышен размер файла. Не более 2MB');
         }
       }
-
-      if (inputRef.current) {
-        inputRef.current.value = '';
-      }
-
-      setProgress(null);
     },
     onSuccess: () => {
+      showToast('success', 'Аватар обновлен');
+    },
+    onSettled: () => {
       if (inputRef.current) {
-        inputRef.current.value = '';
+        inputRef.current.type = 'text';
+        inputRef.current.type = 'file';
       }
 
       setProgress(null);
-
-      showToast('success', 'Аватар обновлен');
     },
   });
 
-  const handleFilesChange: React.ChangeEventHandler<HTMLInputElement> = ev => {
+  const handleFilesChange = (files: File[]) => {
     if (isPending) {
       return;
     }
-
-    const files = ev.target.files;
 
     if (files && files?.length > 0) {
       mutate({
@@ -61,10 +56,13 @@ const UpdateAvatar = ({ className }: UpdateAvatarProps) => {
 
   return (
     <div className={className}>
-      {progress !== null && (
-        <progress max={100} value={progress} className="mb-1">
-          {progress}%
-        </progress>
+      {progress !== null && variables?.avatar?.name && (
+        <div className="flex flex-nowrap items-center mb-2.5 gap-2">
+          <IconImage className="size-6 text-primary" />
+          <p className="label-l text-primary max-w-44 truncate">{variables?.avatar?.name}</p>
+          <ProgressBar value={50} className=" flex-1" />
+          <p className="label-l text-primary font-bold">50%</p>
+        </div>
       )}
       <FileInput
         className="w-full"
@@ -72,6 +70,7 @@ const UpdateAvatar = ({ className }: UpdateAvatarProps) => {
         label="Выберите изображение"
         accept="image/jpg,image/jpeg,image/png"
         ref={inputRef}
+        fileSizeLimit={1024 * 1024 * 2}
       />
     </div>
   );
