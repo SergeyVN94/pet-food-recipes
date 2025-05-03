@@ -126,13 +126,7 @@ const Select = ({
           <SelectPrimitives.Viewport className="rounded-md bg-surf-cont flex flex-col w-full shadow-elevation-2">
             {withSearch && (
               <div className="p-2">
-                <Input
-                  variant="outline"
-                  placeholder="Search"
-                  value={search}
-                  onChange={handleSearchChange}
-                  iconLeft={IconSearch}
-                />
+                <Input variant="outline" placeholder="Search" value={search} onChange={handleSearchChange} iconLeft={IconSearch} />
               </div>
             )}
             {/* 21rem == 6 items */}

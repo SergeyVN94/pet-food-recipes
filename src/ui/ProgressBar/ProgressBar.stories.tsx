@@ -14,7 +14,7 @@ type Story = StoryObj<typeof ProgressBar>;
 
 export const Default: Story = {
   args: {
-    value: 0,
+    value: 92,
   },
   argTypes: {
     value: {

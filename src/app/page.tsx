@@ -30,7 +30,7 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
     <PageLayout className="grid grid-cols-[minmax(400px,1fr)_minmax(200px,300px)] gap-4">
       <section>
         <Suspense fallback={<div className="skeleton h-[3.5rem] w-full" />}>
-          <SearchBar delay={350} placeholder="Введите запрос" isClearable />
+          <SearchBar delay={350} placeholder="Введите запрос" searchParamName="q" />
         </Suspense>
         <Suspense fallback={<ActualRecipesListSkeleton />}>
           <ActualRecipesList initialRecipes={recipes.data} initialIngredients={ingredients} />

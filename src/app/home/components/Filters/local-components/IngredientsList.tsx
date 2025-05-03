@@ -49,7 +49,7 @@ const IngredientsList = ({
 
   return (
     <>
-      <SearchBar className="mb-4" onChange={setSearch} delay={250} placeholder="Поиск" isClearable searchParamName="" />
+      <SearchBar className="mb-4" onChange={setSearch} delay={250} placeholder="Поиск" />
       {search.trim() && filteredIngredients.length === 0 && <p className="body-l my-1">По запросу «{search}» ничего не найдено</p>}
       <SelectedIngredients selectedIngredients={selectedIngredients} ingredientsMap={ingredientsMap} onDelete={onDeleteIngredient} />
       <div className="overflow-y-auto flex-1 max-h-[15rem]" ref={containerRef}>
