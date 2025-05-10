@@ -26,7 +26,7 @@ const Tabs = ({ tabs, activeTabId, onTabClick, className }: TabsProps) => (
         data-active={tab.id === activeTabId}
       >
         <span className="flex flex-nowrap items-center justify-center gap-2 w-full">
-          {tab.icon && React.cloneElement(tab.icon, { className: 'size-6' })}
+          {tab.icon && React.createElement(tab.icon, { className: 'size-6' })}
           {tab.label}
         </span>
       </button>
