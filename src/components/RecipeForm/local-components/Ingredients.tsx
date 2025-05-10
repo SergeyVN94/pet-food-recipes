@@ -63,9 +63,9 @@ const Ingredients = ({ amountTypes, recipeIngredients }: IngredientsProps) => {
 
   return (
     <fieldset className="mt-8 p-0">
-      <h4 className="headline-m">
+      <legend className="headline-m">
         Ингредиенты <span className="text-primary">{`${fields.length}/50`}</span>
-      </h4>
+      </legend>
       <div className="mt-4">
         <table className="w-full border-separate border-spacing-0">
           <tbody>

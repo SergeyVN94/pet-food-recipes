@@ -93,9 +93,11 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
-        <InputUncontrolled name="title" label="Название" required maxLength={150} />
-        <TextareaUncontrolled name="description" label="Описание" className="mt-4" required maxLength={500} />
-        {/* <FileInputUncontrolled
+        <fieldset>
+          <legend className="invisible">Основная информация о рецепте</legend>
+          <InputUncontrolled name="title" label="Название" required maxLength={150} />
+          <TextareaUncontrolled name="description" label="Описание" className="mt-4" required maxLength={500} />
+          {/* <FileInputUncontrolled
           name="images"
           label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"
           multiple
@@ -104,6 +106,7 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
           className="mt-4"
           disabled={isPending}
         /> */}
+        </fieldset>
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
           <div className="mt-4 skeleton h-48" />
         ) : (

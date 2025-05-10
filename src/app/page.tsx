@@ -28,25 +28,27 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
 
   return (
     <PageLayout className="grid grid-cols-[minmax(400px,1fr)_minmax(200px,300px)] gap-4">
-      <section>
+      <div>
         <Suspense fallback={<div className="skeleton h-[3.5rem] w-full" />}>
           <SearchBar delay={350} placeholder="Введите запрос" searchParamName="q" />
         </Suspense>
         <Suspense fallback={<ActualRecipesListSkeleton />}>
           <ActualRecipesList initialRecipes={recipes.data} initialIngredients={ingredients} />
         </Suspense>
-      </section>
-      <aside className="flex flex-col gap-3">
+      </div>
+      <div className="flex flex-col gap-3">
         <Suspense fallback={<div className="skeleton h-full w-full" />}>
           <Filters initialIngredients={ingredients} initialAmountTypes={amountTypes} />
         </Suspense>
-        <div className="sticky top-4 card-outlined">
+        <section className="sticky top-4 card-outlined">
           <h4 className="mb-2 font-semibold">Контакты</h4>
-          <a type="email" href="mailto:pet-food-recipes@yandex.ru" className="body-l font-semibold text-primary">
-            pet-food-recipes@yandex.ru
-          </a>
-        </div>
-      </aside>
+          <address>
+            <a type="email" href="mailto:pet-food-recipes@yandex.ru" className="body-l font-semibold text-primary">
+              pet-food-recipes@yandex.ru
+            </a>
+          </address>
+        </section>
+      </div>
     </PageLayout>
   );
 };

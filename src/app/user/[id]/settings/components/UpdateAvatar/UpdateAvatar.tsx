@@ -70,7 +70,7 @@ const UpdateAvatar = ({ className }: UpdateAvatarProps) => {
         label="Выберите изображение"
         accept="image/jpg,image/jpeg,image/png"
         ref={inputRef}
-        fileSizeLimit={1024 * 1024 * 2}
+        fileSizeLimit={1024 * 1024 * 10}
       />
     </div>
   );

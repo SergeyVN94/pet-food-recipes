@@ -38,14 +38,16 @@ const ActualRecipesList = observer(({ initialRecipes = [], initialIngredients = 
   return isFetching ? (
     <ActualRecipesListSkeleton />
   ) : (
-    <ul className="flex flex-col items-start flex-nowrap gap-4 pt-8 w-full">
-      {recipes?.map((recipe, index) => (
-        <li key={recipe.id} className="w-full">
-          <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} isVisiblePriority={index < 20} />
-        </li>
-      ))}
-      {!isFetching && recipes?.length === 0 && filter.q && <li>{`По запросу «${filter.q}» ничего не найдено`}</li>}
-    </ul>
+    <section aria-label="список рецептов">
+      <ul className="flex flex-col items-start flex-nowrap gap-4 pt-8 w-full">
+        {recipes?.map((recipe, index) => (
+          <li key={recipe.id} className="w-full">
+            <RecipeCard recipe={recipe} ingredientsMap={ingredientsMap} isVisiblePriority={index < 20} />
+          </li>
+        ))}
+        {!isFetching && recipes?.length === 0 && filter.q && <li>{`По запросу «${filter.q}» ничего не найдено`}</li>}
+      </ul>
+    </section>
   );
 });
 

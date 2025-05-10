@@ -36,9 +36,9 @@ const Steps = () => {
 
   return (
     <fieldset className="mt-8 p-0">
-      <h4 className="headline-m">
+      <legend className="headline-m">
         Этапы готовки <span className="text-primary">{`${fields.length}/50`}</span>
-      </h4>
+      </legend>
       <div className="mt-4">
         {fields.map((field, index) => (
           <div key={field.id} className="mt-3 flex flex-nowrap items-start first:mt-0">
@@ -52,8 +52,16 @@ const Steps = () => {
             />
             <div className="flex flex-col">
               <ButtonIcon onClick={() => handleRemoveStepBtnClick(index)} disabled={fields.length === 1} icon={IconDelete} />
-              <ButtonIcon onClick={() => handleMoveTopBtnClick(index)} disabled={fields.length === 1 || index === 0} icon={IconArrowDropUp} />
-              <ButtonIcon onClick={() => handleMoveBottomBtnClick(index)} disabled={fields.length === 1 || index === fields.length - 1} icon={IconArrowDropDown} />
+              <ButtonIcon
+                onClick={() => handleMoveTopBtnClick(index)}
+                disabled={fields.length === 1 || index === 0}
+                icon={IconArrowDropUp}
+              />
+              <ButtonIcon
+                onClick={() => handleMoveBottomBtnClick(index)}
+                disabled={fields.length === 1 || index === fields.length - 1}
+                icon={IconArrowDropDown}
+              />
             </div>
           </div>
         ))}

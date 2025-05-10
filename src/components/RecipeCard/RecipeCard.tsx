@@ -32,7 +32,7 @@ const RecipeCard = ({
   const imageUrl = firstImagePath ? `${process.env.NEXT_PUBLIC_STATIC_SERVER_URL}${firstImagePath}` : '/recipe-card-placeholder.png';
 
   return (
-    <div
+    <article
       className={cn(
         'card-outlined border-b border-neutral-90 group-last:border-none relative pointer hover:shadow-md transition-all rounded-md flex flex-col md:items-start md:pl-72 md:min-h-80',
         className,
@@ -76,7 +76,7 @@ const RecipeCard = ({
           <Chip label={ingredientsMap.get(ingredient.ingredientId)?.name ?? ''} key={ingredient.ingredientId} variant="outline" />
         ))}
       </div>
-    </div>
+    </article>
   );
 };
 

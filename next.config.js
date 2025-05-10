@@ -73,7 +73,7 @@ const nextConfig = {
     NEXT_PUBLIC_API_SERVER_URL: process.env.NEXT_PUBLIC_API_SERVER_URL ?? 'http://localhost:8000',
     NEXT_PUBLIC_STATIC_SERVER_URL: process.env.NEXT_PUBLIC_STATIC_SERVER_URL ?? 'http://localhost:9000',
     NEXT_PUBLIC_YANDEX_METRIKA_ID: process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID ?? '',
-    NEXT_PUBLIC_BUCKET_AVATARS: process.env.NEXT_PUBLIC_BUCKET_AVATARS ?? 'avatars',
+    NEXT_PUBLIC_BUCKET_AVATARS: process.env.NEXT_PUBLIC_BUCKET ?? 'recipes',
   },
 };
 

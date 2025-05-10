@@ -16,11 +16,13 @@ type TableProps<T extends TableRow> = {
   showTableHead?: boolean;
   columns: TableColumn<T>[];
   rows: T[];
+  title?: string;
 };
 
-const Table = <T extends TableRow>({ columns, rows, showTableHead = true }: TableProps<T>) => {
+const Table = <T extends TableRow>({ columns, rows, showTableHead = true, title }: TableProps<T>) => {
   return (
     <table className="mt-8 border border-primary/50">
+      {title && <caption>{title}</caption>}
       {showTableHead && (
         <thead>
           <tr>

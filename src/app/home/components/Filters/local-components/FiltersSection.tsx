@@ -24,7 +24,7 @@ const FiltersSection = ({ title, children, className, isLoading }: FiltersSectio
   };
 
   return (
-    <section className={className}>
+    <fieldset className={className}>
       {isLoading ? (
         <div className="skeleton w-[9.375rem] h-[2.75rem] cursor-progress rounded-full" />
       ) : (
@@ -41,7 +41,7 @@ const FiltersSection = ({ title, children, className, isLoading }: FiltersSectio
         </Button>
         <div className="flex-1 mt-4 bg-inherit flex flex-col">{children}</div>
       </div>
-    </section>
+    </fieldset>
   );
 };
 

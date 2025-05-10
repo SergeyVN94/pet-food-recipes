@@ -81,27 +81,29 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(handleSubmit)}
-        className="card-outlined w-full relative h-[50rem] max-h-[80rem] overflow-hidden z-10"
-      >
-        <h3 className="headline-m">Фильтры</h3>
-        <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
-          {(roles.isAdmin || roles.isModerator) && <CheckboxUncontrolled name="isDeleted" label="Удаленные рецепты" className="mb-2" />}
-          {(roles.isAdmin || roles.isModerator) && (
-            <CheckboxUncontrolled name="isPublished" label="Опубликованные рецепты" className="mb-2" />
-          )}
-          <IngredientsFilter ingredients={ingredients} />
-        </div>
-        <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-transparent">
-          <Button type="submit">Применить</Button>
-          <Button type="button" variant="outline" onClick={handleReset}>
-            Очистить
-          </Button>
-        </div>
-      </form>
-    </FormProvider>
+    <section aria-label="фильтры рецептов">
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(handleSubmit)}
+          className="card-outlined w-full relative h-[50rem] max-h-[80rem] overflow-hidden z-10"
+        >
+          <h3 className="headline-m">Фильтры</h3>
+          <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
+            {(roles.isAdmin || roles.isModerator) && <CheckboxUncontrolled name="isDeleted" label="Удаленные рецепты" className="mb-2" />}
+            {(roles.isAdmin || roles.isModerator) && (
+              <CheckboxUncontrolled name="isPublished" label="Опубликованные рецепты" className="mb-2" />
+            )}
+            <IngredientsFilter ingredients={ingredients} />
+          </div>
+          <div className="flex flex-nowrap items-center gap-3 mt-auto z-30 relative bg-transparent">
+            <Button type="submit">Применить</Button>
+            <Button type="button" variant="outline" onClick={handleReset}>
+              Очистить
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
+    </section>
   );
 };
 
