@@ -3,6 +3,7 @@ import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { cva } from 'class-variance-authority';
 
+import { SVGIcon } from '@/types';
 import { cn } from '@/utils';
 
 const menuItemsVariants = cva(
@@ -21,10 +22,10 @@ const menuItemsVariants = cva(
   },
 );
 
-type MenuItem = {
+export type MenuItem = {
   label: string;
   onSelect: () => void;
-  icon?: React.ReactNode;
+  icon?: SVGIcon;
   disabled?: boolean;
 };
 
@@ -36,27 +37,20 @@ type MenuProps = {
   contentProps?: React.ComponentProps<typeof DropdownMenu.Content>;
 };
 
-const Menu = ({ items, trigger, rootProps = {}, contentProps = {}, itemSize }: MenuProps) => {
-  return (
-    <DropdownMenu.Root {...rootProps}>
-      {trigger && <DropdownMenu.Trigger className="outline-hidden">{trigger}</DropdownMenu.Trigger>}
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content {...contentProps} className={cn('py-2 bg-surf-cont elevation-2 rounded-sm z-20', contentProps.className)}>
-          {items.map(item => (
-            <DropdownMenu.Item
-              key={item.label}
-              onSelect={item.onSelect}
-              disabled={item.disabled}
-              className={menuItemsVariants({ itemSize })}
-            >
-              {item.icon}
-              <p className="body-l block">{item.label}</p>
-            </DropdownMenu.Item>
-          ))}
-        </DropdownMenu.Content>
-      </DropdownMenu.Portal>
-    </DropdownMenu.Root>
-  );
-};
+const Menu = ({ items, trigger, rootProps = {}, contentProps = {}, itemSize }: MenuProps) => (
+  <DropdownMenu.Root {...rootProps}>
+    {trigger && <DropdownMenu.Trigger className="outline-hidden">{trigger}</DropdownMenu.Trigger>}
+    <DropdownMenu.Portal>
+      <DropdownMenu.Content {...contentProps} className={cn('py-2 bg-surf-cont elevation-2 rounded-sm z-20', contentProps.className)}>
+        {items.map(item => (
+          <DropdownMenu.Item key={item.label} onSelect={item.onSelect} disabled={item.disabled} className={menuItemsVariants({ itemSize })}>
+            {item.icon && React.createElement(item.icon, { className: 'size-6 text-primary' })}
+            <p className="body-l block">{item.label}</p>
+          </DropdownMenu.Item>
+        ))}
+      </DropdownMenu.Content>
+    </DropdownMenu.Portal>
+  </DropdownMenu.Root>
+);
 
 export default Menu;

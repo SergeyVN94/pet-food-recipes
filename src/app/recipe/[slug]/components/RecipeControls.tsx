@@ -6,11 +6,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-import { IconDelete, IconFileDownload, IconModeEdit } from '@/assets/icons';
-import { useDeleteRecipe, useUser } from '@/hooks';
+import { IconDelete, IconMenu, IconModeEdit, IconPublic } from '@/assets/icons';
+import { useDeleteRecipe, useUser, useUserRoles } from '@/hooks';
 import usePublishRecipe from '@/hooks/usePublishRecipe';
-import { RecipeEntity, UserRoles } from '@/types';
-import { Button, ButtonIcon } from '@/ui';
+import { RecipeEntity } from '@/types';
+import { Button, ButtonIcon, Menu, MenuItem } from '@/ui';
 import { cn, showToast } from '@/utils';
 
 type RecipeControlsProps = {
@@ -21,6 +21,7 @@ type RecipeControlsProps = {
 const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
   const { data: user } = useUser();
   const router = useRouter();
+  const { isAdmin, isModerator } = useUserRoles();
   const { mutateAsync, isPending } = useDeleteRecipe({
     onError: error => {
       if (error) {
@@ -60,6 +61,7 @@ const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
     },
   });
   const queryClient = useQueryClient();
+  const isRecipeAuthor = user?.id === recipe.user.id;
 
   const handleDeleteButtonClick = () => {
     const handleConfirmClick = () => {
@@ -96,28 +98,40 @@ const RecipeControls = ({ recipe, className }: RecipeControlsProps) => {
     publish(recipe.slug);
   };
 
-  const handleAditButtonClick = () => {
+  const handleEditButtonClick = () => {
     router.push(`/recipe/${recipe.slug}/edit`);
   };
 
-  const buttonPublish = !recipe.isPublished && (user?.role === UserRoles.ADMIN || user?.role === UserRoles.MODERATOR) && (
-    <ButtonIcon variant="filled" disabled={isPublishing} onClick={handlePublishButtonClick} title="Опубликовать" icon={IconFileDownload} />
-  );
+  const menuItems: MenuItem[] = [];
 
-  const buttonEdit = (user?.role === UserRoles.ADMIN || user?.id === recipe.user.id) && (
-    <ButtonIcon variant="filled" disabled={isPending} onClick={handleAditButtonClick} title="Редактировать" icon={IconModeEdit} />
-  );
+  if (!recipe.isPublished && (isAdmin || isModerator)) {
+    menuItems.push({
+      label: 'Опубликовать',
+      icon: IconPublic,
+      onSelect: handlePublishButtonClick,
+    });
+  }
 
-  const buttonDelete = (user?.role === UserRoles.ADMIN || user?.id === recipe.user.id) && (
-    <ButtonIcon variant="filled" disabled={isPending} onClick={handleDeleteButtonClick} title="Удалить" icon={IconDelete} />
-  );
+  if (isAdmin || isRecipeAuthor) {
+    menuItems.push({
+      label: 'Редактировать',
+      icon: IconModeEdit,
+      onSelect: handleEditButtonClick,
+    });
+  }
+
+  if (isAdmin || isModerator) {
+    menuItems.push({
+      label: 'Удалить',
+      icon: IconDelete,
+      onSelect: handleDeleteButtonClick,
+    });
+  }
 
   return (
-    (buttonEdit || buttonPublish || buttonDelete) && (
+    menuItems.length > 0 && (
       <div className={cn('flex justify-end gap-2', className)}>
-        {buttonPublish}
-        {buttonEdit}
-        {buttonDelete}
+        <Menu trigger={<ButtonIcon variant="filled" icon={IconMenu} />} items={menuItems} contentProps={{ align: 'end' }} />
       </div>
     )
   );

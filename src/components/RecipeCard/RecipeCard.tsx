@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { IngredientDto, RecipeEntity } from '@/types';
 import { Chip } from '@/ui';
 import { Avatar } from '@/ui/Avatar';
-import { cn } from '@/utils';
+import { cn, getRecipeImageUrl } from '@/utils';
 
 import { RecipeCardBookmark } from '../RecipeCardBookmark';
 import { TimeSince } from '../TimeSince';
@@ -28,8 +28,8 @@ const RecipeCard = ({
   isShowPublishedStatus = true,
   className,
 }: RecipeCardProps) => {
-  const firstImagePath = recipe.images?.[0];
-  const imageUrl = firstImagePath ? `${process.env.NEXT_PUBLIC_STATIC_SERVER_URL}${firstImagePath}` : '/recipe-card-placeholder.png';
+  const firstImage = recipe.images?.[0];
+  const imageUrl = firstImage ? getRecipeImageUrl(firstImage) : '/recipe-card-placeholder.png';
 
   return (
     <article

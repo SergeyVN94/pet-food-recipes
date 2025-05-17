@@ -8,9 +8,9 @@ import { RecipeBookmarkSelect, TimeSince } from '@/components';
 import { PageLayout } from '@/layouts';
 import { recipesService } from '@/services';
 import { Avatar, Table, TableColumn } from '@/ui';
-import { arrayToDictionary, getTimeSince } from '@/utils';
+import { arrayToDictionary } from '@/utils';
 
-import { RecipeControls } from './components';
+import { ImagesGallery, RecipeControls } from './components';
 
 const recipesTableColumns: TableColumn[] = [{ keyOrComponent: 'ingredientName' }, { keyOrComponent: 'amountTypeValue' }];
 
@@ -57,7 +57,7 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
 
   return (
     <PageLayout>
-      <div>
+      <section>
         <div className="flex flex-nowrap items-center gap-3">
           <Link href={`/user/${recipe.user?.id}`} className="flex items-center gap-1 hover:underline cursor-pointer">
             {recipe.user && <Avatar user={recipe.user} size={32} />}
@@ -71,23 +71,16 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
           </div>
         </div>
         <h1 className="headline-l text-primary text-balance mt-2">{recipe.title}</h1>
-      </div>
-
-      <p className="body-l mt-8 text-pretty">{recipe.description}</p>
-      {recipe.images && recipe.images.length > 0 && (
-        <section className="mt-16 flex flex-wrap gap-4">
-          {recipe.images.map((src, index) => (
-            <div key={src} className="flex-1 basis-[32%]">
-              <Image
-                fill
-                alt={`Изображение ${index}`}
-                src={`${process.env.NEXT_PUBLIC_STATIC_SERVER_URL}${src}`}
-                className="static! block max-h-[400px] object-cover rounded-sm"
-              />
-            </div>
-          ))}
-        </section>
-      )}
+        <p className="body-l mt-8 text-pretty">{recipe.description}</p>
+        {recipe.images && recipe.images.length > 0 && (
+          <ImagesGallery
+            items={recipe.images}
+            additionalClass="max-w-[450px] mt-10"
+            thumbnailPosition="right"
+            showFullscreenButton={false}
+          />
+        )}
+      </section>
       <section className="mt-16">
         <h3 className="headline-l">Ингредиенты</h3>
         <Table columns={recipesTableColumns} showTableHead={false} rows={tableRows} />

@@ -15,7 +15,7 @@ import {
 } from '@/assets/icons';
 import { useStore } from '@/hooks';
 import { UserDto } from '@/types';
-import { Avatar, Menu } from '@/ui';
+import { Avatar, Menu, MenuItem } from '@/ui';
 import { cn } from '@/utils';
 
 type UserControlsProps = {
@@ -29,38 +29,38 @@ const UserControls = observer(({ user, className }: UserControlsProps) => {
   const isAdmin = user?.role === 'ADMIN';
   const isModerator = user?.role === 'MODERATOR';
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       label: 'Профиль',
-      icon: <IconPersonOutline className="size-6 text-primary" />,
+      icon: IconPersonOutline,
       onSelect: () => {
         navigate.push(`/user/${user.id}`);
       },
     },
     {
       label: 'Закладки',
-      icon: <IconBookmarkBorder className="size-6 text-primary" />,
+      icon: IconBookmarkBorder,
       onSelect: () => {
         navigate.push(`/user/${user.id}/bookmarks`);
       },
     },
     {
       label: 'Уведомления',
-      icon: <IconNotificationBorder className="size-6 text-primary" />,
+      icon: IconNotificationBorder,
       onSelect: () => {
         navigate.push(`/user/${user.id}/notifications`);
       },
     },
     {
       label: 'Настройки',
-      icon: <IconSettings className="size-6 text-primary" />,
+      icon: IconSettings,
       onSelect: () => {
         navigate.push(`/user/${user.id}/settings`);
       },
     },
     {
       label: 'Выход',
-      icon: <IconLogout className="size-6 text-primary" />,
+      icon: IconLogout,
       onSelect: () => {
         store.authStore.logout();
         window?.location.reload();
@@ -71,7 +71,7 @@ const UserControls = observer(({ user, className }: UserControlsProps) => {
   if (isAdmin || isModerator) {
     menuItems.splice(-1, 0, {
       label: 'Панель администратора',
-      icon: <IconAdminPanelSettings className="size-6 text-primary" />,
+      icon: IconAdminPanelSettings,
       onSelect: () => {
         navigate.push('/admin');
       },

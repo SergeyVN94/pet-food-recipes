@@ -1,5 +1,18 @@
 import { UserDto } from './user';
 
+export enum RecipeImageStatus {
+  NEW = 'NEW',
+  DELETED = 'DELETED',
+  ATTACHED = 'ATTACHED',
+}
+
+export type RecipeImageDto = {
+  id: string;
+  fileName: string;
+  status: RecipeImageStatus;
+  createdAt: string;
+};
+
 export type AmountTypeDto = {
   id: number;
   name: string;
@@ -37,7 +50,7 @@ export type RecipeEntity = {
   title: string;
   slug: string;
   description: string;
-  images: string[];
+  images: RecipeImageDto[];
   steps: RecipeStepDto[];
   ingredients: RecipeIngredientDto[];
   user: UserDto;
