@@ -7,10 +7,12 @@ import { useRouter } from 'next/navigation';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
 import { useAmountTypes, useIngredients } from '@/hooks';
+import { recipesService } from '@/services';
 import { RecipeCreateDto, RecipeEntity, RecipeIngredientCreateDto } from '@/types';
-import { Button, InputUncontrolled, TextareaUncontrolled } from '@/ui';
+import { Button, FileInput, InputUncontrolled, TextareaUncontrolled } from '@/ui';
 import { arrayToDictionary, showToast } from '@/utils';
 
+import { ImageUploader } from '../ImageUploader';
 import { FormFields } from './RecipeForm.types';
 import { validationSuite } from './lib';
 import { Ingredients, Steps } from './local-components';
@@ -25,6 +27,7 @@ type RecipeFormProps = {
 
 const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit }: RecipeFormProps) => {
   const navigate = useRouter();
+  const [files, setFiles] = React.useState<File[]>([]);
   const { data: amountTypes, isFetching: isAmountTypesFetching } = useAmountTypes({
     refetchOnMount: true,
   });
@@ -90,6 +93,24 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
     navigate.back();
   };
 
+  const handleFilesChange = (newFiles: File[]) => {
+    const nextFiles = [...files, ...newFiles];
+
+    if (nextFiles.length > 10) {
+      showToast('error', 'Максимум 10 файлов');
+      return;
+    }
+
+    const bigFile = nextFiles.find(file => file.size > 15 * 1024 * 1024);
+
+    if (bigFile) {
+      showToast('error', 'Максимум 15 МБ на один файл');
+      return;
+    }
+
+    setFiles([...files, ...newFiles]);
+  };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
@@ -97,15 +118,22 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
           <legend className="invisible">Основная информация о рецепте</legend>
           <InputUncontrolled name="title" label="Название" required maxLength={150} />
           <TextareaUncontrolled name="description" label="Описание" className="mt-4" required maxLength={500} />
-          {/* <FileInputUncontrolled
-          name="images"
-          label="Добавить изображения (максимум 3 файла по 5 Мб каждый)"
-          multiple
-          max={3}
-          accept="image/png image/jpg image/jpeg"
-          className="mt-4"
-          disabled={isPending}
-        /> */}
+          {files.length > 0 && (
+            <div className="flex flex-nowrap gap-4 mt-4">
+              {files.map(file => (
+                <ImageUploader file={file} key={file.name} uploadFile={(file, config) => recipesService.uploadImage(file, config)} />
+              ))}
+            </div>
+          )}
+          <FileInput
+            multiple
+            name="images"
+            label="Добавить изображения (максимум 10 файлов по 15 Мб каждый)"
+            className="mt-4"
+            max={3}
+            accept="image/png image/jpg image/jpeg"
+            onChange={handleFilesChange}
+          />
         </fieldset>
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
           <div className="mt-4 skeleton h-48" />

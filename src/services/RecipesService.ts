@@ -39,6 +39,12 @@ class RecipesService {
   unpublishRecipe(slug: RecipeEntity['slug'], config: AxiosRequestConfig = {}) {
     return this.apiInstance.patch<RecipeEntity>(`${this.baseApiUrl}/${slug}/unpublish`, undefined, config);
   }
+
+  uploadImage(file: File, config: AxiosRequestConfig = {}) {
+    const formData = new FormData();
+    formData.append('image', file);
+    return this.apiInstance.post(`${this.baseApiUrl}/image`, formData, config);
+  }
 }
 
 export default RecipesService;

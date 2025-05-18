@@ -91,8 +91,6 @@ export const humanFileSize = (bytes: number, si = false, fractionDigits = 1) => 
 
   let index = unitsBytes.findIndex(bytesInUnit => normalizedBytes < bytesInUnit) - 1;
 
-  console.log(normalizedBytes, index);
-
   if (index < 0) {
     index = unitsBytes.length - 1;
   }

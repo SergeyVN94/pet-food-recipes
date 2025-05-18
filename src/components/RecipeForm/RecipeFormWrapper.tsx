@@ -19,15 +19,15 @@ type RecipeFormWrapperProps = {
 };
 
 const RecipeFormWrapper = ({ className, initialRecipe }: RecipeFormWrapperProps) => {
-  const { mutateAsync: update, data: updatedRecipe, isPending: isUpdating, error: updateError } = useUpdateRecipe();
-  const { mutateAsync: create, data: createdRecipe, isPending: isCreating, error: createError } = useCreateRecipe();
+  const { mutate: update, data: updatedRecipe, isPending: isUpdating, error: updateError } = useUpdateRecipe();
+  const { mutate: create, data: createdRecipe, isPending: isCreating, error: createError } = useCreateRecipe();
   const navigate = useRouter();
   const [errors, setErrors] = React.useState<FieldErrors<FormFields>>({});
   const isLoading = isUpdating || isCreating;
 
-  const handleFormSubmit = async (data: RecipeCreateDto) => {
+  const handleFormSubmit = (data: RecipeCreateDto) => {
     setErrors({});
-    initialRecipe ? await update({ dto: data, slug: initialRecipe.slug }) : await create(data);
+    initialRecipe ? update({ dto: data, slug: initialRecipe.slug }) : create(data);
   };
 
   React.useEffect(() => {
@@ -55,8 +55,8 @@ const RecipeFormWrapper = ({ className, initialRecipe }: RecipeFormWrapperProps)
     const data = initialRecipe ? updatedRecipe : createdRecipe;
 
     if (data) {
-      navigate.push(`/recipe/${data.slug}`);
       showToast('success', `Рецепт успешно ${initialRecipe ? 'обновлен' : 'создан'}`);
+      navigate.push(`/recipe/${data.slug}`);
     }
   }, [updatedRecipe, createdRecipe]);
 

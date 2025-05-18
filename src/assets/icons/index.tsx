@@ -82,3 +82,4 @@ export { default as IconSave } from './save.svg';
 export { default as IconAdminPanelSettings } from './admin_panel_settings.svg';
 export { default as IconImage } from './image.svg';
 export { default as IconPublic } from './public.svg';
+export { default as IconReplay } from './replay.svg';

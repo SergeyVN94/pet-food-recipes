@@ -32,6 +32,10 @@
   address {
     font-style: normal;
   }
+
+  .image-gallery-image {
+    height: 350px;
+  }
 }
 
 @utility display-l {

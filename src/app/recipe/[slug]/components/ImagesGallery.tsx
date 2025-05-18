@@ -20,6 +20,7 @@ const ImagesGallery = ({ items, ...props }: ImagesGalleryProps) => (
     showThumbnails
     items={items.map(image => ({ original: getRecipeImageUrl(image), thumbnail: getRecipeImageUrl(image) }))}
     showPlayButton={false}
+    additionalClass="min-w-[300px] h-[300px]"
     {...props}
   />
 );
