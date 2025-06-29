@@ -9,7 +9,7 @@ export enum RecipeImageStatus {
 export type RecipeImageDto = {
   id: string;
   fileName: string;
-  status: RecipeImageStatus;
+  recipeId: string | null;
   createdAt: string;
 };
 

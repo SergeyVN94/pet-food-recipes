@@ -15,12 +15,13 @@ export type UploadedImage = {
 
 type ImageUploadedProps = {
   image: UploadedImage;
+  isNew?: boolean;
   className?: string;
   onDelete?: (id: UploadedImage['id']) => void;
-  deleteImage?: (imageId: UploadedImage['id']) => Promise<UploadedImage>;
+  deleteImage?: (imageId: UploadedImage['id']) => Promise<unknown>;
 };
 
-const ImageUploaded = ({ image, className, deleteImage, onDelete }: ImageUploadedProps) => {
+const ImageUploaded = ({ image, className, deleteImage, onDelete, isNew }: ImageUploadedProps) => {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['images', 'delete', image.id],
     mutationFn: async () => await deleteImage?.(image.id),
@@ -32,6 +33,8 @@ const ImageUploaded = ({ image, className, deleteImage, onDelete }: ImageUploade
       return;
     }
 
+    console.log(image, deleteImage);
+
     if (deleteImage) {
       mutate();
     } else {
@@ -41,28 +44,27 @@ const ImageUploaded = ({ image, className, deleteImage, onDelete }: ImageUploade
 
   return (
     <div
-      className={cn('flex flex-nowrap items-center gap-2 border border-transparent relative rounded-2xl overflow-hidden', className, {
+      className={cn('flex flex-nowrap items-center gap-2 relative rounded-2xl', className, {
         'pointer-progress': isPending,
         'border-error': error,
+        'outline-2 outline-green-500 outline-offset-2': isNew,
       })}
     >
-      <ButtonIcon
-        type="button"
-        icon={IconClose}
-        onClick={handleDeleteImage}
-        className="absolute top-0 right-0 translate-1/2"
-        variant="filled"
-      />
-      {error && (
-        <ButtonIcon
-          type="button"
-          icon={IconReplay}
-          onClick={handleDeleteImage}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-          variant="filled"
-        />
+      <div className="absolute top-0 right-0 flex flex-col">
+        <ButtonIcon type="button" icon={IconClose} onClick={handleDeleteImage} variant="filled" />
+        {error && <ButtonIcon type="button" icon={IconReplay} onClick={handleDeleteImage} variant="filled" />}
+      </div>
+      {isNew && (
+        <p className="absolute top-auto left-1/2 bottom-1 -translate-x-1/2 whitespace-nowrap  text-sm text-on-primary-container bg-primary-container p-1 rounded">
+          Не сохранено
+        </p>
       )}
-      <img src={getRecipeImageUrl(image.fileName)} alt="" className="w-32 h-32 object-cover" />
+      <img
+        src={getRecipeImageUrl(image.fileName)}
+        alt=""
+        className="w-44 h-64 object-cover rounded-2xl"
+        title={isNew ? 'Новое изображение' : ''}
+      />
     </div>
   );
 };

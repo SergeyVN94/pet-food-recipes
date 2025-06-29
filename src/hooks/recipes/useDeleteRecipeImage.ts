@@ -15,7 +15,7 @@ const mutationFn = async ({ imageId }: MutationVariables) => {
 const useDeleteRecipeImage = (config: UseMutationOptions<RecipeImageDto, AxiosError<{ message: string }>, MutationVariables> = {}) =>
   useMutation<RecipeImageDto, AxiosError<{ message: string }>, MutationVariables>({
     mutationFn,
-    mutationKey: ['recipes', 'delete-image'],
+    mutationKey: ['recipes', 'image', 'delete'],
     ...config,
   });
 

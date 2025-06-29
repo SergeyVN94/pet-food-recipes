@@ -7,7 +7,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
-import { useAmountTypes, useIngredients } from '@/hooks';
+import { useAmountTypes, useIngredients, useNewRecipeImages } from '@/hooks';
 import { recipesService } from '@/services';
 import { RecipeCreateDto, RecipeEntity, RecipeImageDto, RecipeIngredientCreateDto } from '@/types';
 import { Button, FileInput, ImageUploaded, ImageUploader, InputUncontrolled, TextareaUncontrolled } from '@/ui';
@@ -28,11 +28,14 @@ type RecipeFormProps = {
 const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit }: RecipeFormProps) => {
   const navigate = useRouter();
   const [files, setFiles] = React.useState<File[]>([]);
-  const [uploadedFiles, setUploadedFiles] = React.useState<RecipeImageDto[]>(() => initialRecipe?.images ?? []);
+  const [recipeImages, setRecipeImages] = React.useState<RecipeImageDto[]>(() => initialRecipe?.images ?? []);
   const { data: amountTypes, isFetching: isAmountTypesFetching } = useAmountTypes({
     refetchOnMount: true,
   });
   const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useIngredients({
+    refetchOnMount: true,
+  });
+  const { data: newRecipeImages, isFetching: isNewRecipeImagesFetching } = useNewRecipeImages({
     refetchOnMount: true,
   });
   const amountTypesDict = React.useMemo(() => arrayToDictionary(amountTypes ?? [], 'id'), [amountTypes]);
@@ -112,6 +115,10 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
     setFiles([...files, ...newFiles]);
   };
 
+  React.useEffect(() => {
+    setRecipeImages([...recipeImages, ...(newRecipeImages ?? [])]);
+  }, [newRecipeImages]);
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
@@ -119,11 +126,14 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
           <legend className="invisible">Основная информация о рецепте</legend>
           <InputUncontrolled name="title" label="Название" required maxLength={150} />
           <TextareaUncontrolled name="description" label="Описание" className="mt-4" required maxLength={500} />
-          {(files.length > 0 || uploadedFiles.length > 0) && (
-            <div className="flex flex-nowrap gap-4 mt-8">
-              {uploadedFiles.map(image => (
+          {(files.length > 0 || recipeImages.length > 0) && (
+            <div className="flex flex-wrap gap-4 mt-8">
+              {recipeImages.map(image => (
                 <ImageUploaded
                   key={image.id}
+                  isNew={image.recipeId === null}
+                  deleteImage={image.recipeId ? undefined : id => recipesService.deleteImage(id)}
+                  onDelete={() => setRecipeImages(recipeImages.filter(_image => _image.id !== image.id))}
                   image={{
                     fileName: image.fileName,
                     url: getRecipeImageUrl(image.fileName),
@@ -135,11 +145,11 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
                 <ImageUploader
                   file={file}
                   key={file.name}
-                  uploadFile={(file, config) => recipesService.uploadImage(file, initialRecipe?.id, config)}
+                  uploadFile={(file, config) => recipesService.uploadImage(file, undefined, config)}
                   onDelete={() => setFiles(files.filter(_file => _file.name !== file.name))}
                   onUpload={image => {
                     setFiles(files.filter(_file => _file.name !== file.name));
-                    setUploadedFiles([...uploadedFiles, image]);
+                    setRecipeImages([...recipeImages, image]);
                   }}
                 />
               ))}

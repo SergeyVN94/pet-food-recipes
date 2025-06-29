@@ -40,6 +40,10 @@ class RecipesService {
     return this.apiInstance.patch<RecipeEntity>(`${this.baseApiUrl}/${slug}/unpublish`, undefined, config);
   }
 
+  getNewImages(config: AxiosRequestConfig = {}) {
+    return this.apiInstance.get<RecipeImageDto[]>(`${this.baseApiUrl}/image/new`, config);
+  }
+
   uploadImage(file: File, recipeId?: RecipeEntity['id'], config: AxiosRequestConfig = {}) {
     const formData = new FormData();
     formData.append('image', file);

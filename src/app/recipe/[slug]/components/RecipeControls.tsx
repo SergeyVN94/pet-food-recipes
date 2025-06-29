@@ -7,8 +7,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 import { IconDelete, IconMenu, IconModeEdit, IconPublic } from '@/assets/icons';
-import { useDeleteRecipe, useUser, useUserRoles } from '@/hooks';
-import usePublishRecipe from '@/hooks/usePublishRecipe';
+import { useDeleteRecipe, usePublishRecipe, useUser, useUserRoles } from '@/hooks';
 import { RecipeEntity } from '@/types';
 import { Button, ButtonIcon, Menu, MenuItem } from '@/ui';
 import { cn, showToast } from '@/utils';
