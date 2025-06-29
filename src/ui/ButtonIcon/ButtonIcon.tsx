@@ -53,7 +53,7 @@ const ButtonIcon = <T extends React.ElementType = 'button'>({
   <Component className={buttonVariants({ layoutSize, className })} {...other}>
     <span className={innerWrapperVariants({ variant })}>
       {React.createElement(icon, {
-        className: 'size-6 text-current'
+        className: 'size-6 text-current',
       })}
     </span>
   </Component>

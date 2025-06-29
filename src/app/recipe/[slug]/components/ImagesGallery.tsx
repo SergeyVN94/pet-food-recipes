@@ -18,7 +18,7 @@ const ImagesGallery = ({ items, ...props }: ImagesGalleryProps) => (
     lazyLoad
     infinite
     showThumbnails
-    items={items.map(image => ({ original: getRecipeImageUrl(image), thumbnail: getRecipeImageUrl(image) }))}
+    items={items.map(image => ({ original: getRecipeImageUrl(image.fileName), thumbnail: getRecipeImageUrl(image.fileName) }))}
     showPlayButton={false}
     additionalClass="min-w-[300px] h-[300px]"
     {...props}

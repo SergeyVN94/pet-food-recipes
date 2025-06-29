@@ -24,6 +24,7 @@ export { default as useCheckAccessToken } from './useCheckAccessToken';
 export { default as useQueryIngredients } from './useQueryIngredients';
 export { default as useBookmarksRecipes } from './useBookmarksRecipes';
 export { default as useUpdateUserAvatar } from './useUpdateUserAvatar';
+export { default as useDeleteRecipeImage } from './useDeleteRecipeImage';
 export { default as useAddRecipeToBookmark } from './useAddRecipeToBookmark';
 export { default as userAddRecipeToBookmark } from './useAddRecipeToBookmark';
 export { default as useSendConfirmationEmail } from './useSendConfirmationEmail';

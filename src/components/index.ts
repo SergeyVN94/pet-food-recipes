@@ -9,7 +9,6 @@ export * from './RecipeForm';
 export * from './BanRedirect';
 export * from './BanUserButton';
 export * from './YandexMetrika';
-export * from './ImageUploader';
 export * from './YandexMetrikaHit';
 export * from './RecipeCardBookmark';
 export * from './BanUserDeleteButton';

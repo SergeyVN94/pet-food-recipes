@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import { RecipeCreateDto, RecipeEntity, RecipeFilter, RecipeUpdateDto } from '@/types';
+import { RecipeCreateDto, RecipeEntity, RecipeFilter, RecipeImageDto, RecipeUpdateDto } from '@/types';
 
 class RecipesService {
   constructor(
@@ -40,10 +40,14 @@ class RecipesService {
     return this.apiInstance.patch<RecipeEntity>(`${this.baseApiUrl}/${slug}/unpublish`, undefined, config);
   }
 
-  uploadImage(file: File, config: AxiosRequestConfig = {}) {
+  uploadImage(file: File, recipeId?: RecipeEntity['id'], config: AxiosRequestConfig = {}) {
     const formData = new FormData();
     formData.append('image', file);
-    return this.apiInstance.post(`${this.baseApiUrl}/image`, formData, config);
+    return this.apiInstance.post(`${this.baseApiUrl}/${recipeId ? `${recipeId}/` : ''}image`, formData, config);
+  }
+
+  deleteImage(id: RecipeImageDto['id'], config: AxiosRequestConfig = {}) {
+    return this.apiInstance.delete<RecipeImageDto>(`${this.baseApiUrl}/image/${id}`, config);
   }
 }
 

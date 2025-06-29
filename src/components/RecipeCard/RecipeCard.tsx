@@ -29,7 +29,7 @@ const RecipeCard = ({
   className,
 }: RecipeCardProps) => {
   const firstImage = recipe.images?.[0];
-  const imageUrl = firstImage ? getRecipeImageUrl(firstImage) : '/recipe-card-placeholder.png';
+  const imageUrl = firstImage ? getRecipeImageUrl(firstImage.fileName) : '/recipe-card-placeholder.png';
 
   return (
     <article

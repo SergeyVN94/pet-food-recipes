@@ -12,3 +12,5 @@ export * from './Textarea';
 export * from './FileInput';
 export * from './ButtonIcon';
 export * from './ProgressBar';
+export * from './ImageUploader';
+export * from './ImageUploaded';

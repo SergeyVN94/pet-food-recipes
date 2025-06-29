@@ -3,16 +3,16 @@
 import React from 'react';
 
 import { vestResolver } from '@hookform/resolvers/vest';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
 import { useAmountTypes, useIngredients } from '@/hooks';
 import { recipesService } from '@/services';
-import { RecipeCreateDto, RecipeEntity, RecipeIngredientCreateDto } from '@/types';
-import { Button, FileInput, InputUncontrolled, TextareaUncontrolled } from '@/ui';
-import { arrayToDictionary, showToast } from '@/utils';
+import { RecipeCreateDto, RecipeEntity, RecipeImageDto, RecipeIngredientCreateDto } from '@/types';
+import { Button, FileInput, ImageUploaded, ImageUploader, InputUncontrolled, TextareaUncontrolled } from '@/ui';
+import { arrayToDictionary, getRecipeImageUrl, showToast } from '@/utils';
 
-import { ImageUploader } from '../ImageUploader';
 import { FormFields } from './RecipeForm.types';
 import { validationSuite } from './lib';
 import { Ingredients, Steps } from './local-components';
@@ -28,6 +28,7 @@ type RecipeFormProps = {
 const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit }: RecipeFormProps) => {
   const navigate = useRouter();
   const [files, setFiles] = React.useState<File[]>([]);
+  const [uploadedFiles, setUploadedFiles] = React.useState<RecipeImageDto[]>(() => initialRecipe?.images ?? []);
   const { data: amountTypes, isFetching: isAmountTypesFetching } = useAmountTypes({
     refetchOnMount: true,
   });
@@ -118,10 +119,29 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
           <legend className="invisible">Основная информация о рецепте</legend>
           <InputUncontrolled name="title" label="Название" required maxLength={150} />
           <TextareaUncontrolled name="description" label="Описание" className="mt-4" required maxLength={500} />
-          {files.length > 0 && (
-            <div className="flex flex-nowrap gap-4 mt-4">
+          {(files.length > 0 || uploadedFiles.length > 0) && (
+            <div className="flex flex-nowrap gap-4 mt-8">
+              {uploadedFiles.map(image => (
+                <ImageUploaded
+                  key={image.id}
+                  image={{
+                    fileName: image.fileName,
+                    url: getRecipeImageUrl(image.fileName),
+                    id: image.id,
+                  }}
+                />
+              ))}
               {files.map(file => (
-                <ImageUploader file={file} key={file.name} uploadFile={(file, config) => recipesService.uploadImage(file, config)} />
+                <ImageUploader
+                  file={file}
+                  key={file.name}
+                  uploadFile={(file, config) => recipesService.uploadImage(file, initialRecipe?.id, config)}
+                  onDelete={() => setFiles(files.filter(_file => _file.name !== file.name))}
+                  onUpload={image => {
+                    setFiles(files.filter(_file => _file.name !== file.name));
+                    setUploadedFiles([...uploadedFiles, image]);
+                  }}
+                />
               ))}
             </div>
           )}
