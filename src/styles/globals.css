@@ -39,7 +39,7 @@
 }
 
 @utility display-l {
-  @apply font-sans text-6xl leading-[4rem] font-normal text-on-surface tracking-tight;
+  @apply font-sans text-6xl leading-[4rem] font-normal text-on-surface tracking-[-0.25px];
 }
 
 @utility display-m {
@@ -67,35 +67,35 @@
 }
 
 @utility title-m {
-  @apply font-sans text-base leading-6 font-normal -tracking-wide text-on-surface;
+  @apply font-sans text-base leading-6 font-normal tracking-[0.15px] text-on-surface;
 }
 
 @utility title-s {
-  @apply font-sans text-sm leading-5 font-medium -tracking-wide text-on-surface;
+  @apply font-sans text-sm leading-5 font-medium tracking-[0.1px] text-on-surface;
 }
 
 @utility label-l {
-  @apply font-sans text-sm leading-5 font-medium -tracking-wide text-on-surface;
+  @apply font-sans text-sm leading-5 font-medium tracking-[0.1px] text-on-surface;
 }
 
 @utility label-m {
-  @apply font-sans text-xs leading-4 font-medium -tracking-wide text-on-surface;
+  @apply font-sans text-xs leading-4 font-medium tracking-[0.5px] text-on-surface;
 }
 
 @utility label-s {
-  @apply font-sans text-[0.6875rem] leading-4 font-medium -tracking-wide text-on-surface;
+  @apply font-sans text-[0.6875rem] leading-4 font-medium tracking-[0.5px] text-on-surface;
 }
 
 @utility body-l {
-  @apply font-sans text-base leading-6 font-normal -tracking-tight text-on-surface;
+  @apply font-sans text-base leading-6 font-normal tracking-[0.5px] text-on-surface;
 }
 
 @utility body-m {
-  @apply font-sans text-sm leading-5 font-normal -tracking-wide text-on-surface;
+  @apply font-sans text-sm leading-5 font-normal tracking-[0.25px] text-on-surface;
 }
 
 @utility body-s {
-  @apply font-sans text-xs leading-4 font-normal -tracking-wide text-on-surface;
+  @apply font-sans text-xs leading-4 font-normal tracking-[0.4px] text-on-surface;
 }
 
 @utility elevation-1 {

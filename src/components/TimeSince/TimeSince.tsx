@@ -7,7 +7,7 @@ import { cn, getTimeSince } from '@/utils';
 
 type TimeSinceProps = {
   startTime: string;
-  icon?: React.ReactNode | false;
+  icon?: React.JSX.Element | false;
   className?: string;
 };
 
@@ -25,7 +25,9 @@ const TimeSince = ({ startTime, icon = <IconSchedule className="size-6" />, clas
   return (
     <p className={cn('title-m flex flex-nowrap items-center gap-1', className)}>
       {icon}
-      <time dateTime={startTime}>{formattedTime}</time>
+      <time dateTime={startTime} className="leading-5">
+        {formattedTime}
+      </time>
     </p>
   );
 };
