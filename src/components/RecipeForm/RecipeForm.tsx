@@ -88,6 +88,7 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
 
     onSubmit({
       ...formFields,
+      images: recipeImages.map(image => image.id),
       ingredients,
       steps: formFields.steps.map(step => step.content),
     });
