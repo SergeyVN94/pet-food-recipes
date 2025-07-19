@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useUser from './useUser';
+import useUser from './users/useUser';
 
 const useUserRoles = () => {
   const { data: user } = useUser();
