@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 
@@ -72,18 +71,15 @@ const RecipePage = async ({ params }: { params: RecipePageProps }) => {
         </div>
         <h1 className="headline-l text-primary text-balance mt-2">{recipe.title}</h1>
         <p className="body-l mt-8 text-pretty">{recipe.description}</p>
-        {recipe.images && recipe.images.length > 0 && (
-          <ImagesGallery
-            items={recipe.images}
-            additionalClass="max-w-[450px] mt-10"
-            thumbnailPosition="right"
-            showFullscreenButton={false}
-          />
-        )}
-      </section>
-      <section className="mt-16">
-        <h3 className="headline-l">Ингредиенты</h3>
-        <Table columns={recipesTableColumns} showTableHead={false} rows={tableRows} />
+        <div className="mt-10 flex flex-col gap-16 items-start xl:flex-row">
+          {recipe.images && recipe.images.length > 0 && (
+            <ImagesGallery items={recipe.images} className="w-full xl:w-1/2" thumbnailPosition="bottom" showFullscreenButton={false} />
+          )}
+          <section className="mt-16 xl:mt-0">
+            <h3 className="headline-l">Ингредиенты</h3>
+            <Table columns={recipesTableColumns} showTableHead={false} rows={tableRows} />
+          </section>
+        </div>
       </section>
       <section className="mt-16">
         <h3 className="headline-l">Этапы приготовления</h3>

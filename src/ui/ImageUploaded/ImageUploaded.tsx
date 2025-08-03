@@ -56,7 +56,7 @@ const ImageUploaded = ({ image, className, deleteImage, onDelete, isNew }: Image
       </div>
       {isNew && (
         <p className="absolute top-auto left-1/2 bottom-1 -translate-x-1/2 whitespace-nowrap  text-sm text-on-primary-container bg-primary-container p-1 rounded">
-          Не сохранено
+          Новое
         </p>
       )}
       <img

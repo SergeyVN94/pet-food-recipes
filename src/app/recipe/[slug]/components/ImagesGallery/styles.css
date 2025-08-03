@@ -1,0 +1,31 @@
+[data-fullscreen='true'] .image-gallery-content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+[data-fullscreen='true'] .image-gallery-slide-wrapper,
+[data-fullscreen='true'] .image-gallery-swipe {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+[data-fullscreen='true'] .image-gallery-slides {
+  flex: 1;
+}
+
+[data-fullscreen='true'] .image-gallery-slide {
+  height: 100%;
+  max-height: calc(100vh - 140px) !important;
+}
+
+[data-fullscreen='true'] .image-gallery-image {
+  height: 100%;
+}
+
+.image-gallery-slide {
+  cursor: pointer;
+}
