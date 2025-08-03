@@ -41,7 +41,7 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
           <Filters initialIngredients={ingredients} initialAmountTypes={amountTypes} />
         </Suspense>
         <section className="sticky top-4 card-outlined">
-          <h4 className="mb-2 font-semibold">Контакты</h4>
+          <h4 className="mb-2 headline-s">Контакты</h4>
           <address>
             <a type="email" href="mailto:pet-food-recipes@yandex.ru" className="body-l font-semibold text-primary">
               pet-food-recipes@yandex.ru

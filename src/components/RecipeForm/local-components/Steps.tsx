@@ -36,7 +36,7 @@ const Steps = () => {
 
   return (
     <fieldset className="mt-8 p-0">
-      <legend className="headline-m">
+      <legend className="title-l">
         Этапы готовки <span className="text-primary">{`${fields.length}/50`}</span>
       </legend>
       <div className="mt-4">

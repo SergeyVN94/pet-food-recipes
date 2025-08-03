@@ -23,7 +23,7 @@ const Page500 = ({ error, reset }: Page500Props) => {
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full pt-4 gap-3 h-screen bg-surface">
+    <div className="flex flex-col items-center justify-center w-full pt-4 gap-3 h-screen bg-surf">
       <h1 className="headline-l">{isForbidden ? '403 - Доступ запрещен' : '500 - Произошла ошибка'}</h1>
       <div className="flex gap-2">
         {!isForbidden && (

@@ -91,7 +91,7 @@ const Select = ({
     <SelectPrimitives.Root onValueChange={onChange} onOpenChange={setIsOpen} open={isOpen} name={name} value={value ?? undefined}>
       <SelectPrimitives.Trigger
         className={cn(
-          'outline-hidden w-full cursor-pointer py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surface  hover:bg-on-surface/10 focus:after:h-0.5 focus:after:bg-primary min-w-[10rem]',
+          'outline-hidden w-full cursor-pointer py-1 pl-4 relative bg-surf-cont-highest rounded-t min-h-[3.5rem] after:absolute after:block after:w-full after:bottom-0 after:left-0 after:h-[1px] after:bg-on-surf  hover:bg-on-surf/10 focus:after:h-0.5 focus:after:bg-primary min-w-[10rem]',
           className,
         )}
         aria-label={ariaLabel}
@@ -102,7 +102,7 @@ const Select = ({
         {label && (
           <span
             data-focus={isOpen || !!value?.length}
-            className='text-on-surface-var hover:text-primary body-l whitespace-nowrap absolute top-4 left-4 group-hover:text-on-surface-var peer-focus:text-primary peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:label-s transition-all text-ellipsis'
+            className='text-on-surf-variant hover:text-primary body-l whitespace-nowrap absolute top-4 left-4 group-hover:text-on-surf-variant peer-focus:text-primary peer-focus:top-1 peer-focus:body-s peer-focus:text-xs peer-placeholder-shown:text-primary peer-placeholder-shown:top-1 peer-placeholder-shown:body-s peer-placeholder-shown:text-xs data-[focus="true"]:text-primary data-[focus="true"]:top-1 data-[focus="true"]:label-s transition-all text-ellipsis'
           >
             {label}
           </span>
@@ -113,7 +113,7 @@ const Select = ({
           </span>
           <span className="ml-auto flex flex-nowrap items-center">
             <IconArrowLeft
-              className="ml-auto mr-3 -rotate-90 data-[open='true']:rotate-90 transition-all"
+              className="ml-auto mr-3 -rotate-90 data-[open='true']:rotate-90 transition-all text-on-surf"
               data-open={isOpen}
               width={24}
               height={24}
@@ -157,7 +157,7 @@ const Select = ({
               </div>
             </div>
             {withSearch && search.length > 0 && filteredItems.length === 0 && (
-              <p className="p-2 body-l text-on-surface">Поиск не дал результатов</p>
+              <p className="p-2 body-l text-on-surf">Поиск не дал результатов</p>
             )}
             {onClear && (
               <div className="p-2">

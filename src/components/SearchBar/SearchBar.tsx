@@ -65,7 +65,7 @@ const SearchBar = ({ delay, className, placeholder, onChange, searchParamName, i
   return (
     <div
       className={cn(
-        'p-1 pl-4 rounded-3xl overflow-hidden bg-surf-cont-high flex flex-nowrap items-center gap-1 hover:bg-on-surface-var/25 data-[focus="true"]:bg-on-surface-var/hover:bg-on-surface-var/25 transition-colors',
+        'p-1 pl-4 rounded-3xl overflow-hidden bg-surf-cont-high flex flex-nowrap items-center gap-1 hover:bg-on-surf-variant/25 data-[focus="true"]:bg-on-surf-variant/hover:bg-on-surf-variant/25 transition-colors',
         className,
       )}
       onClick={handleRootClick}
@@ -75,7 +75,7 @@ const SearchBar = ({ delay, className, placeholder, onChange, searchParamName, i
       <label className="py-3 block flex-1">
         <input
           ref={inputRef}
-          className="w-full outline-hidden bg-transparent body-l text-on-surface-var autofill:shadow-[inset_0_0_0px_1000px_rgb(230,224,233)]"
+          className="w-full outline-hidden bg-transparent body-l text-on-surf-variant autofill:shadow-[inset_0_0_0px_1000px_rgb(230,224,233)]"
           onChange={handleChange}
           value={localValue}
           placeholder={placeholder}

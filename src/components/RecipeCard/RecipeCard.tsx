@@ -34,7 +34,7 @@ const RecipeCard = ({
   return (
     <article
       className={cn(
-        'card-outlined border-b border-neutral-90 group-last:border-none relative pointer hover:shadow-md transition-all rounded-md flex flex-col md:items-start md:pl-72 md:min-h-80',
+        'card-outlined group-last:border-none relative pointer hover:shadow-md transition-all rounded-md flex flex-col md:items-start md:pl-72 md:min-h-80',
         className,
       )}
     >
@@ -43,11 +43,11 @@ const RecipeCard = ({
           {recipe.user && <Avatar user={recipe.user} size={32} />}
           <span className="title-m">{recipe.user?.userName}</span>
         </Link>
-        <TimeSince startTime={recipe.createdAt} className="title-s" />
+        <TimeSince startTime={recipe.createdAt} />
       </div>
       <div className="flex flex-nowrap items-center gap-2">
         <Link
-          className="block headline-m text-primary font-semibold line-clamp-2 before:content-[''] before:block before:absolute before:left-0 before:top-0 before:size-full"
+          className="block headline-s text-primary font-medium line-clamp-2 before:content-[''] before:block before:absolute before:left-0 before:top-0 before:size-full"
           href={`/recipe/${recipe.slug}`}
         >
           {recipe.title}

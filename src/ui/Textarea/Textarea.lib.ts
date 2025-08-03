@@ -2,11 +2,11 @@ import { type VariantProps, cva } from 'class-variance-authority';
 
 import { wrapVariants } from '../Input/Input.lib';
 
-export const textareaVariants = cva('peer w-full outline-hidden bg-transparent body-l text-on-surface pr-4', {
+export const textareaVariants = cva('peer w-full outline-hidden bg-transparent body-l text-on-surf pr-4', {
   variants: {
     variant: {
       filled: 'data-[with-label=false]:mt-3 mt-5',
-      outline: 'mt-3 group-hover:text-on-surface',
+      outline: 'mt-3 group-hover:text-on-surf',
     },
   },
   defaultVariants: {

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { IconAdd } from '@/assets/icons';
 import { ButtonLink } from '@/ui';
 
-import { AuthSection } from './components';
+import { AuthSection, SwitchTheme } from './components';
 
 const Header = () => (
   <header className="border-b border-primary/[0.12] bg-surf-cont-highest">
@@ -17,6 +17,7 @@ const Header = () => (
         <Suspense fallback={<div className="skeleton h-[2.5rem] w-[2.5rem] cursor-progress rounded-full" />}>
           <AuthSection />
         </Suspense>
+        <SwitchTheme />
         <ButtonLink href="/recipe/new" variant="filled" iconLeft={<IconAdd width={18} height={18} />}>
           Добавить рецепт
         </ButtonLink>

@@ -91,7 +91,7 @@ const SendEmailButton = ({ email }: SendEmailButtonProps) => {
 
   return (
     <Button onClick={() => sendConfirmationEmail(email)} disabled={isSending || Boolean(lockTime)} variant="outline">
-      Отправить повторно {lockTime && <span className="text-on-surface">(&nbsp;{lockTime})</span>}
+      Отправить повторно {lockTime && <span className="text-on-surf">(&nbsp;{lockTime})</span>}
     </Button>
   );
 };

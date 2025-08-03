@@ -5,7 +5,7 @@ import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const toastVariants = cva(
-  'flex items-center px-4 min-h-12 rounded-lg cursor-pointer overflow-hidden bg-surface-dim shadow-md body-l mb-3 min-w-80',
+  'flex items-center px-4 min-h-12 rounded-lg cursor-pointer overflow-hidden bg-surf-dim shadow-md body-l mb-3 min-w-80',
   {
     variants: {
       variant: {

@@ -1,3 +1,11 @@
+.image-gallery-slide {
+  cursor: pointer;
+}
+
+.image-gallery-image {
+  height: 450px;
+}
+
 [data-fullscreen='true'] .image-gallery-content {
   height: 100vh;
   display: flex;
@@ -19,13 +27,9 @@
 
 [data-fullscreen='true'] .image-gallery-slide {
   height: 100%;
-  max-height: calc(100vh - 140px) !important;
+  max-height: calc(100vh - 165px) !important;
 }
 
 [data-fullscreen='true'] .image-gallery-image {
   height: 100%;
-}
-
-.image-gallery-slide {
-  cursor: pointer;
 }

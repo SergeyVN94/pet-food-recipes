@@ -87,7 +87,7 @@ const Filters = ({ initialIngredients, initialAmountTypes }: FiltersProps) => {
           onSubmit={methods.handleSubmit(handleSubmit)}
           className="card-outlined w-full relative h-[50rem] max-h-[80rem] overflow-hidden z-10"
         >
-          <h3 className="headline-m">Фильтры</h3>
+          <h3 className="headline-s">Фильтры</h3>
           <div className="pt-4 h-[calc(100%-5rem)] overflow-y-auto">
             {(roles.isAdmin || roles.isModerator) && <CheckboxUncontrolled name="isDeleted" label="Удаленные рецепты" className="mb-2" />}
             {(roles.isAdmin || roles.isModerator) && (

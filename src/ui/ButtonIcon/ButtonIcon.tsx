@@ -24,9 +24,9 @@ const innerWrapperVariants = cva(
     variants: {
       variant: {
         standard:
-          'text-on-surface-var group-hover/button-icon:bg-on-surface-var/[0.08] group-focus/button-icon:bg-on-surface-var/[0.12] group-active/button-icon:bg-on-surface-var/[0.12] group-disabled/button-icon:bg-transparent group-disabled/button-icon:text-on-surface!',
+          'text-on-surf-variant group-hover/button-icon:bg-on-surf-variant/[0.08] group-focus/button-icon:bg-on-surf-variant/[0.12] group-active/button-icon:bg-on-surf-variant/[0.12] group-disabled/button-icon:bg-transparent group-disabled/button-icon:text-on-surf!',
         filled:
-          'text-primary bg-surf-cont-highest/70 group-hover/button-icon:bg-surf-cont-highest/90 group-focus/button-icon:bg-surf-cont-highest/95 group-active/button-icon:bg-surf-cont-highest/95 group-disabled/button-icon:bg-on-surface group-disabled/button-icon:text-on-surface!',
+          'text-primary bg-surf-cont-highest/70 group-hover/button-icon:bg-surf-cont-highest/90 group-focus/button-icon:bg-surf-cont-highest/95 group-active/button-icon:bg-surf-cont-highest/95 group-disabled/button-icon:bg-on-surf group-disabled/button-icon:text-on-surf!',
       },
     },
     defaultVariants: {

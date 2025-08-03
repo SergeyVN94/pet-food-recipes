@@ -98,7 +98,7 @@ const BookmarksPage = () => {
           <RecipeCardWrapper key={recipeId} recipeId={recipeId} ingredientsMap={ingredientsMap} />
         ))}
         {!bookmarksRecipesMap[selectedBookmark ?? ''] ||
-          (bookmarksRecipesMap[selectedBookmark ?? '']?.length === 0 && <p className="body-l text-on-surface">Нет закладок</p>)}
+          (bookmarksRecipesMap[selectedBookmark ?? '']?.length === 0 && <p className="body-l text-on-surf">Нет закладок</p>)}
       </div>
     );
 

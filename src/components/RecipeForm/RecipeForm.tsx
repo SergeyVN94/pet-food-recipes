@@ -3,19 +3,17 @@
 import React from 'react';
 
 import { vestResolver } from '@hookform/resolvers/vest';
-import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
-import { useAmountTypes, useIngredients, useNewRecipeImages } from '@/hooks';
-import { recipesService } from '@/services';
-import { RecipeCreateDto, RecipeEntity, RecipeImageDto, RecipeIngredientCreateDto } from '@/types';
-import { Button, FileInput, ImageUploaded, ImageUploader, InputUncontrolled, TextareaUncontrolled } from '@/ui';
-import { arrayToDictionary, getRecipeImageUrl, showToast } from '@/utils';
+import { useAmountTypes, useIngredients } from '@/hooks';
+import { RecipeCreateDto, RecipeEntity, RecipeIngredientCreateDto } from '@/types';
+import { Button, InputUncontrolled } from '@/ui';
+import { arrayToDictionary, showToast } from '@/utils';
 
 import { FormFields } from './RecipeForm.types';
 import { validationSuite } from './lib';
-import { Ingredients, Steps } from './local-components';
+import { Ingredients, MainInfo, Steps } from './local-components';
 
 type RecipeFormProps = {
   onSubmit: (formFields: RecipeCreateDto) => void;
@@ -27,21 +25,18 @@ type RecipeFormProps = {
 
 const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit }: RecipeFormProps) => {
   const navigate = useRouter();
-  const [files, setFiles] = React.useState<File[]>([]);
-  const [recipeImages, setRecipeImages] = React.useState<RecipeImageDto[]>(() => initialRecipe?.images ?? []);
+
   const { data: amountTypes, isFetching: isAmountTypesFetching } = useAmountTypes({
     refetchOnMount: true,
   });
   const { data: recipeIngredients, isFetching: isRecipeIngredientsFetching } = useIngredients({
     refetchOnMount: true,
   });
-  const { data: newRecipeImages, isFetching: isNewRecipeImagesFetching } = useNewRecipeImages({
-    refetchOnMount: true,
-  });
+
   const amountTypesDict = React.useMemo(() => arrayToDictionary(amountTypes ?? [], 'id'), [amountTypes]);
 
-  const defaultValues = React.useMemo(
-    () => ({
+  const methods = useForm<FormFields>({
+    defaultValues: {
       title: initialRecipe?.title ?? '',
       description: initialRecipe?.description ?? '',
       steps: initialRecipe?.steps.map(step => ({ content: step.content })) ?? [{ content: '' }],
@@ -50,12 +45,8 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
         ingredientId: String(ingredient.ingredientId),
         amountTypeId: String(ingredient.amountTypeId),
       })) ?? [{ count: 0 }],
-    }),
-    [initialRecipe],
-  );
-
-  const methods = useForm<FormFields>({
-    defaultValues,
+      images: initialRecipe?.images.map(image => image.id) ?? [],
+    },
     errors,
     resolver: vestResolver(validationSuite),
     mode: 'onChange',
@@ -88,7 +79,6 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
 
     onSubmit({
       ...formFields,
-      images: recipeImages.map(image => image.id),
       ingredients,
       steps: formFields.steps.map(step => step.content),
     });
@@ -98,73 +88,13 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
     navigate.back();
   };
 
-  const handleFilesChange = (newFiles: File[]) => {
-    const nextFiles = [...files, ...newFiles];
-
-    if (nextFiles.length > 10) {
-      showToast('error', 'Максимум 10 файлов');
-      return;
-    }
-
-    const bigFile = nextFiles.find(file => file.size > 15 * 1024 * 1024);
-
-    if (bigFile) {
-      showToast('error', 'Максимум 15 МБ на один файл');
-      return;
-    }
-
-    setFiles([...files, ...newFiles]);
-  };
-
-  React.useEffect(() => {
-    setRecipeImages([...recipeImages, ...(newRecipeImages ?? [])]);
-  }, [newRecipeImages]);
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
-        <fieldset>
-          <legend className="invisible">Основная информация о рецепте</legend>
-          <InputUncontrolled name="title" label="Название" required maxLength={150} />
-          <TextareaUncontrolled name="description" label="Описание" className="mt-4" required maxLength={500} />
-          {(files.length > 0 || recipeImages.length > 0) && (
-            <div className="flex flex-wrap gap-4 mt-8">
-              {recipeImages.map(image => (
-                <ImageUploaded
-                  key={image.id}
-                  isNew={image.recipeId === null}
-                  deleteImage={image.recipeId ? undefined : id => recipesService.deleteImage(id)}
-                  onDelete={() => setRecipeImages(recipeImages.filter(_image => _image.id !== image.id))}
-                  image={{
-                    fileName: image.fileName,
-                    url: getRecipeImageUrl(image.fileName),
-                    id: image.id,
-                  }}
-                />
-              ))}
-              {files.map(file => (
-                <ImageUploader
-                  file={file}
-                  key={file.name}
-                  uploadFile={(file, config) => recipesService.uploadImage(file, undefined, config)}
-                  onDelete={() => setFiles(files.filter(_file => _file.name !== file.name))}
-                  onUpload={image => {
-                    setFiles(files.filter(_file => _file.name !== file.name));
-                    setRecipeImages([...recipeImages, image]);
-                  }}
-                />
-              ))}
-            </div>
-          )}
-          <FileInput
-            multiple
-            name="images"
-            label="Добавить изображения (максимум 10 файлов по 15 Мб каждый)"
-            className="mt-4"
-            max={3}
-            accept="image/png image/jpg image/jpeg"
-            onChange={handleFilesChange}
-          />
+        <MainInfo initialRecipe={initialRecipe} />
+        <fieldset className="mt-8">
+          <legend className="title-l">Параметры блюда</legend>
+          <InputUncontrolled name="cookingTime" label="Время приготовления" className="mt-4" type="number" />
         </fieldset>
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
           <div className="mt-4 skeleton h-48" />

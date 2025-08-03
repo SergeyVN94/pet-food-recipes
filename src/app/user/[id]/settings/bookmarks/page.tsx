@@ -58,7 +58,7 @@ const BookmarkItem = ({ bookmark }: BookmarkItemProps) => {
   };
 
   return (
-    <li className="flex flex-nowrap items-center gap-2 w-full elevation-3 bg-surface-dim px-4">
+    <li className="flex flex-nowrap items-center gap-2 w-full elevation-3 bg-surf-dim px-4">
       {isEditMode ? (
         <div className="flex flex-nowrap items-center gap-2 w-full">
           <BookmarkForm value={bookmark.title} onSubmit={handleSubmit} isLoading={isUpdateBookmarkLoading} />

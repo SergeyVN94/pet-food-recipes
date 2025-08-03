@@ -64,7 +64,7 @@ const IngredientsList = ({
               }}
             >
               <ButtonIcon onClick={() => onAddIngredient(filteredIngredients[virtualItem.index].id)} type="button" icon={IconAdd} />
-              <p tw="body-l ml-2">{filteredIngredients[virtualItem.index].name}</p>
+              <p className="body-l ml-2">{filteredIngredients[virtualItem.index].name}</p>
             </li>
           ))}
         </ul>

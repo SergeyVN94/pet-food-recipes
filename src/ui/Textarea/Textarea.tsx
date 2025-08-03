@@ -79,7 +79,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         <div className={wrapVariants({ variant })} onClick={handleRootClick}>
           <label className="flex-1 relative py-1">
             <textarea
-              className="peer w-full outline-hidden bg-transparent body-l text-on-surface pr-4 mt-4 resize-none block overflow-y-auto"
+              className="peer w-full outline-hidden bg-transparent body-l text-on-surf pr-4 mt-4 resize-none block overflow-y-auto"
               {...other}
               data-label={Boolean(label)}
               data-value={Boolean(value)}
@@ -93,7 +93,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               <span className={labelVariants({ variant })} data-focus={Boolean(value || other.placeholder || isFocus)}>
                 {label}
                 {other.maxLength && (
-                  <span className="text-on-surface-var">
+                  <span className="text-on-surf-variant">
                     &nbsp;({String(value ?? '').length}/{other.maxLength})
                   </span>
                 )}
@@ -112,7 +112,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             />
           )}
         </div>
-        {subText && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
+        {subText && <p className="pt-1 px-4 body-s text-on-surf-variant">{subText}</p>}
       </div>
     );
   },

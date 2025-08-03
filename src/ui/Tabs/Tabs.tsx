@@ -21,7 +21,7 @@ const Tabs = ({ tabs, activeTabId, onTabClick, className }: TabsProps) => (
     {tabs.map(tab => (
       <button
         key={tab.id}
-        className='outline-hidden bg-transparent block cursor-pointer text-on-surface-var label-l border-solid border-b-2 border-transparent data-[active="true"]:border-primary data-[active="true"]:text-on-surface px-4 pt-3.5 pb-3 transition-colors min-w-32'
+        className='outline-hidden bg-transparent block cursor-pointer text-on-surf-variant label-l border-solid border-b-2 border-transparent data-[active="true"]:border-primary data-[active="true"]:text-on-surf px-4 pt-3.5 pb-3 transition-colors min-w-32'
         onClick={() => onTabClick(tab.id)}
         data-active={tab.id === activeTabId}
       >

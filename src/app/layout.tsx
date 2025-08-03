@@ -31,7 +31,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
     </Head>
-    <body className={`${roboto.variable} h-full`}>
+    <body className={`${roboto.variable} h-full bg-surf-cont-lowest`}>
       {process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID && <YandexMetrika metrikaId={process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID} />}
       <Suspense fallback={<></>}>{process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID && <YandexMetrikaHit />}</Suspense>
       <TanStackProvider>

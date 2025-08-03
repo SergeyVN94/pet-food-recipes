@@ -111,7 +111,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               >
                 {label}
                 {maxLength && (
-                  <span className="text-on-surface-var">
+                  <span className="text-on-surf-variant">
                     &nbsp;({String(value ?? '').length}/{maxLength})
                   </span>
                 )}
@@ -131,7 +131,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           {iconRight && <ButtonIcon onClick={handleRightButtonClick} type="button" icon={iconRight} />}
         </div>
-        {subText && !errorMessage && <p className="pt-1 px-4 body-s text-on-surface-var">{subText}</p>}
+        {subText && !errorMessage && <p className="pt-1 px-4 body-s text-on-surf-variant">{subText}</p>}
         {errorMessage && <p className="pt-1 px-4 body-s text-error">{errorMessage}</p>}
       </div>
     );

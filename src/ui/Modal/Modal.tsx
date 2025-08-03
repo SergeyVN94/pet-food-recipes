@@ -10,10 +10,10 @@ import { Button, ButtonProps } from '../Button';
 type BaseProps = { children: React.ReactNode; className?: string };
 
 const ModalTitle = ({ children, className }: BaseProps) => (
-  <Dialog.Title className={cn('headline-s text-on-surface mb-4', className)}>{children}</Dialog.Title>
+  <Dialog.Title className={cn('headline-s text-on-surf mb-4', className)}>{children}</Dialog.Title>
 );
 
-const ModalText = ({ children, className }: BaseProps) => <p className={cn('body-m text-on-surface-var mb-6', className)}>{children}</p>;
+const ModalText = ({ children, className }: BaseProps) => <p className={cn('body-m text-on-surf-variant mb-6', className)}>{children}</p>;
 
 const ModalActionsWrapper = ({ children, className }: BaseProps) => (
   <div className={cn('flex justify-end gap-2 mt-6', className)}>{children}</div>
@@ -33,7 +33,7 @@ const ModalActionClose = ({ children, className, ...other }: BaseProps & Omit<Bu
   </Dialog.Close>
 );
 
-const rootVariants = cva('rounded-xl p-6 bg-surface-dim mx-auto w-screen', {
+const rootVariants = cva('rounded-xl p-6 bg-surf-dim mx-auto w-screen', {
   variants: {
     size: {
       sm: 'max-w-sm',
