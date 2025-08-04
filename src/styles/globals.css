@@ -95,19 +95,19 @@
 }
 
 @utility elevation-1 {
-  @apply rounded-2xl bg-violet-50 shadow-sm;
+  @apply rounded-2xl bg-surf-cont-lowest shadow-sm;
 }
 
 @utility elevation-2 {
-  @apply rounded-2xl bg-gray-100 shadow-sm;
+  @apply rounded-2xl bg-surf-cont-low shadow-sm;
 }
 
 @utility elevation-3 {
-  @apply rounded-2xl bg-gray-200 shadow-sm;
+  @apply rounded-2xl bg-surf-cont shadow-sm;
 }
 
 @utility elevation-4 {
-  @apply rounded-2xl bg-zinc-200 shadow-sm;
+  @apply rounded-2xl bg-surf-cont-high shadow-sm;
 }
 
 @utility card-outlined {

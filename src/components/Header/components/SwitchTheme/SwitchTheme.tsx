@@ -10,7 +10,6 @@ type SwitchThemeProps = {
 
 const SwitchTheme = ({ className }: SwitchThemeProps) => {
   const [isDark, setIsDark] = React.useState(() => {
-    // Check for saved preference or system preference
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme');
 
@@ -25,7 +24,6 @@ const SwitchTheme = ({ className }: SwitchThemeProps) => {
   };
 
   React.useEffect(() => {
-    // Apply the theme class to the document
     if (isDark) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
@@ -51,7 +49,6 @@ const SwitchTheme = ({ className }: SwitchThemeProps) => {
           isDark ? 'translate-x-[20px]' : 'translate-x-[0.125rem]'
         }`}
       >
-        {/* Icons for sun and moon */}
         <span
           className={cn('absolute inset-0 flex items-center justify-center transition-opacity', isDark ? 'opacity-0' : 'opacity-100')}
           aria-hidden="true"

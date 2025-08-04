@@ -8,12 +8,12 @@ import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 
 import { useAmountTypes, useIngredients } from '@/hooks';
 import { RecipeCreateDto, RecipeEntity, RecipeIngredientCreateDto } from '@/types';
-import { Button, InputUncontrolled } from '@/ui';
+import { Button } from '@/ui';
 import { arrayToDictionary, showToast } from '@/utils';
 
 import { FormFields } from './RecipeForm.types';
 import { validationSuite } from './lib';
-import { Ingredients, MainInfo, Steps } from './local-components';
+import { AdditionalParams, Ingredients, MainInfo, Steps } from './local-components';
 
 type RecipeFormProps = {
   onSubmit: (formFields: RecipeCreateDto) => void;
@@ -92,10 +92,7 @@ const RecipeForm = ({ initialRecipe, className, errors = {}, isLoading, onSubmit
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className={className}>
         <MainInfo initialRecipe={initialRecipe} />
-        <fieldset className="mt-8">
-          <legend className="title-l">Параметры блюда</legend>
-          <InputUncontrolled name="cookingTime" label="Время приготовления" className="mt-4" type="number" />
-        </fieldset>
+        {/* <AdditionalParams /> */}
         {isAmountTypesFetching || isRecipeIngredientsFetching ? (
           <div className="mt-4 skeleton h-48" />
         ) : (
